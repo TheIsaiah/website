@@ -1,5 +1,125 @@
+<!DOCTYPE html>
 <html>
- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
-  <p>Welcome!</p>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.foot { position:fixed;left:0;bottom:0;width:100%;color:white;text-align:center;font-size:0.7em;padding:4px; }
+#lo {background:url("bg.jpg");
+background-size: 100vw; height:100vh;}
+</style>
+
+<style>
+#lo {display:none;}
+.loader {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid black;
+  width: 60px;
+  height: 61px;
+  top:20%;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.eng {display:none;}
+</style>
+</head>
+<body>
+<div id="t"></div>
+
+<center id ="ll">
+<h2 id="l" style="padding-top:100px">Loading resources....</h2>
+<div class="loader"></div>
+<script>
+var z = 0.1;
+
+    setTimeout(function() {
+    	document.getElementById("l").innerHTML = "Loading stylesheet from https://isaiah.dev/w3.css";
+    }, 1300 * z)
+    
+   setTimeout(function() {
+        document.getElementById("t").innerHTML = '<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> ';
+    }, 2200 * z)
+    
+    setTimeout(function(){ 
+        document.getElementById("l").innerHTML = "Loading Presenter...";
+    }, 3400 * z);
+    
+    setTimeout(function(){ 
+        document.getElementById("l").innerHTML = "Loading Presenter...";
+        document.getElementById("ll").style.display = "none";
+        document.getElementById("lo").style.display = "block";
+        document.body.background = "background:url('bg.jpg')";
+    }, 4500 * z);
+
+</script>
+<p>WebPresenter &copy; 2021 by Isaiah. All Rights Reserved.</p>
+</center>
+
+<body>
+
+<div id ="lo">
+<div class="w3-bar w3-black" style="font-size:0.6em;padding:8px;"></div>
+<div class="w3-container">
+<h3 style="color:white;">Cómo es la ciberseguridad en los países hispanohablantes?</h3>
+
+<div class="w3-black" style="display:inline;float:right;max-width:670px;padding:8px;font-size:0.7em"><img style="float:left;padding-right:8px;" src="m.png" width="70px"><p>Most threats can be prevented by using antivirus/antimalware software like Malwarebytes, Avast, Nortan, etc., but not McAfee nobody likes McAfee.<br><i style="font-size:0.6rem;">(McAfee was sold, and the new company runined it; So much that John McAfee himself <a href="https://www.youtube.com/watch?v=bKgf5PaBzyg">made a funny video</a> of how it is hard to uninstall McAfee nowdays)</i></p></div>
+
+<div>
+<img src="1.png" width="250px" style="border:1px solid black;">
+</div>
+<br>
+<div style="w3-row">
+<div class="w3-col s6">
+<div class="w3-black" style="padding:8px;max-width:540px;font-size:0.8em">
+<img style="float:right" src="https://st.drweb.com/static/new-www/news/2018/december/03_Android.BankBot.495.origin_2.1.png" width="120px">
+</p>
+<b>Brazilian mobile users hit with banking malware</b>
+<p>Clasificado como trojan: <i>BankBot.495.origin</i><br><br>Lo hace imitación de el pago sitio web<br>
+Cuando los usuarios usan Bradesco, un banco, el troyano roba la información de la cuenta.<br><br><i>(see fake Netflix payment screen on right)</i><br></p><br>
+</div>
+<br>
+<div class="w3-black" style="padding:8px;max-width:540px;font-size:0.8em">
+<b>A Study by Symantec <i>(Nortan Anti-virus)</i></b><br>
+<div class="eng">A world study, by the cybersecurity company Symantec, based on: malware, spam, cyber-attacks, ransomware and cryptojacking. The most insecure countries are Brazil, Mexico and Venezuela.</div>
+Un estudio, de la empresa de ciberseguridad Symantec, basado en: malware, spam, ciberataques, ransomware y cryptojacking. Los países más inseguros son Brasil, México y Venezuela. 
+<br><br>
+</div>
+<br>
+</div>
+<div class="w3-col s6">
+<div class="w3-black" style="padding:8px;max-width:600px;font-size:0.78em">
+<img style="float:right" src="map.png" width="250px;">
+<p>Mapa de ciberseguridad en el mundo.<br>Light = more protection,<br>Dark = less protection.</p>
+<i style="font-size:0.59rem">(source: https://itu.int/dms_pub/itu-d/opb/str/D-STR-GCI.01-2018-PDF-E.pdf)</i>
+</div>
+<br>
+<div class="w3-black" style="padding:8px;max-width:600px;font-size:0.8em">
+El costo del delito cibernético en América Latina es de $ 90 mil millones por año!<br>
+In 2016, the Inter-American Development Bank issued a report putting the cost of cybercrime in Latin America at approximately US$90 billion per year. The report also found that the region in general suffers from a low level of public awareness when it comes to cybercrime.
+</div>
+<br>
+<div class="w3-black" style="padding:8px;max-width:700px;font-size:0.8em">
+On 14 August 2018, the Brazilian Congress passed a bill related to personal data protection. Mexico’s establishes the Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales as Mexico’s data protection authority.
+</div>
+
+
+</div>
+</div>
+
+</div>
+</div>
+<div class="w3-bar w3-black foot" style="color:white;background-color:black;">
+Copyright &copy; 2021 by Isaiah.
+</div>
+</body>
+
 
 </html>

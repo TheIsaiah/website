@@ -29,6 +29,8 @@ background-size: 100vw; height:100vh;}
   100% { transform: rotate(360deg); }
 }
 .eng {display:none;}
+.w3-blaack {background-color:rgba(0,0,0,0.7); color:rgb(250,250,240);font-size:0.9rem;}
+.w3-graay {background-color:rgba(35,35,35,1) !important}
 </style>
 </head>
 <body>
@@ -38,7 +40,7 @@ background-size: 100vw; height:100vh;}
 <h2 id="l" style="padding-top:100px">Loading resources....</h2>
 <div class="loader"></div>
 <script>
-var z = 0.8;
+var z = 0.5;
 
     setTimeout(function() {
     	document.getElementById("l").innerHTML = "Loading stylesheet from https://isaiah.dev/w3.css";
@@ -56,7 +58,6 @@ var z = 0.8;
         document.getElementById("l").innerHTML = "Loading Presenter...";
         document.getElementById("ll").style.display = "none";
         document.getElementById("lo").style.display = "block";
-        document.body.background = "background:url('bg.jpg')";
     }, 4500 * z);
 
 </script>
@@ -66,27 +67,55 @@ var z = 0.8;
 <body>
 
 <div id ="lo">
-<div class="w3-bar w3-black" style="font-size:0.6em;padding:8px;"></div>
+<div class="w3-bar w3-blaack" style="font-size:0.6em;padding:8px;"></div>
 <div class="w3-container">
-<h3 style="color:white;">Cómo es la ciberseguridad en los países hispanohablantes?</h3>
+<h3 style="color:rgb(240,240,240);text-align:center;font-size:1.2em;font-weight:bold;">Cómo es la ciberseguridad en los países hispanohablantes?</h3>
 
-<div class="w3-black" style="display:inline;float:right;max-width:670px;padding:8px;font-size:0.7em"><img style="float:left;padding-right:8px;" src="m.png" width="70px"><p>Most threats can be prevented by using antivirus/antimalware software like Malwarebytes, Avast, Nortan, etc., but not McAfee nobody likes McAfee.<br><i style="font-size:0.6rem;">(McAfee was sold, and the new company runined it; So much that John McAfee himself <a href="https://www.youtube.com/watch?v=bKgf5PaBzyg">made a funny video</a> of how it is hard to uninstall McAfee nowdays)</i></p></div>
+<div class="w3-blaack" style="display:inline;float:right;max-width:710px;padding:8px;font-size:0.7em"><img style="float:left;padding-right:8px;" src="m.png" width="65px">
+<p>Most threats can be prevented by using antivirus/antimalware software like Malwarebytes, Avast, Nortan, etc., but not McAfee nobody likes McAfee.<br>
+<i style="font-size:0.55rem;">(McAfee was sold, and they runined it; So much that John McAfee himself
+<a href="https://www.youtube.com/watch?v=bKgf5PaBzyg">made a funny video</a> of how it is hard to uninstall McAfee nowdays)</i></p></div>
 
-<div>
-<img src="1.png" width="250px" style="border:1px solid black;">
+<div style="max-width:500px;background-color:black;color:white;padding:8px;font-size:0.8em;max-height:200px;">
+    <center><b style="padding:0;margin:0;">Leading Cyber Threats in Latin America</b></center>
+    <div style="padding-top:1px;">
+      <div class="w3-col w3-container" style="width:140px">Ransomware</div>
+      <div class="w3-rest w3-container"><div class="w3-graay w3-center"><div class="w3-green w3-container" id="myBar" style="height:20px;width:1%"></div></div>
+    </div></div>
+
+    <div style="padding-top:1px;">
+      <div class="w3-col w3-container" style="width:140px">Data Breach</div>
+      <div class="w3-rest w3-container"><div class="w3-graay w3-center"><div id="bar1" class="w3-green w3-container" style="height:20px;width:1%"></div></div>
+    </div></div>
+
+    <div style="padding-top:1px;">
+      <div class="w3-col w3-container" style="width:140px">Malware</div>
+      <div class="w3-rest w3-container"><div class="w3-graay w3-center"><div id="bar2" class="w3-green w3-container" style="height:20px;width:1%"></div></div>
+    </div></div>
 </div>
+<script>
+var z = 0;
+var zz = [58,55,52];
+function move(id, max) {
+  var xx=0; var el=document.getElementById(id); var w=10*z; var id=setInterval(f, 20);
+  function f(){ if (w >= max){clearInterval(id);
+    }else{el.style.width=(w++)+'%';el.innerHTML=w*1+'%'; if (z < 3 && xx == 0 && w > (40)){ xx = 1; z++; move("bar" + z, zz[z]); }}}
+}
+setTimeout(function() {move("myBar", 58);}, 2000)
+</script>
+
 <br>
 <div style="w3-row">
 <div class="w3-col s6">
-<div class="w3-black" style="padding:8px;max-width:540px;font-size:0.8em">
-<img style="float:right" src="https://st.drweb.com/static/new-www/news/2018/december/03_Android.BankBot.495.origin_2.1.png" width="120px">
+<div class="w3-blaack" style="padding:8px;max-width:540px;font-size:0.8em">
+<img style="float:right" src="net.png" width="110px">
 </p>
 <b>Brazilian mobile users hit with banking malware</b>
-<p>Clasificado como trojan: <i>BankBot.495.origin</i><br><br>Lo hace imitación de el pago sitio web<br>
+<p>Clasificado como trojan: <i>BankBot.495.origin</i><br>Lo hace imitación de el pago sitio web.
 Cuando los usuarios usan Bradesco, un banco, el troyano roba la información de la cuenta.<br><br><i>(see fake Netflix payment screen on right)</i><br></p><br>
 </div>
 <br>
-<div class="w3-black" style="padding:8px;max-width:540px;font-size:0.8em">
+<div class="w3-blaack" style="padding:8px;max-width:540px;font-size:0.8em">
 <b>A Study by Symantec <i>(Nortan Anti-virus)</i></b><br>
 <div class="eng">A world study, by the cybersecurity company Symantec, based on: malware, spam, cyber-attacks, ransomware and cryptojacking. The most insecure countries are Brazil, Mexico and Venezuela.</div>
 Un estudio, de la empresa de ciberseguridad Symantec, basado en: malware, spam, ciberataques, ransomware y cryptojacking. Los países más inseguros son Brasil, México y Venezuela. 
@@ -95,19 +124,19 @@ Un estudio, de la empresa de ciberseguridad Symantec, basado en: malware, spam, 
 <br>
 </div>
 <div class="w3-col s6">
-<div class="w3-black" style="padding:8px;max-width:600px;font-size:0.78em">
-<img style="float:right" src="map.png" width="250px;">
-<p>Mapa de ciberseguridad en el mundo.<br>Light = more protection,<br>Dark = less protection.</p>
-<i style="font-size:0.59rem">(source: https://itu.int/dms_pub/itu-d/opb/str/D-STR-GCI.01-2018-PDF-E.pdf)</i>
+<div class="w3-blaack" style="padding:8px;max-width:600px;font-size:0.78em">
+<img style="float:right" src="map.png" width="245px;">
+<p>Mapa de ciberseguridad en el mundo.<br>Light = more protection,<br>Dark = less protection.</p><br>
+<i style="font-size:0.6rem">source: <a src="https://itu.int/dms_pub/itu-d/opb/str/D-STR-GCI.01-2018-PDF-E.pdf">itu.int/dms_pub/itu-d/opb/str/D-STR-GCI.01-2018-PDF-E.pdf</a></i><br>
 </div>
 <br>
-<div class="w3-black" style="padding:8px;max-width:600px;font-size:0.8em">
-El costo del delito cibernético en América Latina es de $ 90 mil millones por año!<br>
+<div class="w3-blaack" style="padding:8px;max-width:600px;font-size:0.8em">
+El costo del delito cibernético en América Latina es de $90 mil millones por año!<br>
 In 2016, the Inter-American Development Bank issued a report putting the cost of cybercrime in Latin America at approximately US$90 billion per year. The report also found that the region in general suffers from a low level of public awareness when it comes to cybercrime.
 </div>
 <br>
-<div class="w3-black" style="padding:8px;max-width:700px;font-size:0.8em">
-On 14 August 2018, the Brazilian Congress passed a bill related to personal data protection. Mexico’s establishes the Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales as Mexico’s data protection authority.
+<div class="w3-blaack" style="padding:8px;max-width:700px;font-size:0.8em">
+In 2018, the Brazilian Congress passed a bill related to personal data protection.<br>Mexico’s establishes the Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales as Mexico’s data protection authority.
 </div>
 
 
@@ -116,7 +145,7 @@ On 14 August 2018, the Brazilian Congress passed a bill related to personal data
 
 </div>
 </div>
-<div class="w3-bar w3-black foot" style="color:white;background-color:black;">
+<div class="w3-bar foot" style="color:white;background-color:rgba(0,0,0,0.5);">
 Copyright &copy; 2021 by Isaiah.
 </div>
 </body>

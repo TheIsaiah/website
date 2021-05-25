@@ -40,7 +40,7 @@ background-size: 100vw; height:100vh;}
 <h2 id="l" style="padding-top:100px">Loading resources....</h2>
 <div class="loader"></div>
 <script>
-var z = 0.5;
+var z = 0.6;
 
     setTimeout(function() {
     	document.getElementById("l").innerHTML = "Loading stylesheet from https://isaiah.dev/w3.css";
@@ -58,7 +58,7 @@ var z = 0.5;
         document.getElementById("l").innerHTML = "Loading Presenter...";
         document.getElementById("ll").style.display = "none";
         document.getElementById("lo").style.display = "block";
-    }, 4500 * z);
+    }, 5500 * z);
 
 </script>
 <p>WebPresenter &copy; 2021 by Isaiah. All Rights Reserved.</p>
@@ -101,7 +101,7 @@ function move(id, max) {
   function f(){ if (w >= max){clearInterval(id);
     }else{el.style.width=(w++)+'%';el.innerHTML=w*1+'%'; if (z < 3 && xx == 0 && w > (40)){ xx = 1; z++; move("bar" + z, zz[z]); }}}
 }
-setTimeout(function() {move("myBar", 58);}, 2000)
+setTimeout(function() {move("myBar", 58);}, 3000)
 </script>
 
 <br>

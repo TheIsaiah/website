@@ -9,7 +9,7 @@ Redirecting...
 // Try redirect.
 var l = window.location.href;
 var c = "https://isaiah.w3spaces.com/";
-if (l.toString().contains(".html")) {
+if (l.toString().includes(".html")) {
     c = c + l.split("isaiah.dev/")[1];
 } else {
     c = c + l.split("isaiah.dev/")[1] + ".html";

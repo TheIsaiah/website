@@ -79,6 +79,7 @@ body {background: url('grass.jpg'); background-size:64px 64px;}
 
 <script>
 document.onkeydown = logKey;
+document.onkeyup = logRelease;
 var i = 0;
 console.log(document.body.clientWidth);
 var bz = 0;
@@ -201,13 +202,15 @@ function getScore() {
 setInterval(resetWai, 500);
 function resetWai() { wai = 0;}
 
+var pres = false;
+
 async function logKey(key) {
     var moveBy = 30;
     var t = bob.style.left.toString().replace('px', ' ');
     var to = bob.style.top.toString().replace('px', ' ');
     
     if (key.code == 'Space') {
-	if (wai == 0) {
+	if (wai == 0 && !pres) {
 
         playPew();
 await new Promise(r => setTimeout(r, 200));
@@ -224,6 +227,7 @@ await new Promise(r => setTimeout(r, 200));
         var tim = setInterval(function() { moveShoot(ii); }, 30);
         dict[ii] = tim;
 wai=1;
+pres = true;
         }
     }
 
@@ -247,15 +251,17 @@ wai=1;
     }
 }
 
+function logRelease() { pres=false;}
+
 // Get the modal
 var modal = document.getElementById('id01');
 modal.style.display='block';
 
-var txt = "In the year 2048, a cloning project called \"dename Tophat\" malfunctioned and caused the creation of evil clones. You must stop them! (luck! ~~*: { @ move}ot.";
+var txt = "In the year 2048: \"dename Tophat\", a cloning project, malfunctioned and created evil clones. You must stop them! (luck! ~~*: { @ move}ot.";
 
 async function runTxt() {
   var ci = 0;
-  for (var m = 0; m < 45; m++) {
+  for (var m = 0; m < 30; m++) {
       var char = txt.toString().charAt(ci);
       document.getElementById("txt").innerHTML += (char == '~') ? "<br>" : (char == '"') ? '"Co' : char;
       ci++;

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+ <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+ <title>Codename: Tophat&trade;</title>
+
+<body class="w3-container w3-center">
+<h3 style="color:white;text-shadow: 2px 2px black;">Codename: Tophat&trade;
+<span style="background:blue;font-size:1.4rem;border-radius:1rem;">&nbsp;Test Preview&nbsp;</span></h3>
+
+<span id="scores" style="position:absolute;top:1.5rem;left:2.5rem;color:white;font-size:1.3rem;">Score <span id="score">0</span>, Highscore: <span id="high">0</span></span>
+
+</body>
+
+<a title="Developers for Firefox" rel="nofollow" target="_blank"
+   href="https://www.mozilla.org/firefox/this-browser-comes-highly-recommended/">
+  <img style="border:0 none;position:absolute;top:0;right:0;width:96px;"
+       src="https://code.cdn.mozilla.net/for-firefox/badges/assets/Developers_For_Firefox_Light.png">
+</a>
+
+<style>
+.w3-modal{z-index:3;display:none;padding-top:100px;position:fixed;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,.65) !important;}
+.w3-modal-content, .w3-modal-content header, .w3-modal-content footer {border-radius:.2rem;box-shadow:-1px 6px 16px black;}
+</style>
+
+
+<div class="w3-container">
+  <div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-black"> 
+        <button onclick="document.getElementById('id01').style.display='none';start()" 
+        class="w3-button w3-display-topright">&nbsp;</button>
+        <h2>Codename: Tophat &nbsp;<span style="background:blue;font-size:1.4rem;border-radius:1rem;">&nbsp;Test Preview&nbsp;</span></h2>
+      </header>
+      <div class="w3-container">
+        <p id="txt" style="text-align:left;font-size:1.2rem;">&nbsp;</p>
+        <!--<button id="start" style="display:none;font-size:1.4rem;" onclick="start()" class="w3-center w3-button w3-black">&nbsp;Start Game&nbsp;</button><p>&nbsp;</p> -->
+        <div id="start" style="display:none;">
+
+             <p>Select your character:</p>
+
+
+          <button onclick="start('sb0')" class="w3-tooltip"><img src="good.png" id="sb0" width="64px;"><br><span>Bob</span></button>
+             <button onclick="start('sb1')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Emblem-person-blue.svg/768px-Emblem-person-blue.svg.png" id="sb1" width="64px;"><br><span>Bill</span></button>
+    <button onclick="start('sb2')" class="w3-tooltip"><img src="turtle.png" id="sb2" width="64px;"><br><span>Turtle</span></button>
+
+          <p>&nbsp;</p>
+        </div>
+      </div>
+      <footer class="w3-container w3-black">
+        <p id="mfoot" style="color:rgb(100,100,100);">Copyright &copy 2021 by Isaiah. All Rights Reserved. </p>
+        <!--<p style="font-size:1.2rem;"><img src="uc.png" width="80px;">Note: Non-finished preview</p>-->
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div style="width:98vw;height:540px;border:5px solid;" id="boxx">
+</div>
+
+<div id="bob" style="position: absolute;top:80px;left:30px;">
+    <img id="bobi" src="./good.png" width="110px" style="position: absolute;display:inline;">
+    <span id="text" style="position: absolute;display:inline;">&nbsp;</span>
+</div>
+
+<style>
+body {background: url('grass.jpg'); background-size:64px 64px;}
+#boxx {background: rgba(255,255,255,.50) !important;border-radius:16px;}
+#text {font-size:.5rem;}
+#scores {text-shadow: 2px 2px black;}
+
+.mm {
+    position: absolute;
+    font-size:32px;
+}
+</style>
+
+<center style="position:fixed;bottom:16px;width:100%;"><div class="w3-container w3-center" style="color:rgb(230,230,230);text-shadow:2px 1px black;">Copyright &copy 2021 by Isaiah. All Rights Reserved.</div></center>
+
+<script>
+document.onkeydown = logKey;
+var i = 0;
+console.log(document.body.clientWidth);
+var bz = 0;
+
+var wai = 0;
+
+async function moveShoot(i) {
+    var a = document.getElementById("div" + i);
+    var t = a.style.left.toString().replace('px', ' ');
+
+    checkBox(i);
+
+    a.style.left = (parseInt(t) + (Math.random() > 0.8 ? 30 : 15)).toString() + "px";
+        checkBox(i);
+
+    if (parseInt(t) > (document.body.clientWidth - 100)) {
+        console.log('clearint')
+        document.getElementById("im" + i).remove();
+	clearInterval(dict[i]);
+    }
+}
+
+function checkBox(i) {
+    var f = false;
+    for (var z = 1; z <= bz; z++) {
+        var touc = touch('im' + i, 'bza' + z);
+        if (touc) {
+            playDeath();
+            const i2 = i;
+            const z2 = z;
+document.getElementById("im" + i).remove();
+
+            setTimeout(function() { removeB(i2,z2) }, 400);
+
+            var sc = document.getElementById("score");
+	    var isc = parseInt(sc.innerHTML);
+            sc.innerHTML = (isc + 100);
+            clearInterval(dict[i]);
+        } else { f = true;}
+    }
+}
+
+function removeB(a,b) {
+            document.getElementById("bza"  + b).remove();
+            }
+
+async function moveBad() {
+    for (var z = 1; z <= bz; z++) {
+        var bad = document.getElementById("bza" + z);
+	if (undefined != bad) {
+		var t = bad.style.left.toString().replace('px', ' ');
+		var moveBy = 24; 
+                moveBy += (getScore < 1000) ? (getScore()/100) : Math.min((getScore()/300), 100);
+
+
+		if (t.length > 1)
+       		 	bad.style.left = (parseInt(t) -1).toString() + "px";
+     	   	else bad.style.left = 40 + "px";
+
+		for (var i = 0; i < moveBy/2; i++) {
+                     var t = bad.style.left.toString().replace('px', ' ');
+                     bad.style.left = (parseInt(t) - 1).toString() + "px";
+		     await new Promise(r => setTimeout(r, 100));
+                }
+	}
+    }
+}
+
+function touch(div1,div2){
+    var d1 = document.getElementById(div1);
+    var d2 = document.getElementById(div2);
+    if (undefined == d1 || undefined == d2) {
+    	console.log('something null!'); return false;
+    }
+     d1 = d1.getBoundingClientRect();
+    d2 = d2.getBoundingClientRect();
+
+    var d1y = d1.y - (d2.height);
+    var d2y = d2.y + 2;
+
+    var d1x = d1.x + (d1.width/2);
+    var d2x = d2.x-10;
+
+    var ox = Math.abs(d1x - d2x) + 1 < (d1x < d2x ? (d2.width/8) : (d1.width/4));
+    var oy = Math.abs(d1y - d2y) + 5 < (d1y < d2y ? (d2.height+10) : (d1.height-80));
+    console.log(d1.x + " | " + d1.width);
+
+    return ox && oy;
+}
+
+var dict = {};
+
+var spots = [70,180,289,419,520];
+
+function spawn() {
+    bz++;
+    var g = document.createElement('div');
+    g.setAttribute("id", "bz" + bz);
+    g.className = "mm";
+    document.body.appendChild(g);
+    var ge = document.getElementById("bz" + bz);
+
+    if (bz % 2 == 0) {
+    ge.innerHTML= "<img id='bza"+bz+"' src='./bad3.png' width='100px' style='display:inline;position:absolute;'>";
+} else {
+    ge.innerHTML= "<img id='bza"+bz+"' src='./bad2.gif' width='100px' style='display:inline;position:absolute;'>"; 
+}
+    ge.style.left = (document.body.clientWidth - 200) + "px";
+
+    var randomSpot = spots[Math.floor(Math.random() * spots.length)];
+    ge.style.top = (randomSpot) + "px";
+}
+
+function getScore() {
+    var sc = document.getElementById("score");
+    var isc = parseInt(sc.innerHTML);
+    return isc;
+}
+
+setInterval(resetWai, 500);
+function resetWai() { wai = 0;}
+
+async function logKey(key) {
+    var moveBy = 30;
+    var t = bob.style.left.toString().replace('px', ' ');
+    var to = bob.style.top.toString().replace('px', ' ');
+    
+    if (key.code == 'Space') {
+	if (wai == 0) {
+
+        playPew();
+await new Promise(r => setTimeout(r, 200));
+        i++;
+    	var g = document.createElement('div');
+        g.setAttribute("id", "div" + i);
+        g.className = "mm";
+        document.body.appendChild(g);
+        
+        document.getElementById("div" + i).innerHTML= "<img src='arrow.png' width='64px' style='display:inline;position:absolute;' id='im" + i + "'>";
+        document.getElementById("div" + i).style.left = (parseInt(t) + 100) + "px";
+        document.getElementById("div" + i).style.top = (parseInt(to) + 58) + "px";
+        const ii = i;
+        var tim = setInterval(function() { moveShoot(ii); }, 30);
+        dict[ii] = tim;
+wai=1;
+        }
+    }
+
+    if (key.code == 'KeyD') {
+    	if (t.length > 1)
+        	bob.style.left = (parseInt(t) + moveBy).toString() + "px";
+        else bob.style.left = 40 + "px";
+    }
+    if (key.code == 'KeyA') {
+         bob.style.left = (t.length <= 1) ? (40 + "px") : ((parseInt(t) - moveBy).toString() + "px");
+    }
+    if (key.code == 'KeyS') {
+    	if (to.length > 1)
+        	bob.style.top = (parseInt(to) + moveBy).toString() + "px";
+        else bob.style.top = 40 + "px";
+    }
+    if (key.code == 'KeyW') {
+    	if (to.length > 1)
+        	bob.style.top = (parseInt(to) - moveBy).toString() + "px";
+        else bob.style.top = 40 + "px";
+    }
+}
+
+// Get the modal
+var modal = document.getElementById('id01');
+modal.style.display='block';
+
+var txt = "In the year 2048, a cloning project called \"dename Tophat\" malfunctioned and caused the creation of evil clones. You must stop them! (luck! ~~*: { @ move}ot.";
+
+async function runTxt() {
+  var ci = 0;
+  for (var m = 0; m < 45; m++) {
+      var char = txt.toString().charAt(ci);
+      document.getElementById("txt").innerHTML += (char == '~') ? "<br>" : (char == '"') ? '"Co' : char;
+      ci++;
+      await new Promise(r => setTimeout(r, 60));
+  }
+
+  setInterval(function() {
+    if (ci < txt.toString().length) {
+      var char = txt.toString().charAt(ci);
+      document.getElementById("txt").innerHTML += (char == '~') ? "<br>" : 
+                   (char == '*' ? "Controls" : (char == '{') ? "WASD" : (char == '}') ? ", Space to Sho" : 
+                       (char == '@') ? "to" : (char == '(' ? "Good " : char));
+      ci++;
+    } else {
+         document.getElementById("start").style.display = "block"; 
+         document.getElementById("mfoot").style.color = "rgb(150,150,150)";
+    }
+  }, 70);
+}
+runTxt();
+
+ // var audio = new Audio('https://www.dropbox.com/s/cmsnv772wgp8h8a/pew.wav?dl=1');
+var audio = new Audio('pew.mp4');
+function playPew() {
+  audio.play();
+}
+
+function playDeath() {
+var audio = new Audio('death.mp3');
+  audio.play();
+}
+
+function start(el) {
+    if (undefined != el) {
+        document.getElementById("bobi").src = document.getElementById(el).src;
+    }
+    modal.style.display = "none";
+    setInterval(spawn, 3000);
+    setInterval(moveBad, 300);
+    setInterval(getHigh, 3000);
+    spawn();
+}
+
+var id = "7c1d71fc-cd02-4e9b-9980-0df2a425aac5";
+console.log( getHigh() );
+
+function getHigh() {
+    var data = "";
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("readystatechange", function() {
+       if(this.readyState === 4) {
+          var jso = JSON.parse( this.responseText );
+          var sc = document.getElementById("score");
+	  var isc = parseInt(sc.innerHTML);
+          document.getElementById("high").innerHTML = jso.highscore;
+          if (jso.highscore < isc) updateHigh();
+      }
+   });
+    xhr.open("GET", "https://getpantry.cloud/apiv1/pantry/" + id + "/basket/highscore");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(data);
+}
+
+function updateHigh() {
+    var sc = document.getElementById("score");
+    var isc = parseInt(sc.innerHTML);
+    var data = JSON.stringify({"highscore": isc});
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("readystatechange", function() { if(this.readyState === 4) { console.log(this.responseText); }});
+    xhr.open("PUT", "https://getpantry.cloud/apiv1/pantry/" + id + "/basket/highscore");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(data);
+}
+
+</script>
+<!-- API ID: 7c1d71fc-cd02-4e9b-9980-0df2a425aac5 -->
+
+</html>

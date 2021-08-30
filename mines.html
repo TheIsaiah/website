@@ -1,0 +1,145 @@
+<html>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<style>
+button {min-width:78px; min-height:78px;margin:3px;font-size:2rem;max-height:78px;max-width:78px;border:1px solid black;}
+button span {display:none};
+.e span {display:inline !important;}
+.un {background-color:rgb(189,189,189);}
+</style>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <a href="https://isaiah.dev/" class="w3-bar-item w3-button w3-theme-l1" style="min-width:160px;">Isaiah.dev</a>
+    <!--<a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a>-->
+  </div>
+</div>
+<style>.w3-container {padding-left:3rem;} div .w3-button {min-width:180px;border:1px solid black;box-shadow:4px 4px 4px black;}
+.w3-padding-64 {padding-left:35px;padding-right: 35px;padding:74px;}
+</style>
+
+<body></body>
+
+<body>
+<div class="w3-container" style="padding-top:50px;">
+  <h1 id="title" style="display:inline-block;">Mines</h1>&nbsp;(<a href="javascript:redo()">Refresh</a>)
+  <div id="0"></div>
+  <div id="1"></div>
+  <div id="2"></div>
+  <div id="3"></div>
+  <div id="4"></div>
+  <div id="5"></div>
+  <div id="6"></div>
+  <div id="7"></div>
+  <div id="8"></div>
+</div>
+</body>
+
+<script>
+var mines = 0;
+
+function setup() {
+for (var i = 0; i < 6; i++) {
+  for (var j = 0; j < 7; j++) {
+     var btn = document.createElement('button');
+     btn.setAttribute("id", "b" + i + "|" + j);
+     btn.setAttribute("onclick", "btnclick(" + i + ", " + j + ", 0);");
+     btn.onClick = "btnclick()";
+     btn.className = "un";
+
+     if ( Math.random() > 0.7 && mines < 8) {
+         btn.innerHTML = "&nbsp;<span class='con'>*</span>";
+         mines++;
+     } else btn.innerHTML = "&nbsp;";
+
+     document.getElementById(i).appendChild(btn);
+  }
+}
+} setup();
+
+function redo() {
+  for (var i = 0; i < 10; i++) {
+    var elz = document.getElementsByTagName("button");
+    for (var zz = 0; zz < elz.length; zz++) {
+        elz[zz].remove();
+    }
+   mines = 0;
+}
+    setup();
+}
+
+function btnclick(i,j,r) {
+   var b = document.getElementById("b" + i + "|" + j);
+
+   var up  = document.getElementById("b" + (i-1) + "|" + j);
+   var dwn = document.getElementById("b" + (i+1) + "|" + j);
+
+   var left  = document.getElementById("b" + (i) + "|" + (j-1));
+   var right = document.getElementById("b" + (i) + "|" + (j+1));
+
+
+   var tleft  = document.getElementById("b" + (i-1) + "|" + (j-1));
+   var tright = document.getElementById("b" + (i-1) + "|" + (j+1));
+
+   var bleft  = document.getElementById("b" + (i+1) + "|" + (j-1));
+   var bright = document.getElementById("b" + (i+1) + "|" + (j+1));
+
+   if (undefined != b && b.innerHTML.includes("*") && r == 0) {
+       //b.innerHTML = "*";
+       b.style.background = "red";
+       var els = document.getElementsByTagName("button");
+       for (var z = 0; z < els.length; z++) {
+         if (els[z].innerHTML.includes("*")) { els[z].style.background = "red"; } else els[z].className = "mm";
+       }       window.alert("You lost! Refresh page to play again.");
+       return;
+   }
+
+   var mc = 0;
+
+   if (undefined != up && up.innerHTML.includes("*")) mc++;
+   if (undefined != dwn && dwn.innerHTML.includes("*")) mc++;
+   if (undefined != left && left.innerHTML.includes("*")) mc++;
+   if (undefined != right && right.innerHTML.includes("*")) mc++;
+   
+   if (undefined != tleft && tleft.innerHTML.includes("*")) mc++;
+   if (undefined != tright && tright.innerHTML.includes("*")) mc++;
+   if (undefined != bleft && bleft.innerHTML.includes("*")) mc++;
+   if (undefined != bright && bright.innerHTML.includes("*")) mc++;
+
+   if (undefined != b && b.innerHTML == "&nbsp;") {
+       b.className = "mm";
+       if (mc>0)b.innerHTML = mc;
+       var t = r + 1;
+       if (t > 6) return;
+         //btnclick(i-1, j, t);
+
+       setTimeout(function () {  btnclick(i-1, j, t);    }, 1);
+       setTimeout(function () {  btnclick(i+1, j, t);    }, 1);
+       setTimeout(function () {  btnclick(i,   j-1, t);  }, 1);
+       setTimeout(function () {  btnclick(i,   j+1, t);  }, 1);
+
+      var els = document.getElementsByClassName("un");
+      var win = true;
+      for (var a = 0; a < 20; a++) {
+        for (var z = 0; z < els.length; z++) {
+         console.log(els[z].innerHTML);
+         if (!(els[z].innerHTML.toString().includes("*"))) { win = false; }
+        }
+      }
+      if (win) {
+
+
+         var elz = document.getElementsByTagName("button");
+         for (var zz = 0; zz < elz.length; zz++) {
+            if (elz[zz].innerHTML.includes("*")) { elz[zz].style.background = "green"; }
+         }
+         document.getElementById("title").innerHTML = "You win!";
+      }
+   }
+}
+
+</script>
+
+</html>

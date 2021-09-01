@@ -1,0 +1,265 @@
+<html>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;} #game {width:800px;}
+.spot{border:1px solid rgba(0,40,0,.1);position:absolute;width:80px;height:80px;}
+.card{border:.2px solid rgba(0,0,0,.3);position:absolute;width:56px;height:80px;}
+.sun{position:absolute;width:78px;height:78px;}.suna{position:absolute;}
+.zom{position:absolute;width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
+.pea{position:absolute;width:30px;height:30px;border:0px solid black;border-radius:.5rem;}
+#bg {min-width:800px;min-height:580px;position:absolute;left:280px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
+.w3-sidebar {z-index:3;width:260px;top:43px;bottom:0;height:inherit;border:1px solid rgb(220,220,220)}
+footer{z-index:4;}
+.w3-animate-opacity{animation:opac 4s}.w3-container {padding-left:3rem;} div .w3-button {min-width:180px;border:1px solid black;box-shadow:4px 4px 4px black;}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
+</style>
+<title>Zombie</title>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <a href="https://isaiah.dev/" class="w3-bar-item w3-button w3-theme-l1 w3-animate-left" style="min-width:260px;">Isaiah.dev</a>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-medium w3-theme-l5 w3-animate-left" id="mySidebar" style="display:none !important;">
+  <a class="w3-bar-item w3-button" href=""></a>
+  <span class="w3-bar-item w3-button">Plants vs Zombies clone in JS.<br>Orignal 2009 game by Popcap</span>
+  <span class="w3-bar-item w3-button">Plant different types of plants to defend your house from zombies!</span>
+  <span class="w3-bar-item w3-button">Different plants have different usages. Strength can differ between zombie types.</span>
+  <span class="w3-bar-item w3-button">&nbsp;</span>
+
+  <span class="w3-bar-item w3-button"><b>Debug Info:</b></span>
+  <span class="w3-bar-item w3-button">&nbsp;&nbsp;Running Timers: <span id="timers"></span> </span>
+  <span class="w3-bar-item w3-button"><b>The Todo List:</b></span>
+  <span class="w3-bar-item w3-button">&nbsp;&nbsp;&bull;Implement Zombie plant eating</span>
+  <span class="w3-bar-item w3-button">&nbsp;&nbsp;&bull;Implement Game Over</span>
+  
+  <span class="w3-bar-item w3-button" style="position:absolute;bottom:8px;">Version 2.0.0-indev<br>Copyright &copy; 2021 by Isaiah</span>
+</nav>
+
+<body style="background-color:rgb(10,10,10);">
+
+<div class="w3-content w3-center" style="background-color:black;">
+<p style="padding-top:14px;'>&nbsp;</p>
+<div id="game" style="background-color:black;">
+  <div id="bg" style="background:url('load.gif') no-repeat fixed center;position:fixed;" class="w3-animate-opacity">
+      <div class="suna" id="suna" style="position:absolute;left:35px;top:60px;text-align:center;">0000</div>
+  </div>
+</div>
+</div>
+
+</body>
+
+<script>
+var sc = 0;
+function load() {
+  document.getElementById("bg").style.background = "url('mainBG.png')";
+  createSpots();
+  createCards();
+  spawnSun();
+  setTimeout(function() {
+    alert("The Zombies are coming!");
+	setTimeloop(startZombies, 5000);
+  }, 4500);
+  setTimeloop(spawnSun, 5000)
+}
+
+function touch(d1,d2){
+    if (undefined == d1 || undefined == d2) {
+    	console.log('something null!'); return false;
+    }
+    d1 = d1.getBoundingClientRect();
+    d2 = d2.getBoundingClientRect();
+
+    var d1y = d1.y - (d2.height);
+    var d2y = d2.y + 2;
+
+    var d1x = d1.x + (d1.width/2);
+    var d2x = d2.x-10;
+
+    var ox = Math.abs(d1x - d2x) + 1 < (d1x < d2x ? (d2.width/8) : (d1.width/4));
+    var oy = Math.abs(d1y - d2y) + 5 < (d1y < d2y ? (d2.height+10) : (d1.height-80));
+    //console.log(d1.x + " | " + d1.width);
+
+    return ox && oy;
+}
+
+var zc = 0;
+var zoms = [];
+var zi = {};
+
+var zr = -1;
+function startZombies() {
+  var zom = document.createElement('div');
+  zom.className = "zom";
+  zom.style.left = "720px";
+  var zzr = randi(0,5);
+  while (zzr == zr) {
+    zzr = randi(0,5);
+  }
+  zr = zzr;
+  zom.style.top = ((101 * zzr) + 72) + "px";
+  zom.setAttribute("id", "zom" + zc);
+  zoms.push( zom );
+  zi["" + zc] = 4; // 5 Hits by Pea to kill zombie
+  zc++;
+  
+  var vaal = setTimeloop(function() {
+    var aa = toi(zom.style.left,-1);
+	if (aa < -10) {
+	  zom.remove();
+	  clearTimeloop(vaal);
+	}
+	zom.style.left = aa + "px";
+  }, 150);
+
+  zom.innerHTML = "<img src='./images/zombies/zombie1.webp' width='62px'>";
+  document.getElementById('bg').appendChild(zom);
+}
+
+async function shootTick(id, cd) {
+  var spot = document.getElementById("sp" + id);
+  var pea = document.createElement('div');
+  pea.className = "pea";
+  pea.style.left = (toi(spot.style.left,44)) + "px";
+  pea.style.top = toi(spot.style.top, 6) + "px";
+
+    var inzz = setTimeloop(function() {
+	  var aa = toi(pea.style.left,0);
+	  if (aa > 777) { pea.remove();clearTimeloop(inzz); }
+	  pea.style.left = (aa + 10) + "px";
+
+	  for (var z = 0; z < zoms.length; z++) {
+	      var zom = zoms[z];
+		  if (undefined != zom) {
+		    var to = touch(pea,zom);
+			if (to) {
+			   var h = zi[zom.id.toString().replace('zom','')];
+			   
+			   if (h <= 0) {
+			     var ind = zoms.indexOf(zom);
+			     zoms.splice(ind,1);
+			     zom.remove();
+			   } else {
+			     zi[zom.id.toString().replace('zom','')] = h -1;;
+			   }
+			   pea.remove();
+			   clearTimeloop(inzz);
+			}
+		  }
+	  }
+  }, 50);
+
+  pea.innerHTML = "<img src='./images/pea.png'>";
+  document.getElementById('bg').appendChild(pea);
+}
+plusSun(50); // debug
+
+function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
+
+function createSpots() {
+  for (var i = 0; i < 5; i++) {
+    for (var j = 0; j < 9; j++) {
+      var btn = document.createElement('div');
+      btn.className = "spot";
+      btn.setAttribute("id", "sp" + (i+"m"+j));
+      btn.setAttribute("onclick", "spotClicked('"+i+"m"+j+"')");
+      btn.style.left = 34+(82*j); btn.style.top = 101+(96*i);
+      document.getElementById('bg').appendChild(btn);
+    }
+  }
+}
+
+var cards = ["wallnut","sunflower","peashooter"];
+var csun  = [50       , 50        , 100];
+var cc;
+
+function createCards() {
+  for (var i = 0; i < cards.length; i++) {
+    var c = document.createElement('div');
+    c.className = "card";
+    c.style.left = 32 + (55*(i+1));
+    c.innerHTML = "<img src='./images/cards/card_" + cards[i] + ".png' width='54px'>"
+    c.setAttribute("onclick", "cardClick('" + i + "')");
+    document.getElementById('bg').appendChild(c);
+  }
+}
+
+function spotClicked(id) {
+  if (sc < csun[cc] || undefined == cc) return;
+
+  var spot = document.getElementById("sp" + id);
+  spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
+
+  if (cc == 1) { // Sunflower
+      setTimeloop(function() { spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000);
+  }
+  if (cc == 2) {
+      const id1 = id; const cc1 = cc;
+      setTimeloop(function() { 
+	     shootTick(id1, cc1);
+	  }, 2500);
+  }
+  plusSun(-csun[cc]);
+  cc = undefined;
+}
+
+var suns = 0;
+function spawnSun(x,y) {
+   const c = document.createElement('div');
+   const id = suns; suns++;
+   c.className = "sun";
+   c.style.left = undefined != x ? x : (3 + (20*(rand(1,34)+1))) + "px";
+   c.style.top =  undefined != y ? y : (80 * 1) + "px";
+   c.innerHTML = "<img src='./images/sun.png'>";
+   c.setAttribute("onclick", "sunClick('" + id + "')");
+   c.setAttribute("id", "sun" + id);
+
+   const sto = rand(100, 480);
+   if (undefined == x) {
+     var t;t= setTimeloop(function() {
+     var tt = parseInt(c.style.top.toString().replace('px',''));
+     c.style.top = (tt + 5) + "px";
+     if (tt > sto){ clearTimeloop(t);}
+   }, 60);}
+   document.getElementById('bg').appendChild(c);
+}
+
+function cardClick(car) { cc = car; }
+function sunClick(sun)  {plusSun(25); document.getElementById("sun" + sun).remove();}
+function plusSun(count) {sc += count; document.getElementById("suna").innerHTML=sc;}
+function rand(min, max) {return Math.random() * (max-min)+min;}
+function randi(min, max) {return (Math.random() * (max-min)+min)|0;}
+
+var timers = 0;
+function countTimer(count) {timers += count; document.getElementById("timers").innerHTML=timers;}
+
+function setTimeloop(a,b) {
+    countTimer(1);
+    return setInterval(a,b);
+}
+
+function clearTimeloop(a,b) {
+    countTimer(-1);
+    clearInterval(a,b);
+}
+
+var lt = 1070; var bg = 2;
+
+function dobg(){
+ var inter = setTimeloop(function(){ if (bg>1){var v=bg;document.body.style.background="rgb("+v+","+v+","+v+")";} if (bg<180)bg+=4;},20);
+}
+setTimeout(function() {dobg();}, lt - 1300);
+setTimeout(function() {document.getElementById("mySidebar").style.display = "block"; }, lt + 800);
+setTimeout(load, lt);
+</script>
+
+<footer style="position:absolute;bottom:0;right:0;padding:3.8px;font-size:12px;background-color:rgba(0,0,0,.04)" class="w3-footer w3-centerr">
+Copyright &copy; 2021 by Isaiah.
+</footer>
+
+</html>

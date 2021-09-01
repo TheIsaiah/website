@@ -83,7 +83,6 @@ function touch(d1,d2){
 
     var ox = Math.abs(d1x - d2x) + 1 < (d1x < d2x ? (d2.width/8) : (d1.width/4));
     var oy = Math.abs(d1y - d2y) + 5 < (d1y < d2y ? (d2.height+10) : (d1.height-80));
-    //console.log(d1.x + " | " + d1.width);
 
     return ox && oy;
 }
@@ -103,13 +102,18 @@ function startZombies() {
   }
   zr = zzr;
   zom.style.top = ((101 * zzr) + 72) + "px";
-  zom.setAttribute("id", "zom" + zc);
+  const id = "zom" + zc;
+  zom.setAttribute("id", id);
   zoms.push( zom );
   zi["" + zc] = 4; // 5 Hits by Pea to kill zombie
   zc++;
   
   var vaal = setTimeloop(function() {
     var aa = toi(zom.style.left,-1);
+	if (undefined == document.getElementById(id)) {
+	    clearTimeloop(vaal); // Zombie already dead.
+	}
+
 	if (aa < -10) {
 	  zom.remove();
 	  clearTimeloop(vaal);
@@ -219,13 +223,20 @@ function spawnSun(x,y) {
    c.setAttribute("onclick", "sunClick('" + id + "')");
    c.setAttribute("id", "sun" + id);
 
-   const sto = rand(100, 480);
+   const sto = rand(100, 478);
    if (undefined == x) {
      var t;t= setTimeloop(function() {
      var tt = parseInt(c.style.top.toString().replace('px',''));
      c.style.top = (tt + 5) + "px";
      if (tt > sto){ clearTimeloop(t);}
    }, 60);}
+   
+   setTimeout(function() {
+     var ssun = document.getElementById("sun" + id);
+	 if (undefined != ssun) {
+	    ssun.remove();
+	 }
+   }, 10000);
    document.getElementById('bg').appendChild(c);
 }
 
@@ -251,7 +262,7 @@ function clearTimeloop(a,b) {
 var lt = 1070; var bg = 2;
 
 function dobg(){
- var inter = setTimeloop(function(){ if (bg>1){var v=bg;document.body.style.background="rgb("+v+","+v+","+v+")";} if (bg<180)bg+=4;},20);
+ var inter = setTimeloop(function(){ if (bg>1){var v=bg;document.body.style.background="rgb("+v+","+v+","+v+")";} if (bg<180){bg+=4;}else{clearTimeloop(inter)}},20);
 }
 setTimeout(function() {dobg();}, lt - 1300);
 setTimeout(function() {document.getElementById("mySidebar").style.display = "block"; }, lt + 800);

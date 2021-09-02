@@ -107,6 +107,12 @@ var pi = {};
 
 var zr = -1;
 function startZombies() {
+    if (sc > 2999) startZombie();
+	if (sc > 3999) startZombie();
+    startZombie();
+}
+
+function startZombie() {
   if (document.hidden) { document.title = "Zombies - PAUSED"; return;} else document.title = "Zombies";
   var zom = document.createElement('div');
   zom.className = "zom";
@@ -120,10 +126,11 @@ function startZombies() {
   zoms.push( zom );
   
   var zt = Math.random() > 0.85 ? 2 : 1;
-  if (sc > 950) zt = Math.random() > 0.7 ? 2 : 1;
-  if (sc > 1700) zt = Math.random() > 0.4 ? 2 : 1;
-  if (sc > 2500) zt = Math.random() > 0.1 ? 2 : 1;
-  if (sc > 3000) zt = Math.random() > 0.5 ? 3 : 2;
+  if (sc > 800) zt = Math.random() > 0.7 ? 2 : 1;
+  if (sc > 1400) zt = Math.random() > 0.4 ? 2 : 1;
+  if (sc > 1900) zt = Math.random() > 0.1 ? 2 : 1;
+  if (sc > 2400) zt = Math.random() > 0.5 ? 3 : 2;
+  if (sc > 3999) zt = Math.random() > 0.3 ? 3 : 2;
 
   zi["" + zc] = zt == 1 ? 4 : (zt == 3 ? 7 : 6); // x hits by Pea to kill zombie
   zc++;
@@ -160,7 +167,7 @@ async function shootTick(id, cd) {
   var spot = document.getElementById("sp" + id);
   var pea = document.createElement('div');
   pea.className = "pea";
-  pea.style.left = toi(spot.style.left,44) + "px";
+  pea.style.left = toi(spot.style.left,48) + "px";
   pea.style.top = toi(spot.style.top, 6) + "px";
 
  var dooo = false;
@@ -211,8 +218,8 @@ function createSpots() {
   }
 }
 
-var cards = ["wallnut","sunflower","peashooter"];
-var csun  = [50       , 50        , 100];
+var cards = ["wallnut","sunflower","peashooter", "repeater"];
+var csun  = [50       , 50        , 100        , 200];
 var cc;
 
 function createCards() {
@@ -224,21 +231,39 @@ function createCards() {
     c.setAttribute("onclick", "cardClick('" + i + "')");
     document.getElementById('bg').appendChild(c);
   }
+  var c = document.createElement('div');
+  c.className = "card";
+  c.style.left = 38 + (57*(8));
+  c.innerHTML = "<img src='./images/shovel.png' width='54px'>"
+  c.setAttribute("onclick", "cardClick('-1')");
+  document.getElementById('bg').appendChild(c);
 }
 
+var rem = -1;
 var mz = {};
 function spotClicked(id) {
   if (sc < csun[cc] || undefined == cc) return;
 
   const spot = document.getElementById("sp" + id);
-  if (spot.innerHTML.length<9)spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
+  if (spot.innerHTML.length<9&&cc!=-1)spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
   
   var loop;
 
-  if (cc == 1) loop = setTimeloop(function(){ spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
+  if (cc == 1) {
+      const id1=id;
+      loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
+   }
   if (cc == 2) {
-    const id1=id;const cc1=cc;
-    loop = setTimeloop(function(){ shootTick(id1, cc1);}, 2500);
+    const id1=id; const cc1=cc;
+    loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1);}, 2500);
+  }
+  if (cc == 3) {
+    const id1=id; const cc1=cc;
+    loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1); setTimeout(function() { shootTick(id1, cc1);}, 200)}, 2500);
+  }
+  if (cc == -1) {
+    rem = id; spot.innerHTML = ""; cc = undefined;
+	return;
   }
   pi["" + id] = 20;
 

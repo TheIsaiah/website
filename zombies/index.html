@@ -14,7 +14,8 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
 .pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce,#e1fbb6,#b9f755,#8cd312,#6da40e,black);}
 #bg {min-width:800px;min-height:580px;left:300px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
 .w3-sidebar {z-index:3;width:260px;top:43px;bottom:0;height:inherit;border:1px solid rgb(220,220,220)}
-footer{z-index:4;}.w3-animate-opacity{animation:opac 4s}.w3-container {padding-left:3rem;} div .w3-button {min-width:180px;border:1px solid black;box-shadow:4px 4px 4px black;}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
+.w3-animate-opacity{animation:opac 4s}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
+.w3-modal-content {max-width:32rem;background-color:rgba(40,50,40,.8);color:white;}
 </style>
 <title>Zombie</title>
 
@@ -41,6 +42,20 @@ footer{z-index:4;}.w3-animate-opacity{animation:opac 4s}.w3-container {padding-l
   <span class="w3-bar-item w3-button" style="position:absolute;bottom:8px;">Version 2.0.0-indev<br>Copyright &copy; 2021 by Isaiah</span>
 </nav>
 
+ <div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container"> 
+        <h5>Zombies</h5>
+      </header>
+      <div class="w3-container w3-center">
+        <p style="font-size:2rem;">The Zombies are coming!</p>
+      </div>
+      <footer class="w3-container">
+        <button style="float:right;padding-left:3rem;padding-right:3rem;margin-right:1rem;" onclick="document.getElementById('id01').style.display='none';startZom()" class="w3-button w3-blue">OK</button><p>&nbsp;</p>
+      </footer>
+    </div>
+  </div>
+
 <body style="background-color:rgb(10,10,10);">
 
 <p style="padding-top:1px">&nbsp;</p>
@@ -62,11 +77,11 @@ function load() {
   createCards();
   spawnSun();
   setTimeout(function() {
-    alert("The Zombies are coming!");
-	setTimeloop(startZombies, 5000);
-  }, 4500);
+    document.getElementById('id01').style.display='block';
+  }, 5500);
   setTimeloop(spawnSun, 5000)
 }
+function startZom() {setTimeloop(startZombies, 5000);};
 
 function touch(d1,d2){
     if (undefined == d1 || undefined == d2) {console.log('null'); return false;}
@@ -103,7 +118,10 @@ function startZombies() {
   const id = "zom" + zc;
   zom.setAttribute("id", id);
   zoms.push( zom );
-  zi["" + zc] = 4; // 5 Hits by Pea to kill zombie
+  
+  var zt = rand(0,3) < 2 ? 1 : 2;
+
+  zi["" + zc] = zt == 1 ? 4 : 5; // 5 Hits by Pea to kill zombie
   zc++;
 
   var vaal = setTimeloop(function() {
@@ -116,7 +134,7 @@ function startZombies() {
 	zom.style.left = aa + "px";
   }, 150);
 
-  zom.innerHTML = "<img src='./images/zombies/zombie1.webp' width='62px'>";
+  zom.innerHTML = "<img src='./images/zombies/zombie"+zt+".webp' width='62px'>";
   document.getElementById('bg').appendChild(zom);
 }
 

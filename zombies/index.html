@@ -119,9 +119,13 @@ function startZombies() {
   zom.setAttribute("id", id);
   zoms.push( zom );
   
-  var zt = rand(0,3) < 2 ? 1 : 2;
+  var zt = Math.random() > 0.85 ? 2 : 1;
+  if (sc > 950) zt = Math.random() > 0.7 ? 2 : 1;
+  if (sc > 1700) zt = Math.random() > 0.4 ? 2 : 1;
+  if (sc > 2500) zt = Math.random() > 0.1 ? 2 : 1;
+  if (sc > 3000) zt = Math.random() > 0.5 ? 3 : 2;
 
-  zi["" + zc] = zt == 1 ? 4 : 5; // 5 Hits by Pea to kill zombie
+  zi["" + zc] = zt == 1 ? 4 : (zt == 3 ? 7 : 6); // x hits by Pea to kill zombie
   zc++;
 
   var vaal = setTimeloop(function() {
@@ -134,7 +138,11 @@ function startZombies() {
 	zom.style.left = aa + "px";
   }, 150);
 
-  zom.innerHTML = "<img src='./images/zombies/zombie"+zt+".webp' width='62px'>";
+  if (zt == 1) {
+    zom.innerHTML = "<img src='./images/zombies/zombie"+zt+".webp' width='62px'>";
+  } else { 
+      zom.innerHTML = "<img src='./images/zombies/zombie" + (zt == 3 ? "3.gif" : "2.png") + "' width='62px'>";
+   }
   document.getElementById('bg').appendChild(zom);
 }
 

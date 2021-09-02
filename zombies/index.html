@@ -5,12 +5,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
 html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
-.spot,.card,.sun,.zom,.pea,.suna,#bg{position:absolute;}
+.over {font-size:5rem;color:red;text-shadow: 5px 5px 4px rgb(140,0,0);width:100%;text-align:center;top:99px;}
+.spot,.card,.sun,.zom,.pea,.suna,#bg,.over{position:absolute;}
 .spot{border:1px solid rgba(0,40,0,.1);width:80px;height:80px}
 .card{width:56px;height:80px;top:3px;}
 .sun{width:78px;height:78px;}.bb{padding-top:2px !important;padding-bottom:2px !important;}
 .zom{width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
-.pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce, #e1fbb6, #b9f755, #8cd312,#6da40e);}
+.pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce,#e1fbb6,#b9f755,#8cd312,#6da40e,black);}
 #bg {min-width:800px;min-height:580px;left:300px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
 .w3-sidebar {z-index:3;width:260px;top:43px;bottom:0;height:inherit;border:1px solid rgb(220,220,220)}
 footer{z-index:4;}.w3-animate-opacity{animation:opac 4s}.w3-container {padding-left:3rem;} div .w3-button {min-width:180px;border:1px solid black;box-shadow:4px 4px 4px black;}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
@@ -35,8 +36,7 @@ footer{z-index:4;}.w3-animate-opacity{animation:opac 4s}.w3-container {padding-l
   <span class="w3-bar-item w3-button"><b>Debug Info:</b></span>
   <span class="w3-bar-item w3-button bb">&nbsp;&nbsp;Running Timers: <span id="timers"></span> </span>
   <span class="w3-bar-item w3-button"><b>The Todo List:</b></span>
-  <span class="w3-bar-item w3-button bb">&nbsp;&bull;Add Zombie plant eating</span>
-  <span class="w3-bar-item w3-button bb">&nbsp;&bull;Add Game Over</span>
+  <span class="w3-bar-item w3-button bb">&nbsp;&bull;Increasing difficulty</span>
   
   <span class="w3-bar-item w3-button" style="position:absolute;bottom:8px;">Version 2.0.0-indev<br>Copyright &copy; 2021 by Isaiah</span>
 </nav>
@@ -47,7 +47,7 @@ footer{z-index:4;}.w3-animate-opacity{animation:opac 4s}.w3-container {padding-l
 <div class="w3-content w3-center" style="background-color:black;">
 <div id="game" style="background-color:black;">
   <div id="bg" style="background:url('load.gif') no-repeat fixed center;position:fixed;" class="w3-animate-opacity">
-      <div class="suna" id="suna" style="position:absolute;left:35px;top:60px;text-align:center;">0000</div>
+      <div class="suna" id="suna" style="position:absolute;left:25px;top:60px;text-align:center;font-size:16px;vertical-align:middle;">0000</div>
   </div>
 </div>
 </div>
@@ -88,6 +88,7 @@ function touch(d1,d2){
 var zc = 0;
 var zoms = [];
 var zi = {};
+var pi = {};
 
 var zr = -1;
 function startZombies() {
@@ -107,15 +108,25 @@ function startZombies() {
 
   var vaal = setTimeloop(function() {
     if (document.hidden) return; 
-    var aa = toi(zom.style.left,-1);
+    var aa = toi(zom.style.left,-2);
     if (undefined == document.getElementById(id)) clearTimeloop(vaal); // Zombie already dead
-    if (aa < -10){ zom.remove(); clearTimeloop(vaal);} // Eat Brain
+    if (aa < -10){ gameOver(); clearTimeloop(vaal);} // Eat Brain
 
+    if (undefined == mz[id])
 	zom.style.left = aa + "px";
   }, 150);
 
   zom.innerHTML = "<img src='./images/zombies/zombie1.webp' width='62px'>";
   document.getElementById('bg').appendChild(zom);
+}
+
+function gameOver() {
+  clearAllLoops();
+  var g = document.createElement('div');
+  g.innerHTML = "GAME OVER!<br>THE ZOMBIES ATE<BR>YOUR BRAIN!";
+  g.className = "over";
+  document.getElementById('bg').style.background = "linear-gradient(to bottom, rgba(10, 0, 0, .14), rgb(90,0,0,.78)),url('mainBG.png')";
+  document.getElementById('bg').appendChild(g);
 }
 
 async function shootTick(id, cd) {
@@ -125,6 +136,17 @@ async function shootTick(id, cd) {
   pea.className = "pea";
   pea.style.left = toi(spot.style.left,44) + "px";
   pea.style.top = toi(spot.style.top, 6) + "px";
+
+ var dooo = false;
+  for (var z = 0; z < zoms.length; z++) {
+    var zom = zoms[z];
+    if (undefined != zom) {
+	  if ( Math.abs(toi(zom.style.top,0) - toi(pea.style.top,0)) < 42 ) {
+	    dooo = true;
+	  }
+    }
+  }
+  if (!dooo) return;
 
   var inzz = setTimeloop(function() {
 	if (document.hidden) return;
@@ -178,17 +200,41 @@ function createCards() {
   }
 }
 
+var mz = {};
 function spotClicked(id) {
   if (sc < csun[cc] || undefined == cc) return;
 
-  var spot = document.getElementById("sp" + id);
+  const spot = document.getElementById("sp" + id);
   if (spot.innerHTML.length<9)spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
+  
+  var loop;
 
-  if (cc == 1) setTimeloop(function(){ spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
+  if (cc == 1) loop = setTimeloop(function(){ spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
   if (cc == 2) {
     const id1=id;const cc1=cc;
-    setTimeloop(function(){ shootTick(id1, cc1);}, 2500);
+    loop = setTimeloop(function(){ shootTick(id1, cc1);}, 2500);
   }
+  pi["" + id] = 20;
+
+    var inzz = setTimeloop(function() {
+	if (document.hidden) return;
+
+	for (var z = 0; z < zoms.length; z++) {
+	  var zom = zoms[z];
+	  if (undefined != zom && touch(spot,zom)) {
+		const zid = zom.id.toString();
+		mz[zid] = true;
+        var h = pi[id];
+        if (h <= 0) {
+	      spot.innerHTML = "";
+		  clearTimeloop(inzz);
+		  if (undefined != loop)clearTimeloop(loop);
+		  mz[zid] = null;
+		} else { pi[id]=h-1;}
+	  }
+	}
+  }, 500);
+  
   plusSun(-csun[cc]);
   cc = undefined;
 }
@@ -220,17 +266,19 @@ function spawnSun(x,y) {
 
 function cardClick(car) { cc = car; }
 function sunClick(sun)  {plusSun(25); document.getElementById("sun" + sun).remove();}
-function plusSun(count) {sc += count; document.getElementById("suna").innerHTML=sc;}
+function plusSun(count) {sc += count; document.getElementById("suna").innerHTML= " <img src='./images/sun.png' width='16px' style='padding:0;vertical-align:middle;'><span style='vertical-align:middle;'>" + sc + "</span>";}
 function rand(min, max) {return (Math.random() * (max-min)+min)|0;}
 function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
 
 var timers = 0;
-function countTimer(count) {timers += count; document.getElementById("timers").innerHTML=timers;}
+function countTimer(count) {timers += count; timers = Math.max(0,timers);document.getElementById("timers").innerHTML=timers;}
 
-function setTimeloop(a,b)  {countTimer(1); return setInterval(a,b);}
+function setTimeloop(a,b)  {countTimer(1); var ii =  setInterval(a,b);  times.push(ii); return ii;}
 function clearTimeloop(a,b){countTimer(-1); clearInterval(a,b);}
+function clearAllLoops() { for (var i = 0; i < times.length; i++) clearTimeloop(times[i])};
 
 var lt = 1070; var bg = 2;
+var times = [];
 function dobg(){
  var b = setTimeloop(function(){ if (bg>1){var v=bg;document.body.style.background="rgb("+v+","+v+","+v+")";} if (bg<180){bg+=4;}else{clearTimeloop(b)}},20);
 }

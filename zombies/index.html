@@ -4,16 +4,16 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
-html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;} #game {width:800px;}
-.spot{border:1px solid rgba(0,40,0,.1);position:absolute;width:80px;height:80px;}
-.card{border:.2px solid rgba(0,0,0,.3);position:absolute;width:56px;height:80px;}
-.sun{position:absolute;width:78px;height:78px;}.suna{position:absolute;}
-.zom{position:absolute;width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
-.pea{position:absolute;width:30px;height:30px;border:0px solid black;border-radius:.5rem;}
-#bg {min-width:800px;min-height:580px;position:absolute;left:280px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
+html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
+.spot,.card,.sun,.zom,.pea,.suna,#bg{position:absolute;}
+.spot{border:1px solid rgba(0,40,0,.1);width:80px;height:80px}
+.card{width:56px;height:80px;top:3px;}
+.sun{width:78px;height:78px;}.bb{padding-top:2px !important;padding-bottom:2px !important;}
+.zom{width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
+.pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce, #e1fbb6, #b9f755, #8cd312,#6da40e);}
+#bg {min-width:800px;min-height:580px;left:300px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
 .w3-sidebar {z-index:3;width:260px;top:43px;bottom:0;height:inherit;border:1px solid rgb(220,220,220)}
-footer{z-index:4;}
-.w3-animate-opacity{animation:opac 4s}.w3-container {padding-left:3rem;} div .w3-button {min-width:180px;border:1px solid black;box-shadow:4px 4px 4px black;}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
+footer{z-index:4;}.w3-animate-opacity{animation:opac 4s}.w3-container {padding-left:3rem;} div .w3-button {min-width:180px;border:1px solid black;box-shadow:4px 4px 4px black;}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
 </style>
 <title>Zombie</title>
 
@@ -33,18 +33,18 @@ footer{z-index:4;}
   <span class="w3-bar-item w3-button">&nbsp;</span>
 
   <span class="w3-bar-item w3-button"><b>Debug Info:</b></span>
-  <span class="w3-bar-item w3-button">&nbsp;&nbsp;Running Timers: <span id="timers"></span> </span>
+  <span class="w3-bar-item w3-button bb">&nbsp;&nbsp;Running Timers: <span id="timers"></span> </span>
   <span class="w3-bar-item w3-button"><b>The Todo List:</b></span>
-  <span class="w3-bar-item w3-button">&nbsp;&nbsp;&bull;Implement Zombie plant eating</span>
-  <span class="w3-bar-item w3-button">&nbsp;&nbsp;&bull;Implement Game Over</span>
+  <span class="w3-bar-item w3-button bb">&nbsp;&bull;Add Zombie plant eating</span>
+  <span class="w3-bar-item w3-button bb">&nbsp;&bull;Add Game Over</span>
   
   <span class="w3-bar-item w3-button" style="position:absolute;bottom:8px;">Version 2.0.0-indev<br>Copyright &copy; 2021 by Isaiah</span>
 </nav>
 
 <body style="background-color:rgb(10,10,10);">
 
+<p style="padding-top:1px">&nbsp;</p>
 <div class="w3-content w3-center" style="background-color:black;">
-<p style="padding-top:14px;'>&nbsp;</p>
 <div id="game" style="background-color:black;">
   <div id="bg" style="background:url('load.gif') no-repeat fixed center;position:fixed;" class="w3-animate-opacity">
       <div class="suna" id="suna" style="position:absolute;left:35px;top:60px;text-align:center;">0000</div>
@@ -69,9 +69,8 @@ function load() {
 }
 
 function touch(d1,d2){
-    if (undefined == d1 || undefined == d2) {
-    	console.log('something null!'); return false;
-    }
+    if (undefined == d1 || undefined == d2) {console.log('null'); return false;}
+
     d1 = d1.getBoundingClientRect();
     d2 = d2.getBoundingClientRect();
 
@@ -81,9 +80,8 @@ function touch(d1,d2){
     var d1x = d1.x + (d1.width/2);
     var d2x = d2.x-10;
 
-    var ox = Math.abs(d1x - d2x) + 1 < (d1x < d2x ? (d2.width/8) : (d1.width/4));
-    var oy = Math.abs(d1y - d2y) + 5 < (d1y < d2y ? (d2.height+10) : (d1.height-80));
-
+    var ox = Math.abs(d1x-d2x) + 1 < (d1x<d2x ? (d2.width/8):(d1.width/4));
+    var oy = Math.abs(d1y-d2y) + 5 < (d1y<d2y ? (d2.height+10):(d1.height-80));
     return ox && oy;
 }
 
@@ -93,13 +91,12 @@ var zi = {};
 
 var zr = -1;
 function startZombies() {
+  if (document.hidden) { document.title = "Zombies - PAUSED"; return;} else document.title = "Zombies";
   var zom = document.createElement('div');
   zom.className = "zom";
   zom.style.left = "720px";
-  var zzr = randi(0,5);
-  while (zzr == zr) {
-    zzr = randi(0,5);
-  }
+  var zzr = rand(0,5);
+  while (zzr == zr) {zzr = rand(0,5);}
   zr = zzr;
   zom.style.top = ((101 * zzr) + 72) + "px";
   const id = "zom" + zc;
@@ -107,17 +104,13 @@ function startZombies() {
   zoms.push( zom );
   zi["" + zc] = 4; // 5 Hits by Pea to kill zombie
   zc++;
-  
-  var vaal = setTimeloop(function() {
-    var aa = toi(zom.style.left,-1);
-	if (undefined == document.getElementById(id)) {
-	    clearTimeloop(vaal); // Zombie already dead.
-	}
 
-	if (aa < -10) {
-	  zom.remove();
-	  clearTimeloop(vaal);
-	}
+  var vaal = setTimeloop(function() {
+    if (document.hidden) return; 
+    var aa = toi(zom.style.left,-1);
+    if (undefined == document.getElementById(id)) clearTimeloop(vaal); // Zombie already dead
+    if (aa < -10){ zom.remove(); clearTimeloop(vaal);} // Eat Brain
+
 	zom.style.left = aa + "px";
   }, 150);
 
@@ -126,48 +119,40 @@ function startZombies() {
 }
 
 async function shootTick(id, cd) {
+  if (document.hidden) return;
   var spot = document.getElementById("sp" + id);
   var pea = document.createElement('div');
   pea.className = "pea";
-  pea.style.left = (toi(spot.style.left,44)) + "px";
+  pea.style.left = toi(spot.style.left,44) + "px";
   pea.style.top = toi(spot.style.top, 6) + "px";
 
-    var inzz = setTimeloop(function() {
-	  var aa = toi(pea.style.left,0);
-	  if (aa > 777) { pea.remove();clearTimeloop(inzz); }
-	  pea.style.left = (aa + 10) + "px";
+  var inzz = setTimeloop(function() {
+	if (document.hidden) return;
+	var aa = toi(pea.style.left,0);
+	if (aa > 770) { pea.remove();clearTimeloop(inzz); }
+	pea.style.left = (aa + 10) + "px";
 
-	  for (var z = 0; z < zoms.length; z++) {
-	      var zom = zoms[z];
-		  if (undefined != zom) {
-		    var to = touch(pea,zom);
-			if (to) {
-			   var h = zi[zom.id.toString().replace('zom','')];
-			   
-			   if (h <= 0) {
-			     var ind = zoms.indexOf(zom);
-			     zoms.splice(ind,1);
-			     zom.remove();
-			   } else {
-			     zi[zom.id.toString().replace('zom','')] = h -1;;
-			   }
-			   pea.remove();
-			   clearTimeloop(inzz);
-			}
-		  }
+	for (var z = 0; z < zoms.length; z++) {
+	  var zom = zoms[z];
+	  if (undefined != zom && touch(pea,zom)) {
+		const id = zom.id.toString().replace('zom','');
+        var h = zi[id];
+        if (h <= 0) {
+	      zoms.splice(zoms.indexOf(zom),1);
+          zom.remove();
+		} else { zi[id]=h-1;}
+	    pea.remove(); clearTimeloop(inzz);
 	  }
+	}
   }, 50);
-
-  pea.innerHTML = "<img src='./images/pea.png'>";
   document.getElementById('bg').appendChild(pea);
 }
-plusSun(50); // debug
-
-function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
+plusSun(50);
+if (window.location.toString().includes("file:/")) plusSun(500);//test
 
 function createSpots() {
-  for (var i = 0; i < 5; i++) {
-    for (var j = 0; j < 9; j++) {
+  for (var i=0; i < 5; i++) {
+    for (var j=0; j < 9; j++) {
       var btn = document.createElement('div');
       btn.className = "spot";
       btn.setAttribute("id", "sp" + (i+"m"+j));
@@ -186,7 +171,7 @@ function createCards() {
   for (var i = 0; i < cards.length; i++) {
     var c = document.createElement('div');
     c.className = "card";
-    c.style.left = 32 + (55*(i+1));
+    c.style.left = 38 + (57*(i+1));
     c.innerHTML = "<img src='./images/cards/card_" + cards[i] + ".png' width='54px'>"
     c.setAttribute("onclick", "cardClick('" + i + "')");
     document.getElementById('bg').appendChild(c);
@@ -197,16 +182,12 @@ function spotClicked(id) {
   if (sc < csun[cc] || undefined == cc) return;
 
   var spot = document.getElementById("sp" + id);
-  spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
+  if (spot.innerHTML.length<9)spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
 
-  if (cc == 1) { // Sunflower
-      setTimeloop(function() { spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000);
-  }
+  if (cc == 1) setTimeloop(function(){ spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
   if (cc == 2) {
-      const id1 = id; const cc1 = cc;
-      setTimeloop(function() { 
-	     shootTick(id1, cc1);
-	  }, 2500);
+    const id1=id;const cc1=cc;
+    setTimeloop(function(){ shootTick(id1, cc1);}, 2500);
   }
   plusSun(-csun[cc]);
   cc = undefined;
@@ -225,17 +206,14 @@ function spawnSun(x,y) {
 
    const sto = rand(100, 478);
    if (undefined == x) {
-     var t;t= setTimeloop(function() {
-     var tt = parseInt(c.style.top.toString().replace('px',''));
-     c.style.top = (tt + 5) + "px";
-     if (tt > sto){ clearTimeloop(t);}
+     var t= setTimeloop(function() {
+	 var tt = toi(c.style.top,5); c.style.top = tt + "px";
+     if (tt > sto) clearTimeloop(t);
    }, 60);}
-   
+
    setTimeout(function() {
      var ssun = document.getElementById("sun" + id);
-	 if (undefined != ssun) {
-	    ssun.remove();
-	 }
+	 if (undefined != ssun) ssun.remove();
    }, 10000);
    document.getElementById('bg').appendChild(c);
 }
@@ -243,34 +221,21 @@ function spawnSun(x,y) {
 function cardClick(car) { cc = car; }
 function sunClick(sun)  {plusSun(25); document.getElementById("sun" + sun).remove();}
 function plusSun(count) {sc += count; document.getElementById("suna").innerHTML=sc;}
-function rand(min, max) {return Math.random() * (max-min)+min;}
-function randi(min, max) {return (Math.random() * (max-min)+min)|0;}
+function rand(min, max) {return (Math.random() * (max-min)+min)|0;}
+function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
 
 var timers = 0;
 function countTimer(count) {timers += count; document.getElementById("timers").innerHTML=timers;}
 
-function setTimeloop(a,b) {
-    countTimer(1);
-    return setInterval(a,b);
-}
-
-function clearTimeloop(a,b) {
-    countTimer(-1);
-    clearInterval(a,b);
-}
+function setTimeloop(a,b)  {countTimer(1); return setInterval(a,b);}
+function clearTimeloop(a,b){countTimer(-1); clearInterval(a,b);}
 
 var lt = 1070; var bg = 2;
-
 function dobg(){
- var inter = setTimeloop(function(){ if (bg>1){var v=bg;document.body.style.background="rgb("+v+","+v+","+v+")";} if (bg<180){bg+=4;}else{clearTimeloop(inter)}},20);
+ var b = setTimeloop(function(){ if (bg>1){var v=bg;document.body.style.background="rgb("+v+","+v+","+v+")";} if (bg<180){bg+=4;}else{clearTimeloop(b)}},20);
 }
-setTimeout(function() {dobg();}, lt - 1300);
-setTimeout(function() {document.getElementById("mySidebar").style.display = "block"; }, lt + 800);
+setTimeout(dobg, lt - 1300);
+setTimeout(function() {document.getElementById("mySidebar").style.display="block"; }, lt+800);
 setTimeout(load, lt);
 </script>
-
-<footer style="position:absolute;bottom:0;right:0;padding:3.8px;font-size:12px;background-color:rgba(0,0,0,.04)" class="w3-footer w3-centerr">
-Copyright &copy; 2021 by Isaiah.
-</footer>
-
 </html>

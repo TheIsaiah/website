@@ -36,8 +36,7 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
 
   <span class="w3-bar-item w3-button"><b>Debug Info:</b></span>
   <span class="w3-bar-item w3-button bb">&nbsp;&nbsp;Running Timers: <span id="timers"></span> </span>
-  <span class="w3-bar-item w3-button"><b>The Todo List:</b></span>
-  <span class="w3-bar-item w3-button bb">&nbsp;&bull;Increasing difficulty</span>
+  <span class="w3-bar-item w3-button bb">&nbsp;&nbsp;SC=<span id="msc"></span> </span>
   
   <span class="w3-bar-item w3-button" style="position:absolute;bottom:8px;">Version 2.0.0-indev<br>Copyright &copy; 2021 by Isaiah</span>
 </nav>
@@ -70,7 +69,7 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
 </body>
 
 <script>
-var sc = 0;
+var sc = 0; var msc = -25;
 function load() {
   document.getElementById("bg").style.background = "url('mainBG.png')";
   createSpots();
@@ -102,13 +101,13 @@ function touch(d1,d2){
 
 var zc = 0;
 var zoms = [];
-var zi = {};
-var pi = {};
+var zi = [];
+var pi = [];
 
 var zr = -1;
 function startZombies() {
-    if (sc > 2999) startZombie();
-	if (sc > 3999) startZombie();
+    if (msc > 2999) startZombie();
+	if (msc > 3999) startZombie();
     startZombie();
 }
 
@@ -126,13 +125,13 @@ function startZombie() {
   zoms.push( zom );
   
   var zt = Math.random() > 0.85 ? 2 : 1;
-  if (sc > 800) zt = Math.random() > 0.7 ? 2 : 1;
-  if (sc > 1400) zt = Math.random() > 0.4 ? 2 : 1;
-  if (sc > 1900) zt = Math.random() > 0.1 ? 2 : 1;
-  if (sc > 2400) zt = Math.random() > 0.5 ? 3 : 2;
-  if (sc > 3999) zt = Math.random() > 0.3 ? 3 : 2;
+  if (msc > 800) zt = Math.random() > 0.7 ? 2 : 1;
+  if (msc > 1400) zt = Math.random() > 0.4 ? 2 : 1;
+  if (msc > 1900) zt = Math.random() > 0.1 ? 2 : 1;
+  if (msc > 2400) zt = Math.random() > 0.5 ? 3 : 2;
+  if (msc > 3999) zt = Math.random() > 0.3 ? 3 : 2;
 
-  zi["" + zc] = zt == 1 ? 4 : (zt == 3 ? 7 : 6); // x hits by Pea to kill zombie
+  zi["" + zc] = zt == 1 ? 4 : (zt == 3 ? 8 : 6); // x hits by Pea to kill zombie
   zc++;
 
   var vaal = setTimeloop(function() {
@@ -227,7 +226,7 @@ function createCards() {
     var c = document.createElement('div');
     c.className = "card";
     c.style.left = 38 + (57*(i+1));
-    c.innerHTML = "<img src='./images/cards/card_" + cards[i] + ".png' width='54px'>"
+    c.innerHTML = "<img src='./images/cards/card_" + cards[i] + ".png' width='54px' title='Cost " +csun[i]+" sun'>"
     c.setAttribute("onclick", "cardClick('" + i + "')");
     document.getElementById('bg').appendChild(c);
   }
@@ -250,9 +249,9 @@ function spotClicked(id) {
   var loop;
 
   if (cc == 1) {
-      const id1=id;
-      loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
-   }
+    const id1=id;
+    loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
+  }
   if (cc == 2) {
     const id1=id; const cc1=cc;
     loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1);}, 2500);
@@ -261,10 +260,7 @@ function spotClicked(id) {
     const id1=id; const cc1=cc;
     loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1); setTimeout(function() { shootTick(id1, cc1);}, 200)}, 2500);
   }
-  if (cc == -1) {
-    rem = id; spot.innerHTML = ""; cc = undefined;
-	return;
-  }
+  if (cc == -1){ rem = id; spot.innerHTML = ""; cc = undefined; return; }
   pi["" + id] = 20;
 
     var inzz = setTimeloop(function() {
@@ -317,12 +313,13 @@ function spawnSun(x,y) {
 
 function cardClick(car) { cc = car; }
 function sunClick(sun)  {plusSun(25); document.getElementById("sun" + sun).remove();}
-function plusSun(count) {sc += count; document.getElementById("suna").innerHTML= " <img src='./images/sun.png' width='16px' style='padding:0;vertical-align:middle;'><span style='vertical-align:middle;'>" + sc + "</span>";}
+function plusSun(count) {sc += count; if (count>-51) {msc += count;}else{msc += (count/4)} document.getElementById("suna").innerHTML= " <img src='./images/sun.png' width='16px' style='padding:0;vertical-align:middle;'><span style='vertical-align:middle;'>" + sc + "</span>";}
 function rand(min, max) {return (Math.random() * (max-min)+min)|0;}
 function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
 
 var timers = 0;
-function countTimer(count) {timers += count; timers = Math.max(0,timers);document.getElementById("timers").innerHTML=timers;}
+function countTimer(count) { document.getElementById("msc").innerHTML = sc + ", MSC=" + msc + ",<br>&nbsp;&nbsp;ZI=" + zi.length + ", PI=" + pi.length;
+ timers += count; timers = Math.max(0,timers);document.getElementById("timers").innerHTML=timers;}
 
 function setTimeloop(a,b)  {countTimer(1); var ii =  setInterval(a,b);  times.push(ii); return ii;}
 function clearTimeloop(a,b){countTimer(-1); clearInterval(a,b);}

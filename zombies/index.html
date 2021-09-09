@@ -123,6 +123,9 @@ var zr = -1;
 function startZombies() {
     if (msc > 2999) startZombie();
 	if (msc > 3999) startZombie();
+	if (msc > 4999 && Math.random() > 0.4) startZombie();
+	if (msc > 5999 && Math.random() > 0.2) startZombie();
+	if (msc > 500 && Math.random > 0.8) startZombie();
     startZombie();
 }
 
@@ -173,7 +176,7 @@ function gameOver() {
   var g = document.createElement('div');
   g.innerHTML = "GAME OVER!<br>THE ZOMBIES ATE<BR>YOUR BRAIN!";
   g.className = "over";
-  document.getElementById('bg').style.background = "linear-gradient(to bottom, rgba(10,0,0, .32),rgb(90,0,0,.9)),url('mainBG.png')";
+  document.getElementById('bg').style.background = "linear-gradient(to bottom, rgba(10,0,0, .4),rgb(90,0,0,.9)),url('mainBG.png')";
   document.getElementById('bg').appendChild(g);
 }
 

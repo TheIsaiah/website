@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
-html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
+html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px;display:inline-block;}
 .over {font-size:5rem;color:red;text-shadow: 5px 5px 4px rgb(140,0,0);width:100%;text-align:center;top:99px;}
 .spot,.card,.sun,.zom,.pea,.suna,#bg,.over{position:absolute;}
 .spot{border:1px solid rgba(0,40,0,.1);width:80px;height:80px}
@@ -12,16 +12,12 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
 .sun{width:78px;height:78px;}.bb{padding-top:2px !important;padding-bottom:2px !important;}
 .zom{width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
 .pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce,#e1fbb6,#b9f755,#8cd312,#6da40e,black);}
-#bg {min-width:800px;min-height:580px;left:100px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
-.w3-sidebar {z-index:3;width:260px;top:43px;bottom:0;height:inherit;border:1px solid rgb(220,220,220); right:0;}
-.w3-animate-opacity{animation:opac 4s}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
+#bg {min-width:800px;min-height:580px;left:1px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
+.w3-animate-opacity{animation:opac 1s}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
 .w3-modal-content {max-width:32rem;background-color:rgba(40,50,40,.9);color:white;}
 sub {margin-left:-0.3rem} .b1 {margin-left:-1rem;}
 
-@media only screen and (max-width: 1700px){ #bg {left:190px}}
-@media only screen and (max-width: 1200px){ #bg {left:99px}}
-@media only screen and (max-width: 999px) { #bg {left:64px}}
-@media only screen and (max-width: 900px) { #bg {left:4px}}
+@media (max-width:1350px){ .w3-hide-small{display:none!important} }
 </style>
 <title>Zombie</title>
 
@@ -47,21 +43,44 @@ sub {margin-left:-0.3rem} .b1 {margin-left:-1rem;}
   </div>
 </div>
 
-<body style="background-color:rgb(200,200,200);">
+<body style="background-color:rgb(243, 231, 207);">
 
-<p style="padding-top:1px">&nbsp;</p>
-<div class="w3-content w3-cen1ter" style="background-color:black;">
-<div id="game" style="background-color:black;">
-  <div id="bg" style="background:url('start.png') no-repeat ;position:fixed;" class="w3-animate-opacity">
-      <div class="suna" id="suna" style="position:absolute;left:25px;top:60px;text-align:center;font-size:16px;vertical-align:middle;display:none;">0000</div>
-	  <button onclick="load()" id="stb" style="position:absolute;left:310px;top:380px;width:12rem;height:3rem;border:2px solid rgb(0,0,0);border-radius:8px;background-color:rgb(210,210,210)" class="w3-button">Start</button>
+<p>&nbsp;</p>
+<div class="w3-cen1ter" style="">
+
+  <div class="w3-display-container">
+
+    <div class="w3-display-topmiddle">
+	  <div id="game">
+        <div id="bg" style="background:url('start.png') no-repeat;" class="w3-animate-opacity">
+          <div class="suna" id="suna" style="position:absolute;left:25px;top:60px;text-align:center;font-size:16px;vertical-align:middle;display:none;">0000</div>
+	      <button onclick="load()" id="stb" style="position:absolute;left:310px;top:340px;width:12rem;height:3rem;border:2px solid rgb(2,80,0);border-radius:8px;background-color:rgb(210,240,210)" class="w3-button">Start</button>
+        </div>
+      </div>
+    </div>
+    <div class="w3-display-topleft w3-hide-small" id="hi" style="height:580px;border:1px solid black;background:url('house.jpg');background-size:cover;background-position:center;">&nbsp;</div>
+    <div class="w3-display-topright w3-hide-small">Right</div>
+
   </div>
-</div>
+
 </div>
 
 </body>
 
 <script>
+function sizeup() {
+    var w = document.body.clientWidth;
+	console.log(w);
+	document.getElementById("hi").style.width = ((w/2) - 400) + "px";
+}
+sizeup();
+//setTimeloop(sizeup, 2000);
+
+function pls() {
+    var aud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/0/0f/Plant.ogg");
+	aud.play();
+}
+
 var sc = 0; var msc = -25;
 function load() {
   document.getElementById("stb").style.display = "none";
@@ -74,6 +93,7 @@ function load() {
     document.getElementById('id01').style.display='block';
   }, 5500);
   setTimeloop(spawnSun, 5000)
+  setTimeloop(sizeup, 2000);
 }
 function startZom() {setTimeloop(startZombies, 5000);};
 
@@ -276,6 +296,7 @@ function spotClicked(id) {
 	}
   }, 500);
   
+  pls();
   plusSun(-csun[cc]);
   cc = undefined;
 }
@@ -312,16 +333,13 @@ function rand(min, max) {return (Math.random() * (max-min)+min)|0;}
 function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
 
 var timers = 0;
-function countTimer(count) { document.getElementById("msc").innerHTML = ",<sup>" + sc + "</sup><sub class='b1'>" + msc + "</sub>,<sup>" + zi.length + "</sup><sub>" + pi.length + "</sub>";
+function countTimer(count) { document.getElementById("msc").innerHTML = ",&nbsp;<sup>" + sc + "</sup><sub class='b1'>" + msc + "</sub>,&nbsp;&nbsp;<sup>" + zi.length + "</sup><sub>" + pi.length + "</sub>";
  timers += count; timers = Math.max(0,timers);document.getElementById("timers").innerHTML=timers;}
 
 function setTimeloop(a,b)  {countTimer(1); var ii =  setInterval(a,b);  times.push(ii); return ii;}
 function clearTimeloop(a,b){countTimer(-1); clearInterval(a,b);}
 function clearAllLoops() { for (var i = 0; i < times.length; i++) clearTimeloop(times[i])};
 
-var lt = 1000;
 var times = [];
-
-//setTimeout(load, lt);
 </script>
 </html>

@@ -12,56 +12,49 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
 .sun{width:78px;height:78px;}.bb{padding-top:2px !important;padding-bottom:2px !important;}
 .zom{width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
 .pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce,#e1fbb6,#b9f755,#8cd312,#6da40e,black);}
-#bg {min-width:800px;min-height:580px;left:300px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
-.w3-sidebar {z-index:3;width:260px;top:43px;bottom:0;height:inherit;border:1px solid rgb(220,220,220)}
+#bg {min-width:800px;min-height:580px;left:100px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
+.w3-sidebar {z-index:3;width:260px;top:43px;bottom:0;height:inherit;border:1px solid rgb(220,220,220); right:0;}
 .w3-animate-opacity{animation:opac 4s}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
-.w3-modal-content {max-width:32rem;background-color:rgba(40,50,40,.8);color:white;}
+.w3-modal-content {max-width:32rem;background-color:rgba(40,50,40,.9);color:white;}
+sub {margin-left:-0.3rem} .b1 {margin-left:-1rem;}
+
+@media only screen and (max-width: 1700px){ #bg {left:190px}}
+@media only screen and (max-width: 1200px){ #bg {left:99px}}
+@media only screen and (max-width: 999px) { #bg {left:64px}}
+@media only screen and (max-width: 900px) { #bg {left:4px}}
 </style>
 <title>Zombie</title>
 
 <!-- Navbar -->
 <div class="w3-top">
-  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
-    <a href="https://isaiah.dev/" class="w3-bar-item w3-button w3-theme-l1 w3-animate-left" style="min-width:260px;">Isaiah.dev</a>
+  <div class="w3-bar w3-theme w3-top w3-left-align">
+    <a href="https://isaiah.dev/" class="w3-bar-item w3-button w3-theme-l1 w3-animate-left" style="min-width:200px;">&lt;- Back to Isaiah.dev</a>
+	<div class="w3-bar-item">Debug Info: <small>(<span id="timers"></span><span id="msc"></span>)</small></div>
   </div>
 </div>
 
-<!-- Sidebar -->
-<nav class="w3-sidebar w3-bar-block w3-collapse w3-medium w3-theme-l5 w3-animate-left" id="mySidebar" style="display:none !important;">
-  <a class="w3-bar-item w3-button" href=""></a>
-  <span class="w3-bar-item w3-button">Plants vs Zombies clone in JS.<br>Orignal 2009 game by Popcap</span>
-  <span class="w3-bar-item w3-button">Plant different types of plants to defend your house from zombies!</span>
-  <span class="w3-bar-item w3-button">Different plants have different usages. Strength can differ between zombie types.</span>
-  <span class="w3-bar-item w3-button">&nbsp;</span>
-
-  <span class="w3-bar-item w3-button"><b>Debug Info:</b></span>
-  <span class="w3-bar-item w3-button bb">&nbsp;&nbsp;Running Timers: <span id="timers"></span> </span>
-  <span class="w3-bar-item w3-button bb">&nbsp;&nbsp;SC=<span id="msc"></span> </span>
-  
-  <span class="w3-bar-item w3-button" style="position:absolute;bottom:8px;">Version 2.0.0-indev<br>Copyright &copy; 2021 by Isaiah</span>
-</nav>
-
- <div id="id01" class="w3-modal">
-    <div class="w3-modal-content w3-card-4">
-      <header class="w3-container"> 
-        <h5>Zombies</h5>
-      </header>
-      <div class="w3-container w3-center">
-        <p style="font-size:2rem;">The Zombies are coming!</p>
-      </div>
-      <footer class="w3-container">
-        <button style="float:right;padding-left:3rem;padding-right:3rem;margin-right:1rem;" onclick="document.getElementById('id01').style.display='none';startZom()" class="w3-button w3-blue">OK</button><p>&nbsp;</p>
-      </footer>
+<div id="id01" class="w3-modal">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container"> 
+      <h5>Zombies</h5>
+    </header>
+    <div class="w3-container w3-center">
+      <p style="font-size:2rem;padding:2rem;">The Zombies are coming!</p>
     </div>
+    <footer class="w3-container">
+      <button style="float:right;padding-left:4rem;padding-right:4rem;margin-right:3rem;margin-bottom:.1rem;background-color:rgb(170,90,90)" onclick="document.getElementById('id01').style.display='none';startZom()" class="w3-button w3-blaue">OK</button><p>&nbsp;</p>
+    </footer>
   </div>
+</div>
 
-<body style="background-color:rgb(10,10,10);">
+<body style="background-color:rgb(200,200,200);">
 
 <p style="padding-top:1px">&nbsp;</p>
-<div class="w3-content w3-center" style="background-color:black;">
+<div class="w3-content w3-cen1ter" style="background-color:black;">
 <div id="game" style="background-color:black;">
-  <div id="bg" style="background:url('load.gif') no-repeat fixed center;position:fixed;" class="w3-animate-opacity">
-      <div class="suna" id="suna" style="position:absolute;left:25px;top:60px;text-align:center;font-size:16px;vertical-align:middle;">0000</div>
+  <div id="bg" style="background:url('start.png') no-repeat ;position:fixed;" class="w3-animate-opacity">
+      <div class="suna" id="suna" style="position:absolute;left:25px;top:60px;text-align:center;font-size:16px;vertical-align:middle;display:none;">0000</div>
+	  <button onclick="load()" id="stb" style="position:absolute;left:310px;top:380px;width:12rem;height:3rem;border:2px solid rgb(0,0,0);border-radius:8px;background-color:rgb(210,210,210)" class="w3-button">Start</button>
   </div>
 </div>
 </div>
@@ -71,6 +64,8 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px}
 <script>
 var sc = 0; var msc = -25;
 function load() {
+  document.getElementById("stb").style.display = "none";
+  document.getElementById("suna").style.display = "block";
   document.getElementById("bg").style.background = "url('mainBG.png')";
   createSpots();
   createCards();
@@ -137,13 +132,13 @@ function startZombie() {
 
   var vaal = setTimeloop(function() {
     if (document.hidden) return; 
-    var aa = toi(zom.style.left,-2);
+    var aa = toi(zom.style.left, msc < 200 ? -1 : -2);
     if (undefined == document.getElementById(id)) clearTimeloop(vaal); // Zombie already dead
     if (aa < -10){ gameOver(); clearTimeloop(vaal);} // Eat Brain
 
     if (undefined == mz[id])
-	zom.style.left = aa + "px";
-  }, 150);
+	  zom.style.left = aa + "px";
+    }, 150);
 
   if (zt == 1) {
     zom.innerHTML = "<img src='./images/zombies/zombie"+zt+".webp' width='62px'>";
@@ -158,7 +153,7 @@ function gameOver() {
   var g = document.createElement('div');
   g.innerHTML = "GAME OVER!<br>THE ZOMBIES ATE<BR>YOUR BRAIN!";
   g.className = "over";
-  document.getElementById('bg').style.background = "linear-gradient(to bottom, rgba(10, 0, 0, .14), rgb(90,0,0,.78)),url('mainBG.png')";
+  document.getElementById('bg').style.background = "linear-gradient(to bottom, rgba(10,0,0, .32),rgb(90,0,0,.9)),url('mainBG.png')";
   document.getElementById('bg').appendChild(g);
 }
 
@@ -174,9 +169,7 @@ async function shootTick(id, cd) {
   for (var z = 0; z < zoms.length; z++) {
     var zom = zoms[z];
     if (undefined != zom) {
-	  if ( Math.abs(toi(zom.style.top,0) - toi(pea.style.top,0)) < 42 ) {
-	    dooo = true;
-	  }
+	  if ( Math.abs(toi(zom.style.top,0) - toi(pea.style.top,0)) < 42 ) { dooo = true; }
     }
   }
   if (!dooo) return;
@@ -202,8 +195,8 @@ async function shootTick(id, cd) {
   }, 50);
   document.getElementById('bg').appendChild(pea);
 }
-plusSun(50);
-if (window.location.toString().includes("file:/")) plusSun(500);//test
+plusSun(75);
+if (window.location.toString().includes("file:/")) { sc += 500; plusSun(1); }//test
 
 function createSpots() {
   for (var i=0; i < 5; i++) {
@@ -319,20 +312,16 @@ function rand(min, max) {return (Math.random() * (max-min)+min)|0;}
 function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
 
 var timers = 0;
-function countTimer(count) { document.getElementById("msc").innerHTML = sc + ", MSC=" + msc + ",<br>&nbsp;&nbsp;ZI=" + zi.length + ", PI=" + pi.length;
+function countTimer(count) { document.getElementById("msc").innerHTML = ",<sup>" + sc + "</sup><sub class='b1'>" + msc + "</sub>,<sup>" + zi.length + "</sup><sub>" + pi.length + "</sub>";
  timers += count; timers = Math.max(0,timers);document.getElementById("timers").innerHTML=timers;}
 
 function setTimeloop(a,b)  {countTimer(1); var ii =  setInterval(a,b);  times.push(ii); return ii;}
 function clearTimeloop(a,b){countTimer(-1); clearInterval(a,b);}
 function clearAllLoops() { for (var i = 0; i < times.length; i++) clearTimeloop(times[i])};
 
-var lt = 1070; var bg = 2;
+var lt = 1000;
 var times = [];
-function dobg(){
- var b = setTimeloop(function(){ if (bg>1){var v=bg;document.body.style.background="rgb("+v+","+v+","+v+")";} if (bg<180){bg+=4;}else{clearTimeloop(b)}},20);
-}
-setTimeout(dobg, lt - 1300);
-setTimeout(function() {document.getElementById("mySidebar").style.display="block"; }, lt+800);
-setTimeout(load, lt);
+
+//setTimeout(load, lt);
 </script>
 </html>

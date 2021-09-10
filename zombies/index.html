@@ -15,7 +15,7 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px;display
 #bg {min-width:800px;min-height:580px;left:1px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
 .w3-animate-opacity{animation:opac 1s}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
 .w3-modal-content {max-width:32rem;background-color:rgba(40,50,40,.9);color:white;}
-sub {margin-left:-0.3rem} .b1 {margin-left:-1rem;}
+sub {margin-left:-0.3rem} .b1 {margin-left:-.3rem;}
 
 @media (max-width:1350px){ .w3-hide-small{display:none!important} }
 </style>
@@ -43,6 +43,20 @@ sub {margin-left:-0.3rem} .b1 {margin-left:-1rem;}
   </div>
 </div>
 
+<div id="id02" class="w3-modal">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container"> 
+      <h5>Zombies</h5>
+    </header>
+    <div class="w3-container w3-center">
+      <p style="font-size:2rem;padding:2rem;">The Zombies have found a health pack!<br>All zombies now have +1 health.</p>
+    </div>
+    <footer class="w3-container">
+      <button style="float:right;padding-left:4rem;padding-right:4rem;margin-right:3rem;margin-bottom:.1rem;background-color:rgb(170,90,90)" onclick="document.getElementById('id02').style.display='none';startZom()" class="w3-button w3-blaue">OK</button><p>&nbsp;</p>
+    </footer>
+  </div>
+</div>
+
 <body style="background-color:rgb(243, 231, 207);">
 
 <p>&nbsp;</p>
@@ -59,7 +73,17 @@ sub {margin-left:-0.3rem} .b1 {margin-left:-1rem;}
       </div>
     </div>
     <div class="w3-display-topleft w3-hide-small" id="hi" style="height:580px;border:1px solid black;background:url('house.jpg');background-size:cover;background-position:center;">&nbsp;</div>
-    <div class="w3-display-topright w3-hide-small">Right</div>
+    <div class="w3-display-topright w3-hide-small">
+        <div style="padding-right:32px;max-width:250px;"><br>
+            Copyright &copy; 2021 by Isaiah.<br>All Rights Reserved.<br><br>
+            All code by me, Assets are taken from the original game used under Fair Use <i>(probably)</i>.
+            <br><br>
+            Code size:<br>
+            <img src="https://img.shields.io/github/languages/code-size/TheIsaiah/website"><br>
+            GiVe mE mOnEy:
+            <a href="https://patreon.com/isaiahp"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Disaiahp%26type%3Dpledges&style=flat" alt="Support me on Patreon" /></a>
+        </div>
+    </div>
 
   </div>
 
@@ -79,6 +103,27 @@ sizeup();
 function pls() {
     var aud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/0/0f/Plant.ogg");
 	aud.play();
+}
+
+var ha2 = ("https://static.wikia.nocookie.net/plantsvszombies/images/4/42/Splat2.ogg");
+var ha3 = ("https://static.wikia.nocookie.net/plantsvszombies/images/0/0d/Splat3.ogg");
+
+function phit_s() {
+   if (Math.random() > 0.5) {
+     new Audio(ha2).play();
+   } else {
+     new Audio(ha3).play();
+   }
+}
+
+function th_s() {
+   var aud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/7/76/Throw.ogg");
+   aud.play();
+}
+
+var zaud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/f/ff/DinoGroan1.ogg");
+function zom_s() {
+   zaud.play();
 }
 
 var sc = 0; var msc = -25;
@@ -120,7 +165,27 @@ var zi = [];
 var pi = [];
 
 var zr = -1;
+var mult = 0;
 function startZombies() {
+    if (msc > 1500 && mult == 0) {
+	    mult = 1;
+		document.getElementById('id02').style.display='block';
+	}
+	
+	if (msc > 2500 && mult == 1) {
+	    mult = 2;
+		document.getElementById('id02').style.display='block';
+	}
+    
+    if (msc > 3000 && mult == 2) {
+	    mult = 3;
+		document.getElementById('id02').style.display='block';
+	}
+
+    if (msc > 4000 && mult == 3) { mult = 4; document.getElementById('id02').style.display='block';  startZombie();}
+    if (msc > 5000 && mult == 4) { mult = 5; document.getElementById('id02').style.display='block';  startZombie();}
+    if (msc > 6000 && mult == 5) { mult = 6; document.getElementById('id02').style.display='block';  startZombie();}
+
     if (msc > 2999) startZombie();
 	if (msc > 3999) startZombie();
 	if (msc > 4999 && Math.random() > 0.4) startZombie();
@@ -151,13 +216,18 @@ function startZombie() {
   if (msc > 4000) zt = Math.random() > 0.4 ? 4 : Math.random() > 0.5 ? 3 : Math.random() > 0.3 ? 2 : 1;
 
   zi["" + zc] = zt == 1 ? (Math.random() > 0.5 ? 5 : 4) : (zt == 3 ? (Math.random() > 0.9 ? 9 : 8) : (zt == 4 ? 10 : 6)); // x hits by Pea to kill zombie
+  zi["" + zc] = zi["" + zc] + mult;
   zc++;
+  
+  var sl = setTimeloop(function() {
+    // zom_s();
+  }, 4000);
 
   var vaal = setTimeloop(function() {
     if (document.hidden) return; 
-    var aa = toi(zom.style.left, msc < 200 ? -1 : -2);
-    if (undefined == document.getElementById(id)) clearTimeloop(vaal); // Zombie already dead
-    if (aa < -10){ gameOver(); clearTimeloop(vaal);} // Eat Brain
+    var aa = toi(zom.style.left, msc < 200 ? -1 : msc > 3000 ? (Math.random() > 0.7 ? -3 : -2) : -2);
+    if (undefined == document.getElementById(id)) { clearTimeloop(vaal); clearTimeloop(sl);} // Zombie already dead
+    if (aa < -10){ gameOver(); clearTimeloop(vaal); } // Eat Brain
 
     if (undefined == mz[id])
 	  zom.style.left = aa + "px";
@@ -197,6 +267,8 @@ async function shootTick(id, cd) {
   }
   if (!dooo) return;
 
+  th_s();
+
   var inzz = setTimeloop(function() {
 	if (document.hidden) return;
 	var aa = toi(pea.style.left,0);
@@ -206,6 +278,7 @@ async function shootTick(id, cd) {
 	for (var z = 0; z < zoms.length; z++) {
 	  var zom = zoms[z];
 	  if (undefined != zom && touch(pea,zom)) {
+	    phit_s();
 		const id = zom.id.toString().replace('zom','');
         var h = zi[id];
         if (h <= 0) {
@@ -219,7 +292,7 @@ async function shootTick(id, cd) {
   document.getElementById('bg').appendChild(pea);
 }
 plusSun(75);
-if (window.location.toString().includes("file:/")) { sc += 500; plusSun(1); }//test
+if (window.location.toString().includes("file:/")) { sc += 50; plusSun(1050); }//test
 
 function createSpots() {
   for (var i=0; i < 5; i++) {

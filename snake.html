@@ -1,4 +1,31 @@
-<html><div id='output'></div><script>  function helper_createElement(type, id){ var btn = document.createElement(type); btn.setAttribute('id', id);document.getElementById('output').appendChild(btn);}  function helper_isCollision(d1,d2){  d1 = document.getElementById(d1); d2 = document.getElementById(d2);  if (undefined==d1 || undefined==d2) return false;  var aX = parseInt(d1.style.left.replace('px','')) + (d1.offsetWidth/2);  var bX = parseInt(d2.style.left.replace('px','')) + ((d2.offsetWidth/2)-1);  var ox = Math.abs(aX-bX) < (d1.offsetWidth-2); if (!ox) return false;  var aY = parseInt(d1.style.top.replace('px',''))+(d1.offsetHeight/2);  var bY = parseInt(d2.style.top.replace('px',''))+(d2.offsetHeight/2);  var oy = Math.abs(aY-bY) < d1.offsetHeight-1; return oy;} var event2, score, btn, key, randId, timerRan, changeBy, j;
+<html>
+<style>
+#score {
+  font-smooth: never;
+  -webkit-font-smoothing : none;
+  font-size: 100px;
+  font-family: "ＭＳ Ｐゴシック";
+}
+</style>
+<body style="background:rgb(150,180,0)">
+ <div id='output'></div>
+ <center><span id="score">0</span></center>
+</body>
+<script>
+
+function helper_createElement(type, id){ var btn = document.createElement(type); btn.setAttribute('id', id);document.getElementById('output').appendChild(btn);}
+
+function helper_isCollision(d1,d2){  d1 = document.getElementById(d1); d2 = document.getElementById(d2);  if (undefined==d1 || undefined==d2) return false;
+
+  var aX = parseInt(d1.style.left.replace('px','')) + (d1.offsetWidth/2); 
+  var bX = parseInt(d2.style.left.replace('px','')) + (d2.offsetWidth/2);
+  var ox = Math.abs(aX-bX) < (d1.offsetWidth-2);
+  if (!ox) return false;
+  var aY = parseInt(d1.style.top.replace('px',''))+((d1.offsetHeight/2)-1);
+  var bY = parseInt(d2.style.top.replace('px',''))+((d2.offsetHeight/2)-1);
+  var oy = Math.abs(aY-bY) < (d1.offsetHeight-2); return oy;
+
+} var event2, score, btn, key, randId, timerRan, changeBy, j;
 
 function mathRandomInt(a, b) {
   if (a > b) {
@@ -16,7 +43,7 @@ function mykeydown(event2) {
   if (timerRan == 0) {
     setInterval(function() {
        onkey();
-    fixSize('mybtn');
+       fixSize('mybtn');
     }, 50);
     timerRan = 1;
   }
@@ -24,9 +51,8 @@ function mykeydown(event2) {
 
 // Describe this function...
 function onkey() {
-  if (timerRan == 2) {
-    return;
-  }
+  if (timerRan == 2) { return; }
+
   makeCopy();
   if (helper_isCollision('mybtn', 'apple')) {
     score = (typeof score == 'number' ? score : 0) + 1;
@@ -34,9 +60,9 @@ function onkey() {
   }
   document.getElementById('mybtn').innerHTML = '';
   if (key == 'ArrowDown') {
-    document.getElementById('mybtn').style.top = (changeBy + document.getElementById('mybtn').getBoundingClientRect().y);
+    document.getElementById('mybtn').style.top  = (changeBy + document.getElementById('mybtn').getBoundingClientRect().y);
   } else if (key == 'ArrowUp') {
-    document.getElementById('mybtn').style.top = (document.getElementById('mybtn').getBoundingClientRect().y - changeBy);
+    document.getElementById('mybtn').style.top  = (document.getElementById('mybtn').getBoundingClientRect().y - changeBy);
   } else if (key == 'ArrowRight') {
     document.getElementById('mybtn').style.left = (changeBy + document.getElementById('mybtn').getBoundingClientRect().x);
   } else if (key == 'ArrowLeft') {
@@ -45,6 +71,7 @@ function onkey() {
 }
 
 // Describe this function...
+var fs;
 function makeCopy() {
   randId = (typeof randId == 'number' ? randId : 0) + 1;
   helper_createElement('button', randId);
@@ -52,16 +79,23 @@ function makeCopy() {
   document.getElementById(randId).style.position = 'absolute';
   document.getElementById(randId).style.left = document.getElementById('mybtn').getBoundingClientRect().x;
   document.getElementById(randId).style.top = document.getElementById('mybtn').getBoundingClientRect().y;
-  document.getElementById('1').innerHTML = ('Snake! <i>(Arrow keys to move)</i>. Score: ' + String(score));
+  document.getElementById('1').innerHTML = ('Snake! <i>(Arrow keys to move)</i>. Score: ' + String(score) + '');
+  document.getElementById('score').innerHTML = score;
   if (randId > 3 + score) {
     document.getElementById((randId - (2 + score))).remove();
   }
   if (randId > 1) {
-    document.getElementById(randId).style.fontSize = '8.9px';
+    document.getElementById(randId).style.fontSize = fs;
+    document.getElementById(randId).style.width = fs;
+    document.getElementById(randId).style.height = fs;
+    document.getElementById(randId).style.background = "rgb(0,100,0)";
   } else {
     document.getElementById(randId).style.fontSize = '16px';
   }
-  document.getElementById('mybtn').style.fontSize = '11px';
+  document.getElementById('mybtn').style.fontSize = fs;
+  document.getElementById('mybtn').style.width = fs;
+    document.getElementById('mybtn').style.height = fs;
+    document.getElementById('mybtn').style.background = "rgb(0,220,0)";
   var j_start = randId - (1 + score);
   var j_end = randId - 2;
   var j_inc = 1;
@@ -76,21 +110,21 @@ function makeCopy() {
   }
 }
 
-// Describe this function...
 function fixSize(btn) {
-  document.getElementById(btn).innerHTML = 'S';
+  document.getElementById(btn).innerHTML = '&nbsp;';
 }
-
 
 setInterval(function() {
-   if (document.getElementById('apple') == null) {
-  helper_createElement('button', 'apple');
-  document.getElementById('apple').style.position = 'absolute';
-  document.getElementById('apple').style.top = (mathRandomInt(10, window.innerHeight - 64)) + 'px';
-  document.getElementById('apple').style.left = (mathRandomInt(6, window.innerWidth - 64)) + 'px';
-  fixSize('apple');
-  document.getElementById('apple').innerHTML = '<img src="https://cdn.pixabay.com/photo/2020/03/25/12/33/apple-4967157_960_720.png" width="14">';
-}
+ if (document.getElementById('apple') == null) {
+   helper_createElement('button', 'apple');
+   document.getElementById('apple').style.position = 'absolute';
+   document.getElementById('apple').style.top = (mathRandomInt(10, window.innerHeight - 64)) + 'px';
+   document.getElementById('apple').style.left = (mathRandomInt(6, window.innerWidth - 64)) + 'px';
+   fixSize('apple');
+   document.getElementById('apple').innerHTML = '<img src="https://cdn.pixabay.com/photo/2020/03/25/12/33/apple-4967157_960_720.png" width="24">';
+   document.getElementById('apple').style.background = 'transparent';
+   document.getElementById('apple').style.border = 'none';
+ }
 }, 500);
 
 score = 0;
@@ -99,10 +133,12 @@ document.getElementById('mybtn').style.position = 'absolute';
 document.addEventListener('keydown', mykeydown);
 helper_createElement('button', 'mybtn2');
 document.getElementById('mybtn2').style.position = 'static';
+fs = '24px';
 changeBy = 32;
 key = 'ArrowDown';
 onkey();
-changeBy = 20;
+changeBy = 29;
 timerRan = 0;
 fixSize('mybtn');
+document.getElementById('mybtn').style.background = "rgb(0,220,0)";
 ;</script></html>

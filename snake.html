@@ -1,4 +1,4 @@
-<html><div id='output'></div><script>  function helper_createElement(type, id){ var btn = document.createElement(type); btn.setAttribute('id', id);document.getElementById('output').appendChild(btn);}  function helper_isCollision(d1,d2){  d1 = document.getElementById(d1); d2 = document.getElementById(d2);  if (undefined==d1 || undefined==d2) return false;  var aX = parseInt(d1.style.left.replace('px','')) + (d1.offsetWidth/2);  var bX = parseInt(d2.style.left.replace('px','')) + (d2.offsetWidth/2);  var ox = Math.abs(aX-bX) < (d1.offsetWidth-1); if (!ox) return false;  var aY = parseInt(d1.style.top.replace('px',''))+(d1.offsetHeight/2);  var bY = parseInt(d2.style.top.replace('px',''))+(d2.offsetHeight/2);  var oy = Math.abs(aY-bY) < d1.offsetHeight-1; return oy;} var event2, score, btn, key, randId, timerRan, changeBy, j;
+<html><div id='output'></div><script>  function helper_createElement(type, id){ var btn = document.createElement(type); btn.setAttribute('id', id);document.getElementById('output').appendChild(btn);}  function helper_isCollision(d1,d2){  d1 = document.getElementById(d1); d2 = document.getElementById(d2);  if (undefined==d1 || undefined==d2) return false;  var aX = parseInt(d1.style.left.replace('px','')) + (d1.offsetWidth/2);  var bX = parseInt(d2.style.left.replace('px','')) + (d2.offsetWidth/2);  var ox = Math.abs(aX-bX) < (d1.offsetWidth-2); if (!ox) return false;  var aY = parseInt(d1.style.top.replace('px',''))+(d1.offsetHeight/2);  var bY = parseInt(d2.style.top.replace('px',''))+(d2.offsetHeight/2);  var oy = Math.abs(aY-bY) < d1.offsetHeight-1; return oy;} var event2, score, btn, key, randId, timerRan, changeBy, j;
 
 function mathRandomInt(a, b) {
   if (a > b) {
@@ -57,7 +57,7 @@ function makeCopy() {
     document.getElementById((randId - (2 + score))).remove();
   }
   if (randId > 1) {
-    document.getElementById(randId).style.fontSize = '11px';
+    document.getElementById(randId).style.fontSize = '9.5px';
   } else {
     document.getElementById(randId).style.fontSize = '16px';
   }

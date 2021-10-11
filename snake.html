@@ -1,13 +1,23 @@
 <html>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 #score {
-  font-smooth: never;
-  -webkit-font-smoothing : none;
   font-size: 100px;
-  font-family: "ＭＳ Ｐゴシック";
+   font-family: "Lucida Console", "Courier New", monospace;
+}
+html {height:100vh;}
+body {
+  background-image: linear-gradient(to bottom right, rgba(150,180,0), #7f9900);
+}
+.info {
+    background: rgb(0,70,0);
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+    color: rgb(230,230,230);
 }
 </style>
-<body style="background:rgb(150,180,0)">
+<body>
  <div id='output'></div>
  <center><span id="score">0</span></center>
 </body>
@@ -15,17 +25,20 @@
 
 function helper_createElement(type, id){ var btn = document.createElement(type); btn.setAttribute('id', id);document.getElementById('output').appendChild(btn);}
 
-function helper_isCollision(d1,d2){  d1 = document.getElementById(d1); d2 = document.getElementById(d2);  if (undefined==d1 || undefined==d2) return false;
+function helper_isCollision(d1,d2){  
+  var off = (d2 == 'apple') ? 3 : 7;
+  d1 = document.getElementById(d1); d2 = document.getElementById(d2);  if (undefined==d1 || undefined==d2) return false;
 
   var aX = parseInt(d1.style.left.replace('px','')) + (d1.offsetWidth/2); 
   var bX = parseInt(d2.style.left.replace('px','')) + (d2.offsetWidth/2);
-  var ox = Math.abs(aX-bX) < (d1.offsetWidth-2);
+  var ox = Math.abs(aX-bX) < (d1.offsetWidth-off);
   if (!ox) return false;
   var aY = parseInt(d1.style.top.replace('px',''))+((d1.offsetHeight/2)-1);
   var bY = parseInt(d2.style.top.replace('px',''))+((d2.offsetHeight/2)-1);
-  var oy = Math.abs(aY-bY) < (d1.offsetHeight-2); return oy;
+  var oy = Math.abs(aY-bY) < (d1.offsetHeight-off); return oy;
 
-} var event2, score, btn, key, randId, timerRan, changeBy, j;
+}
+var event2, score, btn, key, randId, timerRan, changeBy, j;
 
 function mathRandomInt(a, b) {
   if (a > b) {
@@ -39,12 +52,18 @@ function mathRandomInt(a, b) {
 
 // Describe this function...
 function mykeydown(event2) {
-  key = event2.key;
+  var ek = event2.key;
+  if (ek.includes('Arrow')){ key = ek; } else {
+    if (ek.includes('w')) key = 'ArrowUp';
+    if (ek.includes('a')) key = 'ArrowLeft';
+    if (ek.includes('s')) key = 'ArrowDown';
+    if (ek.includes('d')) key = 'ArrowRight';
+  }
   if (timerRan == 0) {
     setInterval(function() {
        onkey();
        fixSize('mybtn');
-    }, 75);
+    }, 50);
     timerRan = 1;
   }
 }
@@ -73,39 +92,51 @@ function onkey() {
 // Describe this function...
 var fs;
 function makeCopy() {
-  randId = (typeof randId == 'number' ? randId : 0) + 1;
-  helper_createElement('button', randId);
-  fixSize(randId);
-  document.getElementById(randId).style.position = 'absolute';
-  document.getElementById(randId).style.left = document.getElementById('mybtn').getBoundingClientRect().x;
-  document.getElementById(randId).style.top = document.getElementById('mybtn').getBoundingClientRect().y;
-  document.getElementById('1').innerHTML = ('Snake! <i>(Arrow keys to move)</i>. Score: ' + String(score) + '');
+  randId = (typeof randId == 'number' ? randId : 0) + 1
+  var id = randId;
+  helper_createElement('button', id);
+  fixSize(id);
+  document.getElementById(id).style.position = 'absolute';
+  var xx = document.getElementById('mybtn').getBoundingClientRect().x;;
+  var yy = document.getElementById('mybtn').getBoundingClientRect().y;
+
+  document.getElementById(id).style.left = xx;
+  document.getElementById(id).style.top = yy;
+
+  if (xx > (window.innerWidth - 45)) document.getElementById('mybtn').style.left  = "6px";
+  if (yy > (window.innerHeight - 45)) document.getElementById('mybtn').style.top  = "-16px";
+
   document.getElementById('score').innerHTML = score;
-  if (randId > 3 + score) {
-    document.getElementById((randId - (2 + score))).remove();
+  if (id > 3 + score) {
+    document.getElementById((id - (2 + score))).remove();
   }
-  if (randId > 1) {
-    document.getElementById(randId).style.fontSize = fs;
-    document.getElementById(randId).style.width = fs;
-    document.getElementById(randId).style.height = fs;
-    document.getElementById(randId).style.background = "rgb(0,100,0)";
+  if (id > 1) {
+    document.getElementById(id).style.fontSize = fs;
+    document.getElementById(id).style.width = fs;
+    document.getElementById(id).style.height = fs;
+    document.getElementById(id).style.background = "rgb(0,160,0)";
+    document.getElementById(id).style.border = "1px solid rgb(0,160,0)";
   } else {
-    document.getElementById(randId).style.fontSize = '16px';
+    document.getElementById(id).style.fontSize = '16px';
   }
   document.getElementById('mybtn').style.fontSize = fs;
   document.getElementById('mybtn').style.width = fs;
-    document.getElementById('mybtn').style.height = fs;
-    document.getElementById('mybtn').style.background = "rgb(0,220,0)";
-  var j_start = randId - (1 + score);
-  var j_end = randId - 2;
+  document.getElementById('mybtn').style.height = fs;
+
+  var dir = (key == 'ArrowDown') ? 'bottom' : (key == 'ArrowLeft' ? 'left' : ((key == 'ArrowRight') ? 'right' : 'top'))
+  document.getElementById('mybtn').style.background = "linear-gradient(to " + dir + ", rgb(0,160,0), rgb(0,190,0), rgb(0,210,0))";
+  document.getElementById('mybtn').style.border = "0px solid rgb(0,230,0)";
+  var j_start = id - (1 + score);
+  var j_end = id - 2;
   var j_inc = 1;
   if (j_start > j_end) {
     j_inc = -j_inc;
   }
   for (j = j_start; j_inc >= 0 ? j <= j_end : j >= j_end; j += j_inc) {
-    if (helper_isCollision(randId, j) && timerRan != 2) {
+    if (helper_isCollision(id, j) && timerRan != 2) {
       timerRan = 2;
-      window.alert('Game over, you hit yourself.');
+      //window.alert('Game over, you hit yourself.');
+      swal("Game over!", "You hit your tail", "error");
     }
   }
 }
@@ -133,12 +164,14 @@ document.getElementById('mybtn').style.position = 'absolute';
 document.addEventListener('keydown', mykeydown);
 helper_createElement('button', 'mybtn2');
 document.getElementById('mybtn2').style.position = 'static';
-fs = '24px';
-changeBy = 32;
+fs = '28px';
+changeBy = 42;
 key = 'ArrowDown';
 onkey();
-changeBy = 29;
+changeBy = 28;
 timerRan = 0;
 fixSize('mybtn');
 document.getElementById('mybtn').style.background = "rgb(0,220,0)";
+document.getElementById('1').innerHTML = 'Snake! <i>(Arrow keys to move)</i>.';
+document.getElementById('1').className = "info";
 ;</script></html>

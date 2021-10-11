@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Isaiah.dev</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+.w3-sidebar {
+  z-index: 3;
+  width: 260px;
+  top: 43px;
+  bottom: 10px;
+  height: inherit;
+}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <a href="#" class="w3-bar-item w3-button w3-theme-l1" style="min-width:260px;">Isaiah.dev</a>
+    <!--<a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a>-->
+  </div>
+</div>
+<style>.w3-container {padding-left:3rem;} div .w3-button {min-width:180px;border:1px solid black;box-shadow:4px 4px 4px black;}
+.w3-padding-64 {padding-left:35px;padding-right: 35px;padding:74px;}
+</style>
+
+<!-- Sidebar -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4 class="w3-bar-item"><b>Games</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#tophat">&bull; Codename: Tophat</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#mines">&bull; Mines</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#pz">&bull; Plnts vz Zmbs</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#ig">&bull; Incredible Game: 3D</a>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div class="w3-main" style="margin-left:260px">
+
+<div style="padding-top:40px;"></div>
+  <div class="w3-row w3-padding-64" id="tophat">
+    <div class="w3-half w3-container">
+      <h1 class="w3-text-teal">Codename: Tophat&nbsp;<span style="background-color:yellow;font-size:1rem;padding:3px;color:black;padding-left:16px;padding-right:16px;">NEW</span></h1>
+      <p>In the year 2048, a cloning project called "Codename Tophat" malfunctioned and caused the creation of evil clones. You must stop them! Good luck!</p>
+      <a href="https://isaiah.dev/game"><button class="w3-button w3-black">Play online</button></a>
+    </div>
+    <div class="w3-rest w3-container">
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="width:350px!important;height:215px !important;">
+        <img class="" src="./assets/tophat.png" width="308px">
+      </p>
+    </div>
+  </div>
+
+  <div class="w3-row w3-padding-64" id="mines">
+    <div class="w3-half w3-container">
+      <h1 class="w3-text-teal">Mines <span style="background-color:yellow;font-size:1rem;padding:3px;color:black;padding-left:16px;padding-right:16px;">NEW</span></h1>
+      <p>My Minesweeper clone. Uncover the squares but avoid the mines.</p>
+      <a href="https://isaiah.dev/mines.html"><button class="w3-button w3-black">Play online</button></a>
+    </div>
+    <div class="w3-rest w3-container">
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="width:350px!important;height:215px !important;background-color:rgb(237,28,36);">
+        <img class="" src="./assets/m.png" width="270px">
+      </p>
+    </div>
+  </div>
+
+  <div class="w3-padding-64" id="pz"></div>
+  <div class="w3-row w3-padding-64">
+    <div class="w3-half w3-container">
+      <h1 class="w3-text-teal">PvZ</h1>
+      <p>My clone of the popular game 'Plants vz Zombies'. Survive the Zombie attack in your backyard.</p>
+      <a href="https://www.dropbox.com/s/3ri8scsfliv4ltd/PlantsVsZombies.exe?dl=1"><button class="w3-button w3-black">Download Game</button></a>
+    </div>
+    <div class="w3-third w3-container">
+      <img class="w3-border" src="./assets/pz.png" width="350px">
+    </div>
+  </div>
+
+<div class="w3-padding-64" id="ig"></div>
+  <div class="w3-row w3-padding-64">
+    <div class="w3-half w3-container">
+      <h1 class="w3-text-teal">The Incredible 3D Game:</h1>
+      <p>An open voxel-world game.</p>
+      <button class="w3-button w3-black w3-disabled">Download Game</button> <i>* Download coming soon</i>
+    </div>
+    <div class="w3-third w3-container">
+      <img class="w3-border" src="./assets/ig.png" width="350px">
+    </div>
+  </div>
+<div class="w3-padding-64"></div>
+
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2">
+      <h4></h4>
+    </div>
+
+    <div class="w3-container w3-theme-l1">
+      <p>Copyright &copy; 2018-2021 by Isaiah. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+<!-- END MAIN -->
+</div>
+
+<script>
+</script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<html>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="./theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Java 2 V | Project</title>
+<style>
+.mybtn,.red {min-width:69px; min-height:68px;margin:3px;font-size:2rem;max-height:68px;max-width:68px;border:1px solid black;}
+.red {background-color:red;}
+.mybtn span {display:none}
+.e span {display:inline !important}
+.un {background-color:rgb(189,189,189)!important}
+
+.cursor {position: relative}
+.cursor	i {
+ position:absolute;width:1px;height:20%;left:175px;top:40%;
+ background-color:gray;
+ animation-name:blink;animation-duration:1000ms;animation-iteration-count:infinite;
+}
+
+@keyframes blink {
+ 0%  {background-color:rgb(140,140,140)}
+ 50% {background-color:black}
+ 100%{background-color:rgb(140,140,140)}
+}
+</style>
+
+<!--Navbar-->
+<div class="w3-top">
+  <div class="w3-bar w3-theme-d2 w3-top w3-left-align w3-large">
+    <a href="https://isaiah.dev/" class="w3-bar-item w3-button w3-theme-d5" style="min-width:160px;">Isaiah.dev</a>
+  </div>
+</div>
+<style>.w3-container {padding-left:3rem;}
+.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
+* {transition: all 100ms linear;}
+.ch {float:left;margin-left:1.5rem;margin-right:2rem;}
+.padding-18 {text-align:left;}
+.full {margin-bottom:50vh;}
+.bb {min-width:14rem;}
+.dl {min-width:17rem;}
+.cmd { background-color:black;padding:24px;color:white; font-family: "Courier New", Courier, monospace;text-align:left;border-radius:8px;}
+</style>
+
+<body>
+   <div class="w3-container" style="padding-top:4rem;min-height:100vh;">
+     <div class="w3-row w3-padding-32">
+       <div class="w3-half">
+        <div class="w3-container">
+         <h2><b>Java2V Transpiler</b> <i><small>(In development!)</small></i></h2>
+         <p class="w3-large">Java2V Transpiler <i>(J2V)</i> provides the ability to transpile Java source into V source that can be compiled to C, or Javascript backends.</p>
+         <p>
+           <a href="#free"><button class="bb w3-button w3-green w3-large">Download Free<br><span style="font-variant: small-caps;font-size:.7rem">Basic Edition</span></button></a>
+           <a href="#price"><button class="bb w3-button w3-theme-d1 w3-large">See Pricing Details<br><span style="font-variant: small-caps;font-size:.7rem">Pro Edition</span></button></a>
+         </p>
+         <p>
+           <div class="cmd cursor" style="width:50%"><span style="color:rgb(140,140,140)">&gt;</span>&nbsp;&nbsp;j2v File.java<i></i></div>
+         </p>
+        </div>
+       </div>
+       <div class="w3-rest">
+        <div class="w3-container">
+         <img src="./assets/example.png" width="90%">
+        </div>
+       </div>
+     </div>
+   </div>
+
+    <div id="price" class="w3-container w3-center full" style="padding:48px 4px 48px;line-height:1.8;background-color:lightgray;">
+        <h3><b>Pricing</b></h3>
+        <span>Choose a pricing plan that fits your needs.</span>
+        <div class="w3-row-padding w3-center" style="margin-top:42px">
+            <div class="w3-quarter w3-section"></div>
+            <div class="w3-quarter">
+              <ul class="w3-ul w3-white w3-hover-shadow w3-border" style="background-color:white;">
+                <li class="w3-black w3-xxlarge" style="font-variant: small-caps;"><h3><b>Basic</b></h3></li>
+                <li class="padding-18"><span class="ch">&#10003;</span> Basic class library</li>
+                <li class="padding-18"><span class="ch">&#10007;</span> GUI Support</li>
+                <li><h2 style="margin-bottom:0;"><b>Free</b> </h2><span class="w3-opacity" style="font-size:.8em">Limited Time Offer</span></li>
+                <li class="w3-light-gray w3-padding-24">
+                  <a href="#free"><button class="w3-button w3-green w3-padding">See Details</button></a>
+                </li>
+              </ul>
+            </div>
+            <div class="w3-quarter">
+              <ul class="w3-ul w3-white w3-hover-shadow w3-border" style="background-color:white;">
+                <li class="w3-black w3-xxlarge" style="font-variant: small-caps;"><h3><b>Professional</b></h3></li>
+                <li class="padding-18"><span class="ch">&#10003;</span> Increased class library</li>
+                <li class="padding-18"><span class="ch">&#10003;</span> GUI Support</li>
+                <li><h2 style="margin-bottom:0;"><b>$7.99</b></h2><span class="w3-opacity" style="font-size:.8em">per year + tax</span></li>
+                <li class="w3-light-gray w3-padding-24">
+                  <button class="w3-button w3-black w3-padding" disabled>Coming soon</button>
+                </li>
+              </ul>
+            </div>
+            <div class="w3-quarter w3-section"></div>
+        </div><!--<small><br>Open-source projects might qualify for an additional 60% discount.</small>-->
+    </div>
+
+    <div id="free" style="padding:1vh;">&nbsp;</div>
+    <div class="w3-container w3-center full" style="padding:48px 4px 48px;line-height:1.8;background-color:lightgray;">
+      <h3><b>Download: <span style="font-variant: small-caps;">Basic Edition</span></b></h3><br>
+      <div class="w3-row">
+        <div class="w3-third">
+          <p>Free Alpha Test release.</p><br><b>Version:</b><br>0.0.1-indev (Oct 11<sup>th</sup>)<br><br>
+          <b>Update Notes:</b><br>
+          <li>First version</li>
+          <br>
+          <p><b>Example File:</b><br><a target="_blank" href="./assets/Test.java" class="w3-button w3-theme-d2">Test.java</a></p>
+        </div>
+        <div class="w3-third">
+          &nbsp;
+          Download then run from CMD:<br>
+          <div class="cmd cursor"><span style="color:rgb(140,140,140)">&gt;</span>&nbsp;&nbsp;j2v File.java<i></i></div><br>
+        </div>
+        <div class="w3-third">
+          <p>
+            <i class="fa fa-windows"></i> Download for Windows 10/11<br>
+            <a href="./assets/j2v.exe" class="dl w3-button w3-theme-d2">Download j2v.exe (1.4mb)</a><br><br>
+            
+            <i class="fa fa-linux"></i> Download for Linux<br>
+            <a href="#" class="dl w3-button w3-theme-d2 w3-disabled"><i>Coming soon</i></a><br>
+            
+            <i class="fa fa-apple"></i> Download for macOS<br>
+            <a href="#" class="dl w3-button w3-theme-d2 w3-disabled"><i>Coming soon</i></a>
+          </p>
+        </div>
+      </div>
+      <div class="w3-row-padding w3-center" style="margin-top:42px">
+        <div class="w3-quarter w3-section"></div>
+        <div class="w3-quarter"></div>
+        <div class="w3-quarter"></div>
+        <div class="w3-quarter w3-section"></div>
+      </div><p>&nbsp;</p>
+    </div>
+
+</body>
+<p class="w3-padding-64" style="min-height:40vh;">&nbsp;</p>
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-64 w3-theme-d2">
+     Copyright &copy; 2021 by Isaiah. All Rights Reserved. Do not redistribute.<br>
+     <br>
+     Java<sup>&reg;</sup> is a registered trademark of Oracle Corporation. This site is not affilicated with nor endorsed by Oracle Corporation.<br>
+     V&trade; is a trademark of <a href="https://vlang.io">Vlang</a>. This site is not affilicated with nor endorsed by Vlang.
+  </footer>
+  
+  <div class="w3-theme-d5 w3-center w3-padding-24" style="width:100%;color:rgb(230,230,230)!important">Copyright &copy; 2021 by Isaiah &middot; Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
+
+
+</html>

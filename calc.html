@@ -1,0 +1,8 @@
+<html><style>.a{background:#e4e4e7;display:inline-block;margin:2vh;box-shadow:0 2px 8px}button{height:3rem;width:3rem}
+input{background:#f3f3f3;height:3rem}</style><body><div class="a"><table><tr><td><input type="text" id="o"/></td><td><button onclick="z().value=''">C</button>
+</td></tr></table><table><tr><td>1</td><td>2</td><td>3</td><td>/</td></tr><tr><td>4</td><td>5</td><td>6</td><td>-</td></tr><tr><td>7</td><td>8</td><td>9</td>
+<td>+</td></tr><tr><td>.</td><td>0</td><td><button onclick="z().value=eval(z().value)">=</button></td><td>*</td></tr></table></div></body><script>
+var a = document.getElementsByTagName('td');
+for(var i=0;i<a.length;i++){var t=a[i].innerHTML;if (t.length<2)a[i].innerHTML="<button onclick=\"z().value+='"+t+"'\">"+t+"</button>";}
+function z(){return document.getElementById("o")}
+</script></html>

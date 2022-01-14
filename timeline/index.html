@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<title>Timeline Project</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #474e5d;
+  font-family: Helvetica, sans-serif;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  background-color: white;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
+}
+
+/* Container around content */
+.container {
+  padding: 10px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+}
+
+/* The circles on the timeline */
+.container::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: -17px;
+  background-color: white;
+  border: 4px solid #FF9F55;
+  top: 15px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Place the container to the left */
+.left { left: 0;}
+
+/* Place the container to the right */
+.right {left: 50%;}
+
+/* Add arrows to the left container (pointing right) */
+.left::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  right: 30px;
+  border: medium solid white;
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent white;
+}
+
+/* Add arrows to the right container (pointing left) */
+.right::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  left: 30px;
+  border: medium solid white;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent white transparent transparent;
+}
+
+/* Fix the circle for containers on the right side */
+.right::after {
+  left: -16px;
+}
+
+/* The actual content */
+.content {
+  padding: 20px 30px;
+  background-color: white;
+  position: relative;
+  border-radius: 6px;
+}
+
+/* Media queries - Responsive timeline on screens less than 600px wide */
+@media screen and (max-width: 600px) {
+  /* Place the timelime to the left */
+  .timeline::after {
+  left: 31px;
+  }
+  
+  /* Full-width containers */
+  .container {
+  width: 100%;
+  padding-left: 70px;
+  padding-right: 25px;
+  }
+  
+  /* Make sure that all arrows are pointing leftwards */
+  .container::before {
+  left: 60px;
+  border: medium solid white;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent white transparent transparent;
+  }
+
+  /* Make sure all circles are at the same spot */
+  .left::after, .right::after {
+  left: 15px;
+  }
+  
+  /* Make all right containers behave like the left ones */
+  .right {left: 0%;}
+}
+
+a {margin:10px}
+</style>
+</head>
+<body>
+
+<div class="w3-abar w3-black w3-padding-32">
+	<div class="w3-bar-item w3-buttaon w3-content w3-center" style="font-size:1.5rem">Isaiah's Timeline Project</div>
+</div>
+
+<div class="timeline w3-auto">
+  <div class="container left" >
+    <div id="yellowstone" class="content" style="min-height:200px;background:url(https://www.planetware.com/photos-large/USWY/usa-wyoming-yellowstone-grand-prismatic-spring.jpg);background-size:100% 100%">
+      <h2 style="background:rgba(0,0,0,.7);color:white;max-width:7rem" class="w3-padding">1872</h2>
+      <div style="background:rgba(0,0,0,.7);color:white;" class="w3-margin w3-padding">
+        <p>Congress passed the Yellowstone Act, making Yellowstone the first national park</p>
+      </div>
+    </div>
+  </div>
+  <div class="container right">
+    <div class="content">
+      <h2>1926</h2>
+      <p>Salt Lake City was the first U.S. city to conduct a large scale survey of air pollution.</p>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content">
+      <h2>1940</h2>
+      <div style="display:inline-block;float:left;" class="w3-border w3-margin">
+        <img src="https://www.wfla.com/wp-content/uploads/sites/71/2020/08/GettyImages-1153196344-1.jpg?w=600&h=500&crop=1" width="100">
+      </div>
+      <p>Congress passed the Bald Eagle Preservation Act to prevent the extinction of the national symbol.  The bald eagle was removed from the endangered species list in 2007.</p>
+    </div>
+  </div>
+  <div class="container right" id="Everglades">
+    <div class="content" style="min-height:200px;background:url(https://www.worldatlas.com/upload/a9/71/be/shutterstock-1321057124.jpg);background-size:100% 100%">
+      <h2 style="background:rgba(0,0,0,.7);color:white;max-width:7rem" class="w3-padding">1947</h2>
+      <div style="background:rgba(0,0,0,.7);color:white;" class="w3-margin w3-padding">
+        <p>President Truman established Everglades National Park.  Just prior to the park’s designation, Marjorie Stoneman Douglas published The Everglades: River of Grass.</p>
+      </div>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content">
+      <h2>1954</h2>
+      <p>Heavy smog conditions forced city officials to close schools in Los Angeles for most of the month of October.</p>
+    </div>
+  </div>
+  <div class="container right">
+    <div class="content" id="cleanair">
+      <h2>1963</h2>
+      <p>Congress passed the first Clean Air Act, which regulated air pollution and emissions.</p>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content">
+      <h2>1965</h2>
+      <p>President Johnson signed the Water Quality Act to strengthen federal water pollution laws and outline water quality guidelines for states.</p>
+    </div>
+  </div>
+  <div class="container right">
+    <div class="content" id="1968">
+      <h2>1968</h2>
+      <p>The Wild and Scenic Rivers Act passed by Congress and President Johnson to protect waterways from pollution, commercialization, and development</p>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content">
+      <h2>1969</h2>
+      <p>The National Environmental Policy Act was one of the first laws to establish the broad national 
+framework for protecting the environment.  The Act demanded that all branches of government give 
+proper consideration to the environment prior to building airports, buildings, military complexes, 
+highways, parks, and other activities.</p>
+    </div>
+  </div>
+  <div class="container right">
+    <div class="content">
+      <h2>1970</h2>
+      <p>The first Earth Day was celebrated by 20 million people across the country.  </p>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content" id="epa">
+      <h2>1970</h2>
+      <p>The Environmental Protection Agency was established to “create and maintain conditions under 
+which man and nature can exist in productive harmony”.</p>
+    </div>
+  </div>
+  <div class="container right">
+    <div class="content">
+      <h2>1973</h2>
+      <p>Congress passed the Endangered Species Act</p>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content" id="safe-water">
+      <h2>1974</h2>
+      <p>Congress passed the Safe Drinking Water Act to be administered by the EPA, protecting 
+Americans from contaminated drinking water.  The EPA still regulates public drinking water as a result of 
+the act.</p>
+    </div>
+  </div>
+  <div class="container right">
+    <div class="content" id="1980">
+      <h2>1980</h2>
+      <p>Congress passed the Alaska National Interest Lands Conservation Act, designating over 100 
+million acres of parks, wildlife refuges, and wilderness areas throughout the state.</p>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content">
+      <h2>1992</h2>
+      <p>The Earth Summit held in Rio de Janeiro, resulting in the signing of the Convention on Climate 
+Change and the Earth Charter, a global pledge to control global warming</p>
+    </div>
+  </div>
+
+  <!--<div class="container right">
+    <div class="content">
+      <h2>2000</h2>
+      <p>Insert Text Here</p>
+    </div>
+  </div>
+  <div class="container left">
+    <div class="content">
+      <h2>2000</h2>
+      <p>Insert Text Here</p>
+    </div>
+  </div>-->
+
+  <br><br>
+</div>
+<hr><br>
+
+<div class="w3-content" style="background-color:white;padding:.5rem;min-height:20vh">
+<h2>Groups</h2>
+
+<figure style="border:2px solid black;padding:.5rem">
+    <h3>National Parks / Land:</h3>
+    <a href="#Everglades">Everglades National Park created</a><br>
+    <a href="#yellowstone">Yellowstone Park created</a><br>
+    <a href="#1980">Alaska National Interest Lands Conservation Act</a><br>
+</figure>
+
+<figure style="border:2px solid black;padding:.5rem">
+    <h3>Regulations:</h3>
+    <a href="#safe-water">Safe Drinking Water Act</a><br>
+    <a href="#epa">Evironmental Protection Agency created</a><br>
+    <a href="#1968">Wild and Scenic Rivers Act to protect waterways</a><br>
+    <a href="#cleanair">First Clean Air Act</a><br>
+</figure>
+
+</div>
+
+
+<p>&nbsp;</p>
+<div class="w3-bar w3-black">
+	<span class="w3-bar-item w3-button">Isaiah's Timeline Project</span>
+    <span class="w3-bar-item w3-button" style="float:right">&copy; 2022. All Rights Reserved</span>
+</div>
+
+</body>
+</html>

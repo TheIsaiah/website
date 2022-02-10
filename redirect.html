@@ -6,8 +6,8 @@ Loading....
 </body>
 
 <script>
-var l = window.location.href;
-var c = "https://isaiah.w3spaces.com/" + l.split("?r=")[1];
+var l = window.location.href.replace('wikipedia', 'en.wikipedia.org/wiki/');
+var c = "https://" + l.split("?q=")[1];
 document.body.innerHTML = c;
 window.location = c;
 </script>

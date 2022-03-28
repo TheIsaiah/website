@@ -1,0 +1,48 @@
+<html>
+
+    <style>.w3-lwhite {background:rgb(230,230,230)}
+    .w3-bar{margin-bottom:1rem}
+    button {padding-left: 4rem; padding-right:4rem; padding-bottom:.5rem;padding-top:.5rem;}
+    .f_res {
+        border: 1px solid rgb(230,230,230);
+        padding: 8px;
+        display:inline-block;
+    }
+    </style>
+
+     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+
+    <div id="head" class="w3-bar w3-lwhite w3-border">
+        <div class="w3-bar-item">Coin Flip</div>
+    </div>
+
+    <div class="w3-content w3-padding">
+
+    <button onclick="flip()">Flip Coin</button><br><br>
+    
+    <div id="result">
+    
+    </div>
+    
+    </div>
+
+    <script>
+    
+        var count = 0;
+        function flip() {
+            var rand = Math.random()
+            
+            var side = rand > 0.5 ? 'Head' : 'Tails'
+            
+            var img = side == 'Head'
+                        ? 'https://www.usmint.gov/wordpress/wp-content/uploads/2022/02/2022-lincoln-penny-uncirculated-obverse-philadelphia-768x768.jpg'
+                        : 'https://www.usmint.gov/wordpress/wp-content/uploads/2022/02/2022-lincoln-penny-uncirculated-reverse-768x768.jpg'
+            
+            $('result').innerHTML += '<div class="f_res"> Flip ' + count + ' = ' + side + '<br><img src="' + img +'" width=128></div>'
+            count += 1
+        }
+        
+        function $(id){return document.getElementById(id)}
+    </script>
+
+</html>

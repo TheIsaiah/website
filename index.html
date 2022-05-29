@@ -25,6 +25,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif; scrollbar-color:
 .w3-center {
     margin-right: 45px;
 }
+
+.w3-autoo{margin-left:auto;margin-right:auto}
+.w3-autoo{max-width:1240px}
+@media (max-width:1205px){.w3-autoo{max-width:95%}}
+@media (max-width:992px){.w3-autoo{max-width:100%}}
 </style>
 <body>
 
@@ -53,18 +58,25 @@ h2 {margin-right:3rem;}
 .row {padding: 6rem 3rem 6rem 1.5rem;min-height:120vh !important;}
 .wfa {font-size:5rem;padding:2rem;}
 #main { text-align:center; }
+#mySidebar {
+	background:rgb(224, 233, 251, .04);
+	box-shadow: 5px 10px 32px rgba(21, 64, 106, .1);
+}
+
+.w3-blu {background:rgb(30,90,160);box-shadow:1px 1px 32px rgb(30,90,160);}
+.w3-foot {background:rgb(25, 50, 84);color:white}
 </style>
 
-<body class="w3-light-grey w3-content" style="max-width:1600px">
+<body class="w3-light-grey w3-content" style="max-width:1920px">
 
 <!-- Sidebar -->
-<nav class="w3-sidebar w3-bar-block w3-collapse w3-theme-l5 w3-animate-left w3-large" id="mySidebar">
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-animate-left w3-large" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
   <h4 class="w3-bar-item"><b>Content</b></h4>
   <a class="w3-bar-item w3-button w3-hover-black" href="#main">&bull; Overview</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#about">&bull; About me</a>
+  <!--<a class="w3-bar-item w3-button w3-hover-black" href="#about">&bull; About me</a>-->
   <a class="w3-bar-item w3-button w3-hover-black" href="#projects">&bull; Projects</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="#games">&bull; Games</a>
 </nav>
@@ -75,19 +87,18 @@ h2 {margin-right:3rem;}
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:160px;margin-top:4rem;">
 
-
-  <div class="w3-container row" id="main"><h2 style="text-align:center;"><b>Welcome!</b></h2>
+  <div class="w3-container row w3-auto" id="main"><h2 style="text-align:center;"><b>Welcome!</b></h2>
       <!-- First Photo Grid-->
       <div class="w3-row-padding" style="margin-left:8rem;margin-right:11.5rem;">
-      <div class="w3-third w3-container w3-margin-bottom">
+      <!--<div class="w3-third w3-container w3-margin-bottom">
           <div class="shad">
             <i class="fa fa-user wfa" style="width:100%;background-color:rgb(240,240,240)"></i>
             <div class="w3-container w3-white" style="padding-left:1rem;">
               <p><h1><a href="#about"><button>About Me</button></a></h1></p>
             </div>
           </div>
-        </div>
-        <div class="w3-third w3-container w3-margin-bottom">
+        </div>-->
+        <div class="w3-half w3-container w3-margin-bottom">
           <div class="shad">
             <i class="fa fa-project-diagram wfa" style="width:100%;background-color:rgb(240,240,240)"></i>
             <div class="w3-container w3-white" style="padding-left:1rem;">
@@ -95,7 +106,7 @@ h2 {margin-right:3rem;}
             </div>
           </div>
         </div>
-        <div class="w3-third w3-container w3-margin-bottom"><div class="shad">
+        <div class="w3-half w3-container w3-margin-bottom"><div class="shad">
           <i class="fa fa-gamepad wfa" style="width:100%;background-color:rgb(240,240,240)"></i>
           <div class="w3-container w3-white">
             <p><h1><a href="#games"><button>Games</button></a></h1></p>
@@ -104,7 +115,7 @@ h2 {margin-right:3rem;}
       </div>
   </div>
 
-  <div class="w3-container row" id="about"><h2 style="text-align:center;"><b>About me</b></h2>
+  <!--<div class="w3-container row" id="about"><h2 style="text-align:center;"><b>About me</b></h2>
       <h3 class="w3-center">Certificates</h3>
       <p class="w3-center">
         <a target="_blank" href="https://app.testdome.com/cert/99974c2d3b564c32891c679334cc087b" style="display:inline-block;" class="testdome-certificate-stamp gold"><span class="testdome-certificate-name">Isaiah P.</span><span class="testdome-certificate-test-name">Java </span><span class="testdome-certificate-card-logo">TestDome<br />Certificate</span></a><script>var stylesheet = "https://app.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link"); link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);</script>
@@ -112,17 +123,19 @@ h2 {margin-right:3rem;}
         <a target="_blank" href="https://app.testdome.com/cert/120074a2c3b04c0ab5f43012cad91fab" style="display:inline-block;" class="testdome-certificate-stamp silver"><span class="testdome-certificate-name">Isaiah P.</span><span class="testdome-certificate-test-name">Git </span><span class="testdome-certificate-card-logo">TestDome<br />Certificate</span></a><script>var stylesheet = "https://app.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link"); link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);</script>
         <a target="_blank" href="https://app.testdome.com/cert/f2c143af46ba4462a1a4f0324c2b0198" style="display:inline-block;" class="testdome-certificate-stamp silver"><span class="testdome-certificate-name">Isaiah P.</span><span class="testdome-certificate-test-name">JavaScript </span><span class="testdome-certificate-card-logo">TestDome<br />Certificate</span></a><script>var stylesheet = "https://app.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link"); link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);</script>
       </p>
-  </div>
+  </div>-->
 
-  <div class="w3-container row" id="projects"><h2 style="text-align:center;"><b>Projects</b></h2>
+  <div class="w3-container row w3-auto" id="projects"><h2 style="text-align:center;"><b>Projects</b></h2>
       <!-- First Photo Grid-->
       <div class="w3-row-padding">
         <div class="w3-third w3-container w3-margin-bottom">
           <div class="shad">
-          <div style="width:100%;padding:3rem;background-color:rgb(240,240,240);font-size:4rem;" class="w3-center w3-hover-opacity">J2V</div>
+          <div style="width:100%;padding:3rem;background-color:rgb(240,240,240);font-size:4rem;" class="w3-center w3-hover-opacity">
+			<i class="fa fa-coins"></i>
+		  </div>
           <div class="w3-container w3-white">
-            <p><b>J2V</b> <a target="_blank" href="./j2v.html"><button class="w3-button w3-black">View Details</button></a></p>
-            <p>Transpile Java to <a target="_blank" href="https://vlang.io">V</a>.<br><i><b>In development</b></i></p>
+            <p>Coin Flip <a target="_blank" href="./coin-flip"><button class="w3-button w3-black">Go To</button></a></p>
+            <p>Online Coin-Flip</p>
           </div>
           </div>
         </div>
@@ -143,7 +156,7 @@ h2 {margin-right:3rem;}
       </div>
   </div>
 
-  <div class="w3-container row" id="games"><h2 style="text-align:center;"><b>Games</b></h2>
+  <div class="w3-container row w3-autoo" id="games"><h2 style="text-align:center;"><b>Games</b></h2>
       <!-- First Photo Grid-->
       <div class="w3-row-padding">
         <div class="w3-third w3-container w3-margin-bottom">
@@ -229,14 +242,17 @@ h2 {margin-right:3rem;}
     <p class="w3-padding-24">&nbsp;</p>
   </div>
 
-  <!-- Footer -->
-  <footer class="w3-container w3-padding-32 w3-theme-d2">
-  </footer>
-  
-  <div class="w3-theme-d5 w3-center w3-padding-24" style="width:100%;">Copyright &copy; 2021 by Isaiah &middot; Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
-
 <!-- End page content -->
 </div>
+
+  <!-- Footer -->
+  <footer class="w3-container w3-blu" style="padding:6px">
+  </footer>
+  
+  <div class="w3-foot w3-center w3-padding-32" style="width:100%;">
+	Copyright &copy; 2021 Isaiah
+  </div>
+
 
 <script>
 // Script to open and close sidebar

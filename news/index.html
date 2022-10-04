@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+* {
+	transition: background .1s;
+}
+
+body {
+	background: rgb(240,240,240);
+}
+a {
+	color: rgb(0, 100, 200);
+}
+
+figure {
+	border: 1px solid rgb(150,150,150);
+	margin: 0;
+	padding: 1rem;
+	border-radius: 4px;
+}
+
+.w3-button, button {
+	border-radius: 3px;
+	background:rgba(50,25,0,.05);
+	border: 1px solid rgb(143,143, 157);
+	padding: 5px 30px;
+}
+.w3-button:active, button:active {
+background:rgba(0,0,20,.4) !important;
+}
+.ddd {margin-top:-.5rem;}
+</style>
+
+<title>News</title>
+<body>
+
+<div id="top" class="w3-container w3-auto">
+<br>
+<button onclick="do_dark()" class="w3-button" style="background:rgba(50,25,0,.05);">Dark Mode</button>
+
+<h3>News RSS Feed:</h3>
+<p class="ddd">Collection of top news headlines from the Google, Epoch RSS feeds.</p>
+
+<button class="w3-button" onclick="load_news('TOP')">Top</button>
+<button class="w3-button" onclick="load_news('WORLD')">World</button>
+<button class="w3-button" onclick="load_news('NATION')">Nation</button>
+<button class="w3-button" onclick="load_news('BUSINESS')">Business</button>
+<button class="w3-button" onclick="load_news('TECHNOLOGY')">Tech</button>
+<button class="w3-button" onclick="load_news('SCIENCE')">Science</button>
+<button class="w3-button" onclick="load_news('HEALTH')">Health</button>
+<button class="w3-button" onclick="load_news('TESTING')">Epoch</button>
+
+</div>
+
+<div id="log" class="w3-container w3-auto" style="min-height:100vh;">
+</div>
+
+</body>
+
+<!-- 
+https://news.google.com/news/rss/headlines/section/topic/NATION?ned=us&hl=en
+-->
+<script>
+function $(id) {return document.getElementById('log')}
+
+var dark = false;
+
+function do_dark() {
+	if (dark) {
+    	document.body.style.background = "rgb(240,240,240)";
+      document.body.style.color = "black";
+
+      var aa = document.getElementsByTagName("a")
+      for (var i = 0; i < aa.length; i++) {
+          var el = aa[i];
+          el.style.color = "rgb(0,100,200)";
+      }
+
+      var ab = document.querySelectorAll('[color="#6f6f6f"]');
+      for (var i = 0; i < ab.length; i++) {
+          var el = ab[i];
+          el.style.color = "#6f6f6f";
+      }
+    } else {
+
+      document.body.style.background = "rgb(50,50,50)";
+      document.body.style.color = "white";
+
+      var aa = document.getElementsByTagName("a")
+      for (var i = 0; i < aa.length; i++) {
+          var el = aa[i];
+          el.style.color = "rgb(100,200,230)";
+      }
+
+      var ab = document.querySelectorAll('[color="#6f6f6f"]');
+      for (var i = 0; i < ab.length; i++) {
+          var el = ab[i];
+          el.style.color = "rgb(200,200,200)";
+      }
+    }
+    dark = !dark;
+}
+
+// Load default section:
+load_news('TOP');
+
+function load_news(topic) {
+var topicc = "NATION";
+var RSS_URL = "https://api.allorigins.win/raw?url=https://news.google.com/news/rss/headlines/section/topic/" + topic + "?ned=us&hl=en";
+if (topic == 'TOP') {
+	RSS_URL = "https://api.allorigins.win/raw?url=https://news.google.com/rss?gl=US&hl=en-US&ceid=US:en";
+}
+if (topic == 'TESTING') {
+	RSS_URL = "https://api.allorigins.win/raw?url=https://www.theepochtimes.com/feed/";
+}
+
+$('log').innerHTML = "<br><h2>Fetching Google News Feed...</h2>";
+
+var count = 0;
+
+fetch(RSS_URL)
+  .then(response => response.text())
+  .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+  .then(data => {
+    //$('log').innerHTML = "<p>&nbsp;</p>";
+    const items = data.querySelectorAll("item");
+    var html = ``;
+
+    items.forEach(el => {
+
+	if (topic == 'TESTING') {
+		// Epoch Times rss feed
+ html += `
+        <article>
+           <figure>
+	<img src="${get_image(el)}" alt="No image" width="200">
+          <h2>
+            <a href="${el.querySelector("link").innerHTML}" target="_blank" rel="noopener" >
+	${decodee(el.querySelector("title").innerHTML)}
+            </a>
+          </h2>
+          <figcaption>
+          	${decodee(el.querySelector("description").innerHTML)}
+          </figcaption></figure>
+        </article><br>
+      `;
+
+	} else {
+      html += `
+        <article>
+          <!--<img src="${el.querySelector("link").innerHTML}/image/large.png" alt="" width="300">-->
+          <figure>
+            <h2>
+            <a href="${el.querySelector("link").innerHTML}" target="_blank" rel="noopener">
+              ${el.querySelector("title").innerHTML}
+            </a>
+          </h2>
+          <figcaption>
+          	${decodee(el.querySelector("description").innerHTML)}
+          </figcaption></figure>
+        </article><p>&nbsp;</p>
+      `;
+}
+
+	$('log').innerHTML = "<br><h2>Fetching Google News Feed... (Item " + count + ")</h2>";
+count += 1;
+    });
+  
+  $('log').innerHTML = "<p style='font-size:12px;padding-bottom:1rem;'>&nbsp;Loaded " + count + " headlines for category: '" + topic + "'</p>";
+  $('log').innerHTML += html + ""
+  });
+
+}
+
+function get_image(el) {
+	var sel = el.querySelector("imageurl")
+	if (null != sel) {	
+		return sel.innerHTML
+	}
+}
+  
+function decodee(a) {
+	return a.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("&amp;nbsp;", "&nbsp; ");
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+</script>
+
+<div class="foot w3-padding-32 w3-center" style="background:rgba(0,0,0,.1);margin-top:10rem;font-size:12px;">
+News RSS Reader.  &copy; 2022 by Isaiah.
+</div>
+
+</html>

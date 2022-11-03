@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<title>The Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+.main {
+	margin-top: 4px;
+	background: rgba(255,255,255,0.91);
+    min-height: 80vh;
+    font-size: 1.1rem;
+}
+figure {
+	display: inline-block;
+    border: 1px solid red;
+    margin: 0;
+    min-width: 80px;
+}
+figcaption {
+font-size: 11px;
+}
+.votes {
+border:1px solid black;
+}
+#out {
+position: fixed;
+bottom: 1rem;
+border: 1px solid green;
+width: 99vw;
+}
+</style>
+
+<body>
+
+<div class="main w3-container w3-content">
+  <h1>The Game</h1>
+  
+  <div class="title" id="menu">
+       <div id="rules">
+        Hello there! You are a bill. Your job is to get passed.<br>
+        Current Bill Details:<br>
+        - Rename all the Post Offices to be the Mr. Clayton Post Office
+        <br><br>
+        Rules:<br>
+        - The first player to become a passed bill will win!<br>
+        - The game will use dice rolls for chance.
+        
+       </div><br>
+       <button onclick="start_game(1)">1 player</button>
+       <button onclick="start_game(2)">2 Players</button>
+       <button onclick="start_game(3)">3 Players</button>
+       <button onclick="start_game(4)">4 Players</button>
+       <button onclick="start_game(5)">5 Players</button>
+  </div>
+  <br>
+  <div id="game" style="display:none">
+  	<div id="playerid"></div>
+ 	<div id="proposed" style="display:none">
+        You are being proposed to the House of Representatives.
+        After being read to the house you are assigned a committee.
+        <br><br>
+        
+        <button onclick="do_roll('prorol')">Roll Dice</button><br>
+        <span id="prorol" style="font-size:1.5rem;"></span>
+    </div>
+    <div id="vote">
+   
+    </div>
+  </div>
+  <div id="out">
+  Stats:
+  </div>
+  
+</div>
+
+
+</body>
+<script>
+function $(id){return document.getElementById(id)}
+
+var players = 2;
+var turn = 0;
+
+var progresss = [];
+
+function main() {
+}
+
+function start_game(plr_count) {
+	players = plr_count
+    $('menu').style.display = "none";
+    $('game').style.display = "block";
+    // $('out').innerHTML = players
+    //vote();
+    
+    for (var i = 0; i < plr_count; i++) {
+    	progresss[i] = 1;
+    }
+    //update_stats();
+    
+    turn = 1;
+    $('playerid').innerHTML = "<h1>PLAYER 1</h1>"
+    
+    stage_1()
+    
+    setInterval(update_stats, 100);
+}
+
+function roll_val() {
+	return Math.floor(Math.random() * 6) + 1;
+}
+
+function do_roll() {
+	var val = roll_val()
+    $('prorol').innerHTML = val;
+    var con = "You Rolled a " + val + ", (5 or 6 = good)";
+    $('prorol').style.border = "2px solid transparent";
+    if (val > 4) {
+    	$('prorol').innerHTML = con + "<br>Congrads! Your committee has desided you are a perfect bill, and decided you go to the next stage.";
+        progresss[turn - 1] += 2;
+        $('prorol').style.border = "2px solid green";
+    } else {
+    	$('prorol').innerHTML = con + "<br>Oh no! Your committee does not like you and are debating changes! Wait for your next turn for a second chance";
+        progresss[turn - 1] -= 1; 
+        $('prorol').style.border = "2px solid red";
+    }
+}
+
+function stage_1() {
+    $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>"
+    $('proposed').style.display = "block";
+}
+
+function update_stats() {
+	var con = "";
+    for (var i = 0; i < players; i++) {
+    	con += "<br>Player #" + (i+1) + ": " + progresss[i];
+    }
+    $('out').innerHTML = "Progress:<br>" + con;
+}
+
+
+
+function vote() {
+    var yes_votes = 0;
+    for (var i = 0; i < 435; i++) {
+        var yes = Math.random() > 0.5;
+        var vote = yes ? "YES!" : "NO!";
+        if (yes){ yes_votes += 1 }
+    }
+    var no_votes = 435 - yes_votes
+    $('vote').innerHTML += "<div class='votes'>Total Votes:<br>YAY: " + yes_votes + " and NAY: " + no_votes + "<br>Needed: At least 218 YAY to pass.</div>"
+}
+
+main();
+</script>
+
+
+</html> 

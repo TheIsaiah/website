@@ -223,9 +223,9 @@ document.getElementById('id01').style.display='block'
 setTimeout(function() {$('id01').style.display="none";},500)
 	var val = roll_val()
     $('prorol').innerHTML = val;
-    var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (5 or 6 = good)</span>";
+    var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (6 = good)</span>";
     $('prorol').style.border = "2px solid transparent";
-    if (val > 4 || testing) {
+    if (val > 5 || testing) {
     	$('prorol').innerHTML = con + "<br>Congrads! Your committee has desided to send you to the whole House with a recommendation to pass.";
         progresss[turn - 1] += 2;
         $('prorol').style.background = "rgb(0, 245,0)";
@@ -455,7 +455,7 @@ function update_stats() {
 function votee() {
     var yes_votes = 0;
     for (var i = 0; i < 435; i++) {
-        var yes = Math.random() > 0.65;
+        var yes = Math.random() > 0.71;
         var vote = yes ? "YES!" : "NO!";
         if (yes){ yes_votes += 1 }
     }

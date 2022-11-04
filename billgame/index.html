@@ -4,11 +4,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
+body {
+background: url('https://static1.squarespace.com/static/5e949a92e17d55230cd1d44f/t/610acd62299dda29b28e1292/1628097932845/BlissDayiMac6K+Display.png');
+background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
 .main {
 	margin-top: 4px;
-	background: rgba(255,255,255,0.91);
+	background: rgba(255,255,255,0.8);
+    border-radius:4px;
     min-height: 80vh;
     font-size: 1.1rem;
+    box-shadow: 1px 1px 16px black;
 }
 figure {
 	display: inline-block;
@@ -26,42 +33,77 @@ border:1px solid black;
 position: fixed;
 bottom: 1rem;
 border: 1px solid green;
-width: 99vw;
+padding:.7rem;
+right: 1rem;
+background: rgba(255,255,255,0.85);
 }
+#copy {
+position:fixed;
+bottom: .5rem;
+left: .5rem;
+font-size: 11px;
+}
+button {
+border:1.2px solid rgb(170,170,170);
+background: linear-gradient(rgb(235,235,235), rgb(220,220,220));
+padding: 8px 16px;
+}
+button:hover {
+background: linear-gradient(rgb(220,220,220), rgb(200,200,200));
+}
+button:active{
+	position:relative;
+    top:-1;
+}
+
 </style>
 
 <body>
 
 <div class="main w3-container w3-content">
-  <h1>The Game</h1>
-  
+<button style="float:left" onclick="javascript:location.reload()">Reset</button>
+  <h1 class="w3-center" style="font-weight:bold;">How a Bill Becomes Law: THE GAME</h1>
+  <hr>
   <div class="title" id="menu">
        <div id="rules">
         Hello there! You are a bill. Your job is to get passed.<br>
-        Current Bill Details:<br>
-        - Rename all the Post Offices to be the Mr. Clayton Post Office
-        <br><br>
-        Rules:<br>
-        - The first player to become a passed bill will win!<br>
-        - The game will use dice rolls for chance.
-        
+       
+        <h2>Rules:</h2>
+<div style="margin-left:2rem;">
+        - The first player to become a passed bill the quickist will win!<br>
+        - The game will use dice rolls for chance.<br>
+        - Points will be given for advancing and deducted for not advancing.<br>
+        - Game will take turns, Once "Next Player" is clicked it will be the next person's turn.<br>
+        - Make sure to <b style="background:black;color:white;padding:2px;">READ EVERYTHING!</b>
+</div>
+ 
        </div><br>
        <button onclick="start_game(1)">1 player</button>
        <button onclick="start_game(2)">2 Players</button>
        <button onclick="start_game(3)">3 Players</button>
        <button onclick="start_game(4)">4 Players</button>
        <button onclick="start_game(5)">5 Players</button>
+       <br><br>
+       <span style="font-size: 12px;">Copyright &copy; 2022. All Rights Reserved.</span>
   </div>
-  <br>
-  <div id="game" style="display:none">
-  	<div id="playerid"></div>
+  <div id="game" style="display:none;">
+  	<div id="playerid" style="background:black;color:white;font-weight:bold;"></div>
  	<div id="proposed" style="display:none">
         You are being proposed to the House of Representatives.
         After being read to the house you are assigned a committee.
         <br><br>
-        
-        <button onclick="do_roll('prorol')">Roll Dice</button><br>
-        <span id="prorol" style="font-size:1.5rem;"></span>
+        <button id="prl" onclick="do_roll('prorol')">Roll Dice</button><br><br>
+        <span id="prorol" style="font-size:1.2rem;"></span>
+        <br><br>
+        <button id="pnt" style="display:none" onclick="next_turn()">Next Player</button>
+    </div>
+    <div id="stage2" style="display:none">
+    	The Rules Committee has released the bill, which is now on the floor for debate.
+                <br><br>
+        <button id="2rl" onclick="do_roll_2('2rorol')">Roll Dice</button><br><br>
+        <span id="2rorol" style="font-size:1.2rem;"></span>
+        <br><br>
+        <button id="2nt" style="display:none" onclick="next_turn()">Next Player</button>
     </div>
     <div id="vote">
    
@@ -70,7 +112,23 @@ width: 99vw;
   <div id="out">
   Stats:
   </div>
+  <div id="copy">
+  &copy; 2022
+  </div>
   
+</div>
+
+
+<!-- The Modal -->
+<div id="id01" class="w3-modal">
+  <div class="w3-modal-content" style="margin:0!important;position:absolute;top:0;left:0;width:100vw;height:100vh;">
+    <div class="w3-container w3-center">
+      <span onclick="document.getElementById('id01').style.display='none'"
+      class="w3-button w3-display-topright">&times;</span>
+      <h1>Rolling Dice..</h1>
+      <img src="https://thumbs.gfycat.com/ElatedImpartialArmadillo-max-1mb.gif" width="400px">
+    </div>
+  </div>
 </div>
 
 
@@ -82,6 +140,7 @@ var players = 2;
 var turn = 0;
 
 var progresss = [];
+var stages = [];
 
 function main() {
 }
@@ -99,7 +158,7 @@ function start_game(plr_count) {
     //update_stats();
     
     turn = 1;
-    $('playerid').innerHTML = "<h1>PLAYER 1</h1>"
+    $('playerid').innerHTML = "<span>PLAYER 1</span>"
     
     stage_1()
     
@@ -111,32 +170,95 @@ function roll_val() {
 }
 
 function do_roll() {
+document.getElementById('id01').style.display='block'
+setTimeout(function() {$('id01').style.display="none";},500)
 	var val = roll_val()
     $('prorol').innerHTML = val;
-    var con = "You Rolled a " + val + ", (5 or 6 = good)";
+    var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (5 or 6 = good)</span>";
     $('prorol').style.border = "2px solid transparent";
     if (val > 4) {
-    	$('prorol').innerHTML = con + "<br>Congrads! Your committee has desided you are a perfect bill, and decided you go to the next stage.";
+    	$('prorol').innerHTML = con + "<br>Congrads! Your committee has desided to send you to the whole House with a recommendation to pass.";
         progresss[turn - 1] += 2;
-        $('prorol').style.border = "2px solid green";
+        $('prorol').style.background = "rgb(0, 245,0)";
+        stages[turn - 1] = 2;
     } else {
-    	$('prorol').innerHTML = con + "<br>Oh no! Your committee does not like you and are debating changes! Wait for your next turn for a second chance";
+    	$('prorol').innerHTML = con + "<br>Oh no! Your committee dislikes you!<br>(Wait for your next turn for a second chance).";
         progresss[turn - 1] -= 1; 
-        $('prorol').style.border = "2px solid red";
+        $('prorol').style.background = "red";
+        stages[turn - 1] = 1;
+    }
+    $('prl').style.display = "none";
+    $('pnt').style.display = "block";
+}
+
+function do_roll_2() {
+document.getElementById('id01').style.display='block'
+setTimeout(function() {$('id01').style.display="none";}, 500)
+	var val = roll_val()
+    $('2rorol').innerHTML = val;
+    var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (6 = good)</span>";
+    $('2rorol').style.border = "2px solid transparent";
+    if (val > 4) {
+    	$('2rorol').innerHTML = con + "<br>The House has passed your bill! It will now be sent to the 2nt Reading!";
+        progresss[turn - 1] += 2;
+        $('2rorol').style.background = "rgb(0, 245,0)";
+        stages[turn - 1] = 3;
+    } else {
+    	$('2rorol').innerHTML = con + "<br>Oh no! The House wants to change your bill, sending back to stage 1.";
+        progresss[turn - 1] -= 1; 
+        $('2rorol').style.background = "red";
+        stages[turn - 1] = 1;
+    }
+    $('2rl').style.display = "none";
+    $('2nt').style.display = "block";
+}
+
+function next_turn() {
+	if (turn < players) {
+		turn += 1
+        if (stages[turn - 1] == 2) {
+        	stage_2();
+        } else {
+        	stage_1();
+        }
+    } else {
+    	// Next Stage
+        turn = 0;
     }
 }
 
 function stage_1() {
+    $('prl').style.display = "block";
+    $('pnt').style.display = "none";
+     $('prorol').style.border = "";
+     $('prorol').style.background = "";
+    $('prorol').innerHTML = "";
     $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>"
     $('proposed').style.display = "block";
+    $('stage2').style.display = "none";
+}
+
+function stage_2() {
+    $('2rl').style.display = "block";
+    $('2nt').style.display = "none";
+    $('2rorol').style.border = "";
+    $('2rorol').innerHTML = "";
+    $('proposed').style.display = "none";
+    $('stage2').style.display = "block";
+    $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>"
+    // $('proposed').style.display = "none";
 }
 
 function update_stats() {
 	var con = "";
     for (var i = 0; i < players; i++) {
-    	con += "<br>Player #" + (i+1) + ": " + progresss[i];
+    	var stag = stages[i];
+        if (undefined == stag) {
+        	stag = 1;
+        }
+    	con += "<br>Player #" + (i+1) + ": Score:" + progresss[i] + ", Currently on Level: " + stag;
     }
-    $('out').innerHTML = "Progress:<br>" + con;
+    $('out').innerHTML = "Scores:<br>" + con;
 }
 
 

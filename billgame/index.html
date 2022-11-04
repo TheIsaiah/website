@@ -105,6 +105,42 @@ button:active{
         <br><br>
         <button id="2nt" style="display:none" onclick="next_turn()">Next Player</button>
     </div>
+     <div id="stage3" style="display:none">
+    	The House is now proforming a second read/debate. Roll the dice for the result.
+                <br><br>
+        <button id="3rl" onclick="do_roll_3('3rorol')">Roll Dice</button><br><br>
+        <span id="3rorol" style="font-size:1.2rem;"></span>
+        <br><br>
+        <button id="3nt" style="display:none" onclick="next_turn()">Next Player</button>
+    </div>
+      <div id="stage4" style="display:none">
+    	The House is now proforming a vote on your bill! A majority, 218, of the 435 representivies need to vote for the bill to pass.
+                <br><br>
+        <button id="4rl" onclick="do_roll_4('4rorol')">Proceed with Vote</button><br><br>
+        <span id="4rorol" style="font-size:1.2rem;"></span>
+        <br><br>
+        <button id="4nt" style="display:none" onclick="next_turn()">Next Player</button>
+    </div>
+    <!--stage5+ are in the senate-->
+    <div id="stage5" style="display:none">
+    	Your bill has been proposed in the Senate, it has went to a Senate committee.
+                <br><br>
+        <button id="5rl" onclick="do_roll_5('5rorol')">Roll Dice</button><br><br>
+        <span id="5rorol" style="font-size:1.2rem;"></span>
+        <br><br>
+        <button id="5nt" style="display:none" onclick="next_turn()">Next Player</button>
+    </div>
+    
+    <div id="stage6" style="display:none">
+    	Your bill has been sent to the President to sign.
+        <br><img src="https://cdn10.picryl.com/photo/1975/06/19/photograph-of-president-gerald-r-ford-signing-his-crime-message-to-congress-3bdd9b-1024.jpg" width="150"><span style="font-size:.88rem;">&lt;- President Gerald Ford (38th President)</span>
+                <br><br>
+        <button id="6rl" onclick="do_roll_6('6rorol')">Roll Dice</button><br><br>
+        <span id="6rorol" style="font-size:1.2rem;"></span>
+        <br><br>
+        <button id="6nt" style="display:none" onclick="next_turn()">Next Player</button>
+    </div>
+    
     <div id="vote">
    
     </div>
@@ -131,10 +167,23 @@ button:active{
   </div>
 </div>
 
+<!-- The Modal -->
+<div id="id02" class="w3-modal">
+  <div class="w3-modal-content" style="">
+    <div class="w3-container w3-center">
+      <span onclick="document.getElementById('id02').style.display='none'"
+      class="w3-button w3-display-topright">&times;</span>
+      <h1>Player <span id="winid">{ID}</span> has won the game!</h1>
+      <img src="https://media3.giphy.com/media/3ohryhNgUwwZyxgktq/giphy.gif" width="200">
+    </div>
+  </div>
+</div>
 
 </body>
 <script>
 function $(id){return document.getElementById(id)}
+
+var testing = true;
 
 var players = 2;
 var turn = 0;
@@ -176,7 +225,7 @@ setTimeout(function() {$('id01').style.display="none";},500)
     $('prorol').innerHTML = val;
     var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (5 or 6 = good)</span>";
     $('prorol').style.border = "2px solid transparent";
-    if (val > 4) {
+    if (val > 4 || testing) {
     	$('prorol').innerHTML = con + "<br>Congrads! Your committee has desided to send you to the whole House with a recommendation to pass.";
         progresss[turn - 1] += 2;
         $('prorol').style.background = "rgb(0, 245,0)";
@@ -198,8 +247,8 @@ setTimeout(function() {$('id01').style.display="none";}, 500)
     $('2rorol').innerHTML = val;
     var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (6 = good)</span>";
     $('2rorol').style.border = "2px solid transparent";
-    if (val > 4) {
-    	$('2rorol').innerHTML = con + "<br>The House has passed your bill! It will now be sent to the 2nt Reading!";
+    if (val > 4 || testing) {
+    	$('2rorol').innerHTML = con + "<br>The foor has passed your bill to the next stage! It will now be sent to the 2nt Reading!";
         progresss[turn - 1] += 2;
         $('2rorol').style.background = "rgb(0, 245,0)";
         stages[turn - 1] = 3;
@@ -213,13 +262,122 @@ setTimeout(function() {$('id01').style.display="none";}, 500)
     $('2nt').style.display = "block";
 }
 
+function do_roll_3() {
+document.getElementById('id01').style.display='block'
+setTimeout(function() {$('id01').style.display="none";}, 500)
+	var val = roll_val()
+    $('3rorol').innerHTML = val;
+    var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (6 = good)</span>";
+    $('3rorol').style.border = "2px solid transparent";
+    if (val > 4 || testing) {
+    	$('3rorol').innerHTML = con + "<br>The House has read your bill again, and decided they liked it, moving to the 3rd read/debate";
+        progresss[turn - 1] += 2;
+        $('3rorol').style.background = "rgb(0, 245,0)";
+        stages[turn - 1] = 4;
+    } else {
+    	$('3rorol').innerHTML = con + "<br>Oh no! The House wants to change your bill, sending back to stage 1.";
+        progresss[turn - 1] -= 1; 
+        $('3rorol').style.background = "red";
+        stages[turn - 1] = 1;
+    }
+    $('3rl').style.display = "none";
+    $('3nt').style.display = "block";
+}
+
+function do_roll_4() {
+document.getElementById('id01').style.display='block'
+setTimeout(function() {$('id01').style.display="none";}, 500)
+	//var val = roll_val()
+	var vote = votee();
+    var passed = vote >= 218 || testing;
+
+    var con = "<span style='font-size:1rem'></span>";
+    $('4rorol').style.border = "2px solid transparent";
+    if (passed) {
+    	$('4rorol').innerHTML = con + "<br>Congradulations you got " + vote + " of 435 votes! You are now going to visit the second house aka The Senate";
+        progresss[turn - 1] += 2;
+        $('4rorol').style.background = "rgb(0, 245,0)";
+        stages[turn - 1] = 5;
+    } else {
+    	$('4rorol').innerHTML = con + "<br>Oh no! You only got " + vote + " votes, when you needed 218!<br>You have not passed, sending you back to start.";
+        progresss[turn - 1] -= 1; 
+        $('4rorol').style.background = "red";
+        stages[turn - 1] = 1;
+    }
+    $('4rl').style.display = "none";
+    $('4nt').style.display = "block";
+}
+
+
+function do_roll_5() {
+document.getElementById('id01').style.display='block'
+setTimeout(function() {$('id01').style.display="none";}, 500)
+	var val = roll_val()
+    $('5rorol').innerHTML = val;
+    var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (6 = good)</span>";
+    $('5rorol').style.border = "2px solid transparent";
+    if (val > 5 || testing) {
+    	$('5rorol').innerHTML = con + "<br>The Senate has passed the bill, it will now be sent to the President.";
+        progresss[turn - 1] += 2;
+        $('5rorol').style.background = "rgb(0, 245,0)";
+        stages[turn - 1] = 6;
+    } else {
+    	$('5rorol').innerHTML = con + "<br>Oh no! The Senate has changed your bill, sending back to House for vote.";
+        progresss[turn - 1] -= 1; 
+        $('5rorol').style.background = "red";
+        stages[turn - 1] = 4;
+    }
+    $('5rl').style.display = "none";
+    $('5nt').style.display = "block";
+}
+
+
+function do_roll_6() {
+document.getElementById('id01').style.display='block'
+setTimeout(function() {$('id01').style.display="none";}, 500)
+	var val = roll_val()
+    $('6rorol').innerHTML = val;
+    var con = "<span style='font-size:1rem'>You Rolled a " + val + ", (6 = good)</span>";
+    $('6rorol').style.border = "2px solid transparent";
+    if (val > 4 || testing) {
+    	$('6rorol').innerHTML = con + "<br>The President has signed your bill, your bill is now law!";
+        progresss[turn - 1] += 2;
+        $('6rorol').style.background = "rgb(0, 245,0)";
+        stages[turn - 1] = 7;
+        process_win();
+    } else {
+    	if (val > 3) {
+    	$('6rorol').innerHTML = con + "<br>The President has vetoed (said no) your bill! However, you rolled a 3/4/5 so Congress has voted to override the veto, making your bill passed into a law!";
+        progresss[turn - 1] += 2;
+        $('6rorol').style.background = "rgb(0, 245,0)";
+        stages[turn - 1] = 7;
+        process_win();
+        } else {
+        progresss[turn - 1] -= 1; 
+        $('6rorol').style.background = "red";
+        stages[turn - 1] = 1;
+        $('6rorol').innerHTML = con + "<br>The President has vetoed (said no to) your bill!";
+        }
+    }
+    $('6rl').style.display = "none";
+    $('6nt').style.display = "block";
+}
+
+function process_win() {
+document.getElementById('id02').style.display='block';
+$('winid').innerHTML = turn;
+}
+
 function next_turn() {
 	if (turn < players) {
 		turn += 1
-        if (stages[turn - 1] == 2) {
-        	stage_2();
+        var sta = stages[turn - 1]
+        if (sta != undefined && sta > 1) {
+        	stage_(stages[turn - 1]);
         } else {
-        	stage_1();
+        	if (sta == 1 || undefined == sta) {
+        		stage_1();
+            }
         }
     } else {
     	// Next Stage
@@ -233,9 +391,21 @@ function stage_1() {
      $('prorol').style.border = "";
      $('prorol').style.background = "";
     $('prorol').innerHTML = "";
-    $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>"
+    $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>";
+    hides();
     $('proposed').style.display = "block";
     $('stage2').style.display = "none";
+}
+
+function hides() {
+	$('proposed').style.display = "none";
+    
+    for (var i = 0; i < 20; i++) {
+    	var el = $('stage' + i)
+        if (undefined != el) {
+        	el.style.display = "none";
+        }
+    }
 }
 
 function stage_2() {
@@ -243,10 +413,29 @@ function stage_2() {
     $('2nt').style.display = "none";
     $('2rorol').style.border = "";
     $('2rorol').innerHTML = "";
-    $('proposed').style.display = "none";
+    hides();
     $('stage2').style.display = "block";
     $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>"
-    // $('proposed').style.display = "none";
+}
+
+function stage_3() {
+    $('3rl').style.display = "block";
+    $('3nt').style.display = "none";
+    $('3rorol').style.border = "";
+    $('3rorol').innerHTML = "";
+    hides();
+    $('stage3').style.display = "block";
+    $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>"
+}
+
+function stage_(id) {
+    $(id + 'rl').style.display = "block";
+    $(id + 'nt').style.display = "none";
+    $(id + 'rorol').style.border = "";
+    $(id + 'rorol').innerHTML = "";
+    hides();
+    $('stage' + id).style.display = "block";
+    $('playerid').innerHTML = "<h1>PLAYER " + turn + "</h1>"
 }
 
 function update_stats() {
@@ -256,22 +445,22 @@ function update_stats() {
         if (undefined == stag) {
         	stag = 1;
         }
-    	con += "<br>Player #" + (i+1) + ": Score:" + progresss[i] + ", Currently on Level: " + stag;
+    	con += "<br>Player #" + (i+1) + ": Score:" + progresss[i] + ", Level: " + stag;
     }
     $('out').innerHTML = "Scores:<br>" + con;
 }
 
 
 
-function vote() {
+function votee() {
     var yes_votes = 0;
     for (var i = 0; i < 435; i++) {
-        var yes = Math.random() > 0.5;
+        var yes = Math.random() > 0.65;
         var vote = yes ? "YES!" : "NO!";
         if (yes){ yes_votes += 1 }
     }
     var no_votes = 435 - yes_votes
-    $('vote').innerHTML += "<div class='votes'>Total Votes:<br>YAY: " + yes_votes + " and NAY: " + no_votes + "<br>Needed: At least 218 YAY to pass.</div>"
+    return yes_votes;
 }
 
 main();

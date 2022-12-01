@@ -11,7 +11,8 @@ html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px;display
 .sun{width:78px;height:78px;}.bb{padding-top:2px !important;padding-bottom:2px !important;}
 .zom{width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
 .pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce,#e1fbb6,#b9f755,#8cd312,#6da40e,black);}
-#bg {min-width:800px;min-height:580px;left:1px;border:3px solid black;border-radius:4px;box-shadow:2px 2px 3px black;}
+#bg {min-width:800px;min-height:580px;left:1px;border:2px solid black;border-radius:4px;box-shadow:2px 2px 3px black;
+transform-origin: 50% 50% !important; transform-box: fill-box !important;}
 .w3-animate-opacity{animation:opac 1s}.w3-padding-64 {padding-left:35px;padding-right:35px;padding:74px;}
 .w3-modal-content {max-width:32rem;background-color:rgba(40,50,40,.9);color:white;}
 sub {margin-left:-0.3rem} .b1 {margin-left:-.3rem;}
@@ -50,7 +51,7 @@ sub {margin-left:-0.3rem} .b1 {margin-left:-.3rem;}
 </div>
 
 <body style="background-color:#cfba96">
-<div class="w3-cen1ter" style="">
+<div class="w3-center" style="margin-top:2px;">
 	<div class="w3-display-container">
 		<div class="w3-display-topmiddle">
 			<div id="game">
@@ -102,8 +103,28 @@ function scale_game() {
 	} else {
 		$('bg').style.transform = "scale(" + sss+ ", " + sss+ ") rotate(0deg)"
 	}
-	$('bg').style.top = 0;
+	var rect = $('bg').getBoundingClientRect();
 
+	console.log('RECT:');
+	var con = "";
+	$('bg').style.position="absolute";
+	$('bg').style.top = "10px !important";
+
+	var topp = rect.top;
+	if (topp < 0) { topp = -topp; }
+
+	$('bg').style.marginTop =topp + "px";
+$('bg').style.left = "10px !important";
+	for (const key in rect) {
+  if (typeof rect[key] !== 'function') {
+    var para = `${key} : ${rect[key]}`;
+    console.log(para);
+	con += para +"<br>"
+	$('titleinfo').innerHTML = con
+  }
+}
+
+	$('bg').style.top = "10px !important";
 	console.log("WWW:" +sss);
 }
 

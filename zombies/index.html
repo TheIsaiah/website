@@ -1,14 +1,13 @@
 <html>
-
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <style>
 html,body,h1,h2,h3 {font-family:"Roboto",sans-serif;} #game {width:800px;display:inline-block;}
 .over {font-size:5rem;color:red;text-shadow: 5px 5px 4px rgb(140,0,0);width:100%;text-align:center;top:99px;}
 .spot,.card,.sun,.zom,.pea,.suna,#bg,.over{position:absolute;}
 .spot{border:1px solid rgba(0,40,0,.1);width:80px;height:80px}
-.card{width:56px;height:80px;top:3px;}
+.card{width:56px;height:80px;top:6px;}
 .sun{width:78px;height:78px;}.bb{padding-top:2px !important;padding-bottom:2px !important;}
 .zom{width:63px;height:102px;border:0px solid black;border-radius:.5rem;}
 .pea{width:25px;height:25px;border:2px solid black;border-radius:1.4rem;background-image: linear-gradient(to bottom right, #ebfdce,#e1fbb6,#b9f755,#8cd312,#6da40e,black);}
@@ -22,86 +21,103 @@ sub {margin-left:-0.3rem} .b1 {margin-left:-.3rem;}
 <title>Zombie</title>
 
 <!-- Navbar -->
-<div class="w3-top">
-  <div class="w3-bar w3-theme w3-top w3-left-align">
-    <a href="https://isaiah.dev/" class="w3-bar-item w3-button w3-theme-l1 w3-animate-left" style="min-width:200px;">&lt;- Back to Isaiah.dev</a>
-	<div class="w3-bar-item">Debug Info: <small>(<span id="timers"></span><span id="msc"></span>)</small></div>
-  </div>
+<div class="w3-top" style="display:none">
+	<div class="w3-bar w3-top w3-left-align" style="border: 1px solid blue;width:100px;">
+		<a href="https://isaiah.dev/" class="w3-bar-item w3-button w3-theme-l1 w3-animate-left" style="min-width:99px">&lt;- Back</a>
+		<div class="w3-bar-item">Debug Info: <small>(<span id="debugdat"></span>)</small></div>
+	</div>
 </div>
-
 <div id="id01" class="w3-modal">
-  <div class="w3-modal-content w3-card-4">
-    <header class="w3-container"> 
-      <h5>Zombies</h5>
-    </header>
-    <div class="w3-container w3-center">
-      <p style="font-size:2rem;padding:2rem;">The Zombies are coming!</p>
-    </div>
-    <footer class="w3-container">
-      <button style="float:right;padding-left:4rem;padding-right:4rem;margin-right:3rem;margin-bottom:.1rem;background-color:rgb(170,90,90)" onclick="document.getElementById('id01').style.display='none';startZom()" class="w3-button w3-blaue">OK</button><p>&nbsp;</p>
-    </footer>
-  </div>
+	<div class="w3-modal-content w3-card-4">
+		<header class="w3-container"><h5>Zombies</h5></header>
+		<div class="w3-container w3-center"><p style="font-size:2rem;padding:2rem;">The Zombies are coming!</p></div>
+		<footer class="w3-container">
+			<button style="float:right;padding-left:4rem;padding-right:4rem;margin-right:3rem;margin-bottom:.1rem;background-color:rgb(170,90,90)" onclick="$('id01').style.display='none';startZom()" class="w3-button w3-blaue">OK</button><p>&nbsp;</p>
+		</footer>
+	</div>
 </div>
 
 <div id="id02" class="w3-modal">
-  <div class="w3-modal-content w3-card-4">
-    <header class="w3-container"> 
-      <h5>Zombies</h5>
-    </header>
-    <div class="w3-container w3-center">
-      <p style="font-size:2rem;padding:2rem;">The Zombies have found a health pack!<br>All zombies now have +1 health.</p>
-    </div>
-    <footer class="w3-container">
-      <button style="float:right;padding-left:4rem;padding-right:4rem;margin-right:3rem;margin-bottom:.1rem;background-color:rgb(170,90,90)" onclick="document.getElementById('id02').style.display='none';startZom()" class="w3-button w3-blaue">OK</button><p>&nbsp;</p>
-    </footer>
-  </div>
+	<div class="w3-modal-content w3-card-4">
+		<header class="w3-container"><h5>Zombies</h5></header>
+		<div class="w3-container w3-center">
+			<p style="font-size:2rem;padding:2rem;">The Zombies have found a health pack!<br>All zombies now have +1 health.</p>
+		</div>
+		<footer class="w3-container">
+			<button style="float:right;padding-left:4rem;padding-right:4rem;margin-right:3rem;margin-bottom:.1rem;background-color:rgb(170,90,90)" onclick="$('id02').style.display='none';startZom()" class="w3-button w3-blaue">OK</button><p>&nbsp;</p>
+		</footer>
+	</div>
 </div>
 
-<body style="background-color:rgb(243, 231, 207);">
-
-<p>&nbsp;</p>
+<body style="background-color:#cfba96">
 <div class="w3-cen1ter" style="">
-
-  <div class="w3-display-container">
-
-    <div class="w3-display-topmiddle">
-	  <div id="game">
-        <div id="bg" style="background:url('start.png') no-repeat;" class="w3-animate-opacity">
-          <div class="suna" id="suna" style="position:absolute;left:25px;top:60px;text-align:center;font-size:16px;vertical-align:middle;display:none;">0000</div>
-	      <button onclick="load()" id="stb" style="position:absolute;left:310px;top:340px;width:12rem;height:3rem;border:2px solid rgb(2,80,0);border-radius:8px;background-color:rgb(210,240,210)" class="w3-button">Start</button>
-        </div>
-      </div>
-    </div>
-    <div class="w3-display-topleft w3-hide-small" id="hi" style="height:580px;border:1px solid black;background:url('house.jpg');background-size:cover;background-position:center;">&nbsp;</div>
-    <div class="w3-display-topright w3-hide-small">
-        <div style="padding-right:32px;max-width:250px;"><br>
-            Copyright &copy; 2021 by Isaiah.<br>All Rights Reserved.<br><br>
-            All code by me, Assets are taken from the original game used under Fair Use <i>(probably)</i>.
-            <br><br>
-            Code size:<br>
-            <img src="https://img.shields.io/github/languages/code-size/TheIsaiah/website"><br>
-            GiVe mE mOnEy:
-            <a href="https://patreon.com/isaiahp"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Disaiahp%26type%3Dpledges&style=flat" alt="Support me on Patreon" /></a>
-        </div>
-    </div>
-
-  </div>
-
+	<div class="w3-display-container">
+		<div class="w3-display-topmiddle">
+			<div id="game">
+				<div id="bg" style="background:black;" class="w3-animate-opacity">
+				<div class="suna" id="suna" style="position:absolute;left:24px;top:60px;text-align:center;font-size:16px;vertical-align:middle;display:none;">0000</div>
+				<div id="titleinfo" style="color:white;padding-top:100px;">
+					<center><h1>Isaiah's Plants vs Zombies remake</h1>
+					<p style="max-width: 490px;font-size:18px;">
+						Plant different types of plants to defend your house from zombies! Different plants have different effects. Strength can differ between zombie types.</p>
+					</center>
+				</div>
+				<button onclick="load()" id="stb" style="position:absolute;left:310px;top:340px;width:12rem;height:3rem;border:2px solid rgb(2,80,0);border-radius:8px;background-color:rgb(210,240,210)" class="w3-button">Start</button>
+				</div>
+			</div>
+		</div>
+		<div class="w3-display-topleft w3-hide-small" id="hi" style="height:580px;">&nbsp;</div>
+		<div class="w3-display-topright w3-hide-small">
+			<div style="padding-right:32px;max-width:250px;">&copy; 2021 Isaiah.<br>Assets that are taken from the original game used under fair use.</div>
+		</div>
+	</div>
 </div>
-
 </body>
 
 <script>
+function scale_game() {
+	var w = document.body.clientWidth;
+	if (w >= 800) {
+		 $('bg').style.transform = "scale(1, 1) rotate(0deg)"
+		return;
+	}
+	//else if (w >= 0) { scale_game(w / 800) }
+
+	var sss = w / 900;
+	var hhh = document.body.clientHeight / 700;
+
+	var fff = sss;
+	if (hhh < sss) {
+		fff = hhh;
+	}
+
+	var h =document.body.clientHeight;
+
+	if (h > w) {
+		sss = document.body.clientHeight / 800;
+		$('bg').style.transform = "scale(" + sss+ ", " + sss+ ") rotate(90deg)"
+	} else {
+		$('bg').style.transform = "scale(" + sss+ ", " + sss+ ") rotate(0deg)"
+	}
+	$('bg').style.top = 0;
+
+	console.log("WWW:" +sss);
+}
+
+window.addEventListener('resize', function(event) {
+	scale_game();
+}, true);
+scale_game();
+
+function $(id){return document.getElementById(id)}
 function sizeup() {
-    var w = document.body.clientWidth;
-	console.log(w);
-	document.getElementById("hi").style.width = ((w/2) - 400) + "px";
+	var w = document.body.clientWidth;
+	$("hi").style.width = ((w/2) - 400) + "px";
 }
 sizeup();
-//setTimeloop(sizeup, 2000);
 
 function pls() {
-    var aud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/0/0f/Plant.ogg");
+	var aud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/0/0f/Plant.ogg");
 	aud.play();
 }
 
@@ -109,54 +125,44 @@ var ha2 = ("https://static.wikia.nocookie.net/plantsvszombies/images/4/42/Splat2
 var ha3 = ("https://static.wikia.nocookie.net/plantsvszombies/images/0/0d/Splat3.ogg");
 
 function phit_s() {
-   if (Math.random() > 0.5) {
-     new Audio(ha2).play();
-   } else {
-     new Audio(ha3).play();
-   }
+	if (Math.random() > 0.5) { new Audio(ha2).play(); } else { new Audio(ha3).play(); }
 }
 
 function th_s() {
-   var aud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/7/76/Throw.ogg");
-   aud.play();
+	var aud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/7/76/Throw.ogg");
+	aud.play();
 }
 
 var zaud = new Audio("https://static.wikia.nocookie.net/plantsvszombies/images/f/ff/DinoGroan1.ogg");
-function zom_s() {
-   zaud.play();
-}
+function zom_s() { zaud.play(); }
 
 var sc = 0; var msc = -25;
 function load() {
-  document.getElementById("stb").style.display = "none";
-  document.getElementById("suna").style.display = "block";
-  document.getElementById("bg").style.background = "url('mainBG.png')";
-  createSpots();
-  createCards();
-  spawnSun();
-  setTimeout(function() {
-    document.getElementById('id01').style.display='block';
-  }, 5500);
-  setTimeloop(spawnSun, 5000)
-  setTimeloop(sizeup, 2000);
+	$("stb").style.display = "none";
+	$("titleinfo").style.display = "none";
+	$("suna").style.display = "block";
+	$("bg").style.background = "url('mainBG.png')";
+	createSpots();
+	createCards();
+	spawnSun();
+	setTimeout(function() { $('id01').style.display='block'; }, 5500);
+	setTimeloop(spawnSun, 5000)
+	setTimeloop(sizeup, 2000);
 }
 function startZom() {setTimeloop(startZombies, 5000);};
 
 function touch(d1,d2){
-    if (undefined == d1 || undefined == d2) {console.log('null'); return false;}
+	if (undefined == d1 || undefined == d2) {console.log('null'); return false;}
 
-    d1 = d1.getBoundingClientRect();
-    d2 = d2.getBoundingClientRect();
-
-    var d1y = d1.y - (d2.height);
-    var d2y = d2.y + 2;
-
-    var d1x = d1.x + (d1.width/2);
-    var d2x = d2.x-10;
-
-    var ox = Math.abs(d1x-d2x) + 1 < (d1x<d2x ? (d2.width/8):(d1.width/4));
-    var oy = Math.abs(d1y-d2y) + 5 < (d1y<d2y ? (d2.height+10):(d1.height-80));
-    return ox && oy;
+	d1 = d1.getBoundingClientRect();
+	d2 = d2.getBoundingClientRect();
+	var d1y = d1.y - (d2.height);
+	var d2y = d2.y + 2;
+	var d1x = d1.x + (d1.width/2);
+	var d2x = d2.x-10;
+	var ox = Math.abs(d1x-d2x) + 1 < (d1x<d2x ? (d2.width/8):(d1.width/4));
+	var oy = Math.abs(d1y-d2y) + 5 < (d1y<d2y ? (d2.height+10):(d1.height-80));
+	return ox && oy;
 }
 
 var zc = 0;
@@ -167,31 +173,30 @@ var pi = [];
 var zr = -1;
 var mult = 0;
 function startZombies() {
-    if (msc > 1500 && mult == 0) {
-	    mult = 1;
-		document.getElementById('id02').style.display='block';
+	if (msc > 1500 && mult == 0) {
+		mult = 1;
+		$('id02').style.display='block';
 	}
-	
+
 	if (msc > 2500 && mult == 1) {
-	    mult = 2;
-		document.getElementById('id02').style.display='block';
-	}
-    
-    if (msc > 3000 && mult == 2) {
-	    mult = 3;
-		document.getElementById('id02').style.display='block';
+		mult = 2;
+		$('id02').style.display='block';
 	}
 
-    if (msc > 4000 && mult == 3) { mult = 4; document.getElementById('id02').style.display='block';  startZombie();}
-    if (msc > 5000 && mult == 4) { mult = 5; document.getElementById('id02').style.display='block';  startZombie();}
-    if (msc > 6000 && mult == 5) { mult = 6; document.getElementById('id02').style.display='block';  startZombie();}
+	if (msc > 3000 && mult == 2) {
+		mult = 3;
+		$('id02').style.display='block';
+	}
 
-    if (msc > 2999) startZombie();
+	if (msc > 4000 && mult == 3) { mult = 4; $('id02').style.display='block';  startZombie();}
+	if (msc > 5000 && mult == 4) { mult = 5; $('id02').style.display='block';  startZombie();}
+	if (msc > 6000 && mult == 5) { mult = 6; $('id02').style.display='block';  startZombie();}
+	if (msc > 2999) startZombie();
 	if (msc > 3999) startZombie();
 	if (msc > 4999 && Math.random() > 0.4) startZombie();
 	if (msc > 5999 && Math.random() > 0.2) startZombie();
 	if (msc > 500 && Math.random > 0.8) startZombie();
-    startZombie();
+	startZombie();
 }
 
 function startZombie() {
@@ -219,14 +224,12 @@ function startZombie() {
   zi["" + zc] = zi["" + zc] + mult;
   zc++;
   
-  var sl = setTimeloop(function() {
-    // zom_s();
-  }, 4000);
+  // var sl = setTimeloop(function() { zom_s(); }, 4000);
 
   var vaal = setTimeloop(function() {
     if (document.hidden) return; 
     var aa = toi(zom.style.left, msc < 200 ? -1 : msc > 3000 ? (Math.random() > 0.7 ? -3 : -2) : -2);
-    if (undefined == document.getElementById(id)) { clearTimeloop(vaal); clearTimeloop(sl);} // Zombie already dead
+    if (undefined == $(id)) { clearTimeloop(vaal); clearTimeloop(sl);} // Zombie already dead
     if (aa < -10){ gameOver(); clearTimeloop(vaal); } // Eat Brain
 
     if (undefined == mz[id])
@@ -238,21 +241,21 @@ function startZombie() {
   } else { 
       zom.innerHTML = "<img src='./images/zombies/zombie" + (zt == 3 ? "3.gif" : zt == 4 ? "4.webp" : ("2.png")) + "' width='62px'>";
    }
-  document.getElementById('bg').appendChild(zom);
+  $('bg').appendChild(zom);
 }
 
 function gameOver() {
-  clearAllLoops();
-  var g = document.createElement('div');
-  g.innerHTML = "GAME OVER!<br>THE ZOMBIES ATE<BR>YOUR BRAIN!";
-  g.className = "over";
-  document.getElementById('bg').style.background = "linear-gradient(to bottom, rgba(10,0,0, .4),rgb(90,0,0,.9)),url('mainBG.png')";
-  document.getElementById('bg').appendChild(g);
+	clearAllLoops();
+	var g = document.createElement('div');
+	g.innerHTML = "GAME OVER!<br>THE ZOMBIES ATE<BR>YOUR BRAIN!";
+	g.className = "over";
+	$('bg').style.background = "linear-gradient(to bottom, rgba(10,0,0, .4),rgb(90,0,0,.9)),url('mainBG.png')";
+	$('bg').appendChild(g);
 }
 
 async function shootTick(id, cd) {
   if (document.hidden) return;
-  var spot = document.getElementById("sp" + id);
+  var spot = $("sp" + id);
   var pea = document.createElement('div');
   pea.className = "pea";
   pea.style.left = toi(spot.style.left,48) + "px";
@@ -289,129 +292,127 @@ async function shootTick(id, cd) {
 	  }
 	}
   }, 50);
-  document.getElementById('bg').appendChild(pea);
+  $('bg').appendChild(pea);
 }
 plusSun(75);
 if (window.location.toString().includes("file:/")) { sc += 50; plusSun(1050); }//test
 
 function createSpots() {
-  for (var i=0; i < 5; i++) {
-    for (var j=0; j < 9; j++) {
-      var btn = document.createElement('div');
-      btn.className = "spot";
-      btn.setAttribute("id", "sp" + (i+"m"+j));
-      btn.setAttribute("onclick", "spotClicked('"+i+"m"+j+"')");
-      btn.style.left = 34+(82*j); btn.style.top = 101+(96*i);
-      document.getElementById('bg').appendChild(btn);
-    }
-  }
+	for (var i=0; i < 5; i++) {
+ 		for (var j=0; j < 9; j++) {
+			var btn = document.createElement('div');
+			btn.className = "spot";
+			btn.setAttribute("id", "sp" + (i+"m"+j));
+			btn.setAttribute("onclick", "spotClicked('"+i+"m"+j+"')");
+			btn.style.left = 34+(82*j); btn.style.top = 101+(96*i);
+			$('bg').appendChild(btn);
+		}
+	}
 }
 
 var cards = ["wallnut","sunflower","peashooter", "repeater"];
-var csun  = [50       , 50        , 100        , 200];
+var csun  = [50, 50, 100, 200];
 var cc;
 
 function createCards() {
-  for (var i = 0; i < cards.length; i++) {
-    var c = document.createElement('div');
-    c.className = "card";
-    c.style.left = 38 + (57*(i+1));
-    c.innerHTML = "<img src='./images/cards/card_" + cards[i] + ".png' width='54px' title='Cost " +csun[i]+" sun'>"
-    c.setAttribute("onclick", "cardClick('" + i + "')");
-    document.getElementById('bg').appendChild(c);
-  }
-  var c = document.createElement('div');
-  c.className = "card";
-  c.style.left = 38 + (57*(8));
-  c.innerHTML = "<img src='./images/shovel.png' width='54px'>"
-  c.setAttribute("onclick", "cardClick('-1')");
-  document.getElementById('bg').appendChild(c);
+	for (var i = 0; i < cards.length; i++) {
+		var c = document.createElement('div');
+		c.className = "card";
+		c.style.left = 38 + (60*(i+1));
+		c.innerHTML = "<img src='./images/cards/card_" + cards[i] + ".png' width='56px' title='Cost " +csun[i]+" sun'>"
+		c.setAttribute("onclick", "cardClick('" + i + "')");
+		$('bg').appendChild(c);
+	}
+	var c = document.createElement('div');
+	c.className = "card";
+	c.style.left = 38 + (57*(8));
+	c.innerHTML = "<img src='./images/shovel.png' width='54px'>"
+	c.setAttribute("onclick", "cardClick('-1')");
+	$('bg').appendChild(c);
 }
 
 var rem = -1;
 var mz = {};
 function spotClicked(id) {
-  if (sc < csun[cc] || undefined == cc) return;
+	if (sc < csun[cc] || undefined == cc) return;
 
-  const spot = document.getElementById("sp" + id);
-  if (spot.innerHTML.length<9&&cc!=-1)spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
+	const spot = $("sp" + id);
+	if (spot.innerHTML.length<9&&cc!=-1)spot.innerHTML = "<img src='./images/plants/" + cards[cc] + ".gif' width='70px'>";
   
-  var loop;
-
-  if (cc == 1) {
-    const id1=id;
-    loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
-  }
-  if (cc == 2) {
-    const id1=id; const cc1=cc;
-    loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1);}, 2500);
-  }
-  if (cc == 3) {
-    const id1=id; const cc1=cc;
-    loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1); setTimeout(function() { shootTick(id1, cc1);}, 200)}, 2500);
-  }
-  if (cc == -1){ rem = id; spot.innerHTML = ""; cc = undefined; return; }
-  pi["" + id] = 20;
-
-    var inzz = setTimeloop(function() {
-	if (document.hidden) return;
-
-	for (var z = 0; z < zoms.length; z++) {
-	  var zom = zoms[z];
-	  if (undefined != zom && touch(spot,zom)) {
-		const zid = zom.id.toString();
-		mz[zid] = true;
-        var h = pi[id];
-        if (h <= 0) {
-	      spot.innerHTML = "";
-		  clearTimeloop(inzz);
-		  if (undefined != loop)clearTimeloop(loop);
-		  mz[zid] = null;
-		} else { pi[id]=h-1;}
-	  }
+	var loop;
+	if (cc == 1) {
+		const id1=id;
+		loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} spawnSun(spot.offsetLeft, spot.offsetTop); }, 6000); // Sunflower
 	}
-  }, 500);
+	if (cc == 2) {
+		const id1=id; const cc1=cc;
+		loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1);}, 2500);
+	}
+	if (cc == 3) {
+		const id1=id; const cc1=cc;
+		loop = setTimeloop(function(){ if (rem == id1) {clearTimeloop(loop);} shootTick(id1, cc1); setTimeout(function() { shootTick(id1, cc1);}, 200)}, 2500);
+	}
+	if (cc == -1){ rem = id; spot.innerHTML = ""; cc = undefined; return; }
+	pi["" + id] = 20;
+
+	var inzz = setTimeloop(function() {
+		if (document.hidden) return;
+
+		for (var z = 0; z < zoms.length; z++) {
+			var zom = zoms[z];
+			if (undefined != zom && touch(spot,zom)) {
+				const zid = zom.id.toString();
+				mz[zid] = true;
+				var h = pi[id];
+				if (h <= 0) {
+					spot.innerHTML = "";
+					clearTimeloop(inzz);
+					if (undefined != loop)clearTimeloop(loop);
+					mz[zid] = null;
+				} else { pi[id]=h-1;}
+			}
+		}
+	}, 500);
   
-  pls();
-  plusSun(-csun[cc]);
-  cc = undefined;
+	pls();
+	plusSun(-csun[cc]);
+	cc = undefined;
 }
 
 var suns = 0;
 function spawnSun(x,y) {
-   const c = document.createElement('div');
-   const id = suns; suns++;
-   c.className = "sun";
-   c.style.left = undefined != x ? x : (3 + (20*(rand(1,34)+1))) + "px";
-   c.style.top =  undefined != y ? y : (80 * 1) + "px";
-   c.innerHTML = "<img src='./images/sun.png'>";
-   c.setAttribute("onclick", "sunClick('" + id + "')");
-   c.setAttribute("id", "sun" + id);
+	const c = document.createElement('div');
+	const id = suns; suns++;
+	c.className = "sun";
+	c.style.left = undefined != x ? x : (3 + (20*(rand(1,34)+1))) + "px";
+	c.style.top =  undefined != y ? y : (80 * 1) + "px";
+	c.innerHTML = "<img src='./images/sun.png'>";
+	c.setAttribute("onclick", "sunClick('" + id + "')");
+	c.setAttribute("id", "sun" + id);
 
-   const sto = rand(100, 478);
-   if (undefined == x) {
-     var t= setTimeloop(function() {
-	 var tt = toi(c.style.top,5); c.style.top = tt + "px";
-     if (tt > sto) clearTimeloop(t);
-   }, 60);}
+	const sto = rand(100, 478);
+	if (undefined == x) {
+		var t= setTimeloop(function() {
+			var tt = toi(c.style.top,5); c.style.top = tt + "px";
+			if (tt > sto) clearTimeloop(t);
+		}, 60);
+	}
 
-   setTimeout(function() {
-     var ssun = document.getElementById("sun" + id);
-	 if (undefined != ssun) ssun.remove();
-   }, 10000);
-   document.getElementById('bg').appendChild(c);
+	setTimeout(function() {
+		var ssun = $("sun" + id);
+		if (undefined != ssun) ssun.remove();
+	}, 10000);
+	$('bg').appendChild(c);
 }
 
 function cardClick(car) { cc = car; }
-function sunClick(sun)  {plusSun(25); document.getElementById("sun" + sun).remove();}
-function plusSun(count) {sc += count; if (count>-51) {msc += count;}else{msc += (count/4)} document.getElementById("suna").innerHTML= " <img src='./images/sun.png' width='16px' style='padding:0;vertical-align:middle;'><span style='vertical-align:middle;'>" + sc + "</span>";}
+function sunClick(sun)  {plusSun(25); $("sun" + sun).remove();}
+function plusSun(count) {sc += count; if (count>-51) {msc += count;}else{msc += (count/4)} $("suna").innerHTML= " <img src='./images/sun.png' width='16px' style='padding:0;vertical-align:middle;'><span style='vertical-align:middle'>" + sc + "</span>";}
 function rand(min, max) {return (Math.random() * (max-min)+min)|0;}
 function toi(s,n) { return (parseInt(s.replace('px','')) + n);}
 
 var timers = 0;
-function countTimer(count) { document.getElementById("msc").innerHTML = ",&nbsp;<sup>" + sc + "</sup><sub class='b1'>" + msc + "</sub>,&nbsp;&nbsp;<sup>" + zi.length + "</sup><sub>" + pi.length + "</sub>";
- timers += count; timers = Math.max(0,timers);document.getElementById("timers").innerHTML=timers;}
-
+function countTimer(count) {  timers += count; timers = Math.max(0,timers); $("debugdat").innerHTML = timers + "/" + sc + "/" + msc + "/" + zi.length; }
 function setTimeloop(a,b)  {countTimer(1); var ii =  setInterval(a,b);  times.push(ii); return ii;}
 function clearTimeloop(a,b){countTimer(-1); clearInterval(a,b);}
 function clearAllLoops() { for (var i = 0; i < times.length; i++) clearTimeloop(times[i])};

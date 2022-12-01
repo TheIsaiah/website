@@ -78,8 +78,8 @@ sub {margin-left:-0.3rem} .b1 {margin-left:-.3rem;}
 function scale_game() {
 	var w = document.body.clientWidth;
 	if (w >= 800) {
-		 $('bg').style.transform = "scale(1, 1) rotate(0deg)"
-		return;
+		// $('bg').style.transform = "scale(1, 1) rotate(0deg)"
+		// return;
 	}
 	//else if (w >= 0) { scale_game(w / 800) }
 
@@ -89,6 +89,9 @@ function scale_game() {
 	var fff = sss;
 	if (hhh < sss) {
 		fff = hhh;
+	}
+	if (sss > 1) {
+		sss = 1;
 	}
 
 	var h =document.body.clientHeight;
